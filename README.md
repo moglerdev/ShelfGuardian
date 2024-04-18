@@ -2,13 +2,14 @@
 
 ## Description
 
+Shelf Guardian is your ultimate inventory management solution, designed
+to streamline your pantry or storage organization effortlessly.
+With its intuitive interface and smart features, Shelf Guardian offers
+a comprehensive overview of your supplies, ensuring you stay ahead
+of expiration dates and never run out of essentials.
+
 ## License
 
-    Shelf Guardian is your ultimate inventory management solution, designed
-    to streamline your pantry or storage organization effortlessly.
-    With its intuitive interface and smart features, Shelf Guardian offers
-    a comprehensive overview of your supplies, ensuring you stay ahead
-    of expiration dates and never run out of essentials.
     Copyright (C) 2024 Christopher R. Jäger, Jona Böcker, Tobias Stöhr
 
     This program is free software: you can redistribute it and/or modify
