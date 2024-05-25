@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shelf_guardian/bloc/product_bloc.dart';
-import 'package:shelf_guardian/models/product_model.dart';
+import 'package:shelf_guardian/pages/scanner_page.dart';
+import 'package:shelf_guardian/pages/setting_page.dart';
+import 'package:shelf_guardian/routes.dart';
 import 'package:shelf_guardian/views/product_view.dart';
 
 final iconStyle = ButtonStyle(
@@ -11,6 +13,36 @@ final iconStyle = ButtonStyle(
   backgroundColor: const WidgetStatePropertyAll(Color(0xFF8367C7)),
   iconColor: const WidgetStatePropertyAll(Color(0xFFFFFFFF)),
 );
+
+class CustomIconBtn extends StatelessWidget {
+  final IconData icon;
+  final Function() onPressed;
+  final double size;
+
+  const CustomIconBtn(
+      {super.key, required this.icon, required this.onPressed, this.size = 35});
+
+  @override
+  Widget build(BuildContext context) {
+    var style = iconStyle.copyWith(
+        fixedSize: WidgetStateProperty.all(Size(size + 20, size + 20)));
+    return IconButton(
+      iconSize: size,
+      style: style,
+      icon: FaIcon(
+        icon,
+        shadows: const [
+          Shadow(
+            color: Color.fromARGB(110, 0, 0, 0),
+            offset: Offset(0, 2),
+            blurRadius: 10,
+          )
+        ],
+      ),
+      onPressed: onPressed,
+    );
+  }
+}
 
 class HomePageAction extends StatelessWidget {
   final ScrollController scrollController;
@@ -21,19 +53,14 @@ class HomePageAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
       List<Widget> leftBtns = [
-        IconButton(
-          iconSize: 35,
-          style: iconStyle,
-          icon: const FaIcon(FontAwesomeIcons.gear),
-          onPressed: () {
-            print("TODO: Implement settings page");
-          },
-        ),
+        CustomIconBtn(
+            icon: FontAwesomeIcons.gear,
+            onPressed: () {
+              AppRoutes.navigateToSetting(context);
+            }),
         const SizedBox(width: 10),
-        IconButton(
-          iconSize: 35,
-          style: iconStyle,
-          icon: const FaIcon(FontAwesomeIcons.filter),
+        CustomIconBtn(
+          icon: FontAwesomeIcons.filter,
           onPressed: () {
             print("TODO: Implement filter page");
           },
@@ -43,58 +70,37 @@ class HomePageAction extends StatelessWidget {
       Widget mainBtn;
       List<Widget> rightBtns = [const SizedBox(width: 10)];
       if (state is ProductSelectedState) {
-        rightBtns.add(IconButton(
-          iconSize: 35,
-          style: iconStyle,
-          icon: const FaIcon(FontAwesomeIcons.rectangleXmark),
+        rightBtns.add(CustomIconBtn(
+          icon: FontAwesomeIcons.rectangleXmark,
           onPressed: () {
             context.read<ProductBloc>().add(UnselectAllProductsEvent());
           },
         ));
-        mainBtn = IconButton(
-          iconSize: 50,
-          style: iconStyle,
-          icon: const FaIcon(FontAwesomeIcons.trash),
+        mainBtn = CustomIconBtn(
+          size: 50,
+          icon: FontAwesomeIcons.trash,
           onPressed: () {
             context.read<ProductBloc>().add(const RemoveSelectedProductEvent());
           },
         );
       } else {
-        rightBtns.add(IconButton(
-          iconSize: 35,
-          style: iconStyle,
-          icon: const FaIcon(FontAwesomeIcons.checkToSlot),
+        rightBtns.add(CustomIconBtn(
+          icon: FontAwesomeIcons.checkToSlot,
           onPressed: () {
             context.read<ProductBloc>().add(SelectAllProductsEvent());
           },
         ));
-        mainBtn = IconButton(
-          iconSize: 50,
-          style: iconStyle,
-          icon: const FaIcon(FontAwesomeIcons.plus),
+        mainBtn = CustomIconBtn(
+          size: 50,
+          icon: FontAwesomeIcons.plus,
           onPressed: () {
-            context.read<ProductBloc>().add(AddProductEvent(
-                  Product(
-                    name: 'New Product',
-                    description: "",
-                    image: "",
-                    priceInCents: 1000,
-                    expiredAt: DateTime.now().add(const Duration(days: 7)),
-                  ),
-                ));
-            scrollController.animateTo(
-              scrollController.position.maxScrollExtent,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeOut,
-            );
+            AppRoutes.navigateToScanner(context);
           },
         );
       }
       rightBtns.add(const SizedBox(width: 10));
-      rightBtns.add(IconButton(
-        iconSize: 35,
-        style: iconStyle,
-        icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
+      rightBtns.add(CustomIconBtn(
+        icon: FontAwesomeIcons.magnifyingGlass,
         onPressed: () {
           print("TODO: Implement search page");
         },

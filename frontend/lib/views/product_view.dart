@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:moment_dart/moment_dart.dart';
 import 'package:shelf_guardian/models/product_model.dart';
 
 class ProductView extends StatelessWidget {
   final Product product;
   final Function(bool?) onSelected;
+  final Function() onTap;
   final bool isSelected;
 
   const ProductView(
       {super.key,
       required this.product,
       required this.onSelected,
-      required this.isSelected});
+      required this.isSelected,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -19,46 +22,51 @@ class ProductView extends StatelessWidget {
     // when expired AD0392
     // Text Color FFFFFF
 
-    return Container(
-      // height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: product.isExpired
-            ? const Color(0xFFAD0392)
-            : const Color(0xFF5603AD),
-      ),
-      padding: const EdgeInsets.all(10),
-      // color: item.isExpired ? Color(0xFFAD0392) : Color(0xFF5603AD),
-      child: Row(children: [
-        Container(
-          margin: const EdgeInsets.only(right: 10),
-          child: const FaIcon(
-            FontAwesomeIcons.cheese,
-            color: Color(0xFFFFFFFF),
+    return GestureDetector(
+      onLongPress: () {
+        onSelected(!isSelected);
+      },
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+          // height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: product.isExpired
+                ? const Color(0xFFAD0392)
+                : const Color(0xFF5603AD),
           ),
-        ),
-        Expanded(
-            child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              product.name,
-              style: const TextStyle(
-                  color: Color(0xFFFFFFFF),
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.all(10),
+          // color: item.isExpired ? Color(0xFFAD0392) : Color(0xFF5603AD),
+          child: Row(children: [
+            Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: const FaIcon(
+                FontAwesomeIcons.cheese,
+                color: Color(0xFFFFFFFF),
+              ),
             ),
-            Text(
-              product.isExpired
-                  ? 'Expired at ${product.expiredAt}'
-                  : 'Expires at ${product.expiredAt}',
-              style: const TextStyle(color: Color(0xFFFFFFFF)),
-            ),
-          ],
-        )),
-        Checkbox(value: isSelected, onChanged: onSelected)
-      ]),
+            Expanded(
+                child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product.name,
+                  style: const TextStyle(
+                      color: Color(0xFFFFFFFF),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  product.expiredAt.toMoment().fromNow(),
+                  style: const TextStyle(color: Color(0xFFFFFFFF)),
+                ),
+              ],
+            )),
+            Checkbox(value: isSelected, onChanged: onSelected)
+          ])),
     );
   }
 }
@@ -94,6 +102,12 @@ class ProductListView extends StatelessWidget {
                   child: ProductView(
                       product: product,
                       isSelected: isSelected,
+                      onTap: () {
+                        if (selectedProducts.isNotEmpty) {
+                          onSelected(product, !isSelected);
+                          return;
+                        }
+                      },
                       onSelected: (selected) {
                         onSelected(product, selected);
                       }));
