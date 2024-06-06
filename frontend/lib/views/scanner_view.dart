@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:shelf_guardian/common/theme.dart';
 import 'package:shelf_guardian/views/button_view.dart';
 
 class ScannerView extends StatefulWidget {
@@ -41,13 +42,13 @@ class _ScannerViewState extends State<ScannerView> with WidgetsBindingObserver {
       return const Text(
         'Scan something!',
         overflow: TextOverflow.fade,
-        style: TextStyle(color: Colors.white),
+        style: ShelfGuardianTextStyles.body1,
       );
     }
     return Text(
       value.displayValue ?? 'No display value.',
       overflow: TextOverflow.fade,
-      style: const TextStyle(color: Colors.white),
+      style: ShelfGuardianTextStyles.body1,
     );
   }
 
@@ -107,7 +108,7 @@ class _ScannerViewState extends State<ScannerView> with WidgetsBindingObserver {
         child: Container(
           alignment: Alignment.bottomCenter,
           height: 100,
-          color: Colors.black.withOpacity(0.4),
+          color: ShelfGuardianColors.button,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:shelf_guardian/common/theme.dart';
 
 class AnalyzeImageFromGalleryButton extends StatelessWidget {
   const AnalyzeImageFromGalleryButton({required this.controller, super.key});
@@ -10,7 +11,7 @@ class AnalyzeImageFromGalleryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      color: Colors.white,
+      color: ShelfGuardianColors.icon,
       icon: const Icon(Icons.image),
       iconSize: 32.0,
       onPressed: () async {
@@ -32,6 +33,7 @@ class AnalyzeImageFromGalleryButton extends StatelessWidget {
           return;
         }
 
+        // outdated? TODO?
         final SnackBar snackbar = barcodes != null
             ? const SnackBar(
                 content: Text('Barcode found!'),
@@ -60,7 +62,7 @@ class StartStopMobileScannerButton extends StatelessWidget {
       builder: (context, state, child) {
         if (!state.isInitialized || !state.isRunning) {
           return IconButton(
-            color: Colors.white,
+            color: ShelfGuardianColors.icon,
             icon: const Icon(Icons.play_arrow),
             iconSize: 32.0,
             onPressed: () async {
@@ -70,7 +72,7 @@ class StartStopMobileScannerButton extends StatelessWidget {
         }
 
         return IconButton(
-          color: Colors.white,
+          color: ShelfGuardianColors.icon,
           icon: const Icon(Icons.stop),
           iconSize: 32.0,
           onPressed: () async {
@@ -140,7 +142,7 @@ class ToggleFlashlightButton extends StatelessWidget {
         switch (state.torchState) {
           case TorchState.auto:
             return IconButton(
-              color: Colors.white,
+              color: ShelfGuardianColors.icon,
               iconSize: 32.0,
               icon: const Icon(Icons.flash_auto),
               onPressed: () async {
@@ -149,7 +151,7 @@ class ToggleFlashlightButton extends StatelessWidget {
             );
           case TorchState.off:
             return IconButton(
-              color: Colors.white,
+              color: ShelfGuardianColors.icon,
               iconSize: 32.0,
               icon: const Icon(Icons.flash_off),
               onPressed: () async {
@@ -158,7 +160,7 @@ class ToggleFlashlightButton extends StatelessWidget {
             );
           case TorchState.on:
             return IconButton(
-              color: Colors.white,
+              color: ShelfGuardianColors.icon,
               iconSize: 32.0,
               icon: const Icon(Icons.flash_on),
               onPressed: () async {
@@ -168,7 +170,7 @@ class ToggleFlashlightButton extends StatelessWidget {
           case TorchState.unavailable:
             return const Icon(
               Icons.no_flash,
-              color: Colors.grey,
+              color: ShelfGuardianColors.disabled,
             );
         }
       },

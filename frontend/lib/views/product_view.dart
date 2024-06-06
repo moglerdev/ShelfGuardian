@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moment_dart/moment_dart.dart';
+import 'package:shelf_guardian/common/theme.dart';
 import 'package:shelf_guardian/models/product_model.dart';
 
 class ProductView extends StatelessWidget {
@@ -34,8 +35,8 @@ class ProductView extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: product.isExpired
-                ? const Color(0xFFAD0392)
-                : const Color(0xFF5603AD),
+                ? ShelfGuardianColors.secondary
+                : ShelfGuardianColors.primary,
           ),
           padding: const EdgeInsets.all(10),
           // color: item.isExpired ? Color(0xFFAD0392) : Color(0xFF5603AD),
@@ -44,7 +45,7 @@ class ProductView extends StatelessWidget {
               margin: const EdgeInsets.only(right: 10),
               child: const FaIcon(
                 FontAwesomeIcons.cheese,
-                color: Color(0xFFFFFFFF),
+                color: ShelfGuardianColors.icon,
               ),
             ),
             Expanded(
@@ -54,14 +55,11 @@ class ProductView extends StatelessWidget {
               children: [
                 Text(
                   product.name,
-                  style: const TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+                  style: ShelfGuardianTextStyles.header1,
                 ),
                 Text(
                   product.expiredAt.toMoment().fromNow(),
-                  style: const TextStyle(color: Color(0xFFFFFFFF)),
+                  style: ShelfGuardianTextStyles.body1,
                 ),
               ],
             )),
