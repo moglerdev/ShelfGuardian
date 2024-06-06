@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:equatable/equatable.dart';
 
 class Product extends Equatable {
@@ -7,7 +9,7 @@ class Product extends Equatable {
   final String image;
   final DateTime expiredAt;
 
-  get isExpired => DateTime.now().isAfter(expiredAt);
+  bool get isExpired => DateTime.now().isAfter(expiredAt);
 
   const Product({
     required this.name,

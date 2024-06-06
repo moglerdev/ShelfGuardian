@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shelf_guardian/routes.dart';
 import 'package:shelf_guardian/views/scanner_view.dart';
 
 class ScannerPage extends StatefulWidget {
@@ -24,7 +23,7 @@ class _ScannerPageState extends State<ScannerPage> {
       appBar: AppBar(
         title: const Text('Scanner'),
       ),
-      body: ScannerView(),
+      body: const ScannerView(),
     );
   }
 }

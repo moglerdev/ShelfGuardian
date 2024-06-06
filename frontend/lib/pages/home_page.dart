@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shelf_guardian/bloc/product_bloc.dart';
-import 'package:shelf_guardian/pages/scanner_page.dart';
-import 'package:shelf_guardian/pages/setting_page.dart';
 import 'package:shelf_guardian/routes.dart';
 import 'package:shelf_guardian/views/product_view.dart';
 
@@ -16,7 +14,7 @@ final iconStyle = ButtonStyle(
 
 class CustomIconBtn extends StatelessWidget {
   final IconData icon;
-  final Function() onPressed;
+  final void Function() onPressed;
   final double size;
 
   const CustomIconBtn(
@@ -62,6 +60,7 @@ class HomePageAction extends StatelessWidget {
         CustomIconBtn(
           icon: FontAwesomeIcons.filter,
           onPressed: () {
+            // TODO Implement filter page
             print("TODO: Implement filter page");
           },
         ),
@@ -102,6 +101,7 @@ class HomePageAction extends StatelessWidget {
       rightBtns.add(CustomIconBtn(
         icon: FontAwesomeIcons.magnifyingGlass,
         onPressed: () {
+          // TODO Implement search page
           print("TODO: Implement search page");
         },
       ));

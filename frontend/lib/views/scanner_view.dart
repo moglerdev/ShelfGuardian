@@ -4,7 +4,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shelf_guardian/views/button_view.dart';
 
 class ScannerView extends StatefulWidget {
-  const ScannerView({Key? key}) : super(key: key);
+  const ScannerView({super.key});
 
   @override
   State createState() => _ScannerViewState();

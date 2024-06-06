@@ -9,19 +9,19 @@ class AppRoutes {
   }
 
   static void navigateToHome(BuildContext context) {
-    MaterialPageRoute route = MaterialPageRoute(
+    MaterialPageRoute<HomePage> route = MaterialPageRoute(
         builder: (context) => const HomePage(), fullscreenDialog: true);
     Navigator.push(context, route);
   }
 
   static void navigateToScanner(BuildContext context) {
-    MaterialPageRoute route = MaterialPageRoute(
+    MaterialPageRoute<ScannerPage> route = MaterialPageRoute(
         builder: (context) => const ScannerPage(), fullscreenDialog: true);
     Navigator.push(context, route);
   }
 
   static void navigateToSetting(BuildContext context) {
-    MaterialPageRoute route = MaterialPageRoute(
+    MaterialPageRoute<SettingPage> route = MaterialPageRoute(
         builder: (context) => const SettingPage(), fullscreenDialog: true);
     Navigator.push(context, route);
   }

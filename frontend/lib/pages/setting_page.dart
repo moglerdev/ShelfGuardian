@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shelf_guardian/pages/home_page.dart';
 import 'package:shelf_guardian/routes.dart';
 
 class SettingPage extends StatefulWidget {

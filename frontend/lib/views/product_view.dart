@@ -5,8 +5,8 @@ import 'package:shelf_guardian/models/product_model.dart';
 
 class ProductView extends StatelessWidget {
   final Product product;
-  final Function(bool?) onSelected;
-  final Function() onTap;
+  final void Function(bool?) onSelected;
+  final void Function() onTap;
   final bool isSelected;
 
   const ProductView(
@@ -74,7 +74,7 @@ class ProductView extends StatelessWidget {
 class ProductListView extends StatelessWidget {
   final List<Product> products;
   final List<Product> selectedProducts;
-  final Function(Product, bool?) onSelected;
+  final void Function(Product, bool?) onSelected;
   final ScrollController scrollController;
 
   const ProductListView(
