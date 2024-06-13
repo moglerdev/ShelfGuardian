@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:moment_dart/moment_dart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/bloc/product_bloc.dart';
-import 'package:shelf_guardian/pages/home_page.dart';
+import 'package:moment_dart/moment_dart.dart';
+import 'package:shelf_guardian/controller/product_controller.dart';
+import 'package:shelf_guardian/routes.dart';
 
 void main() {
   Moment.setGlobalLocalization(MomentLocalizations.de());
@@ -14,18 +14,15 @@ class ShelfGuardianApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ProductBloc()..add(LoadProductsEvent()),
-        ),
-      ],
-      child: MaterialApp(
+    return BlocProvider(
+      create: (context) => ProductController(),
+      child: MaterialApp.router(
         title: 'Shelf Guardian',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage(),
+        routerDelegate: routes.routerDelegate,
+        routeInformationParser: routes.routeInformationParser,
       ),
     );
   }
