@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/bloc/product_bloc.dart';
-import 'package:shelf_guardian/routes.dart';
 import 'package:shelf_guardian/views/product_view.dart';
 
 final iconStyle = ButtonStyle(
@@ -54,7 +54,7 @@ class HomePageAction extends StatelessWidget {
         CustomIconBtn(
             icon: FontAwesomeIcons.gear,
             onPressed: () {
-              AppRoutes.navigateToSetting(context);
+              context.go("/setting");
             }),
         const SizedBox(width: 10),
         CustomIconBtn(
@@ -93,7 +93,7 @@ class HomePageAction extends StatelessWidget {
           size: 50,
           icon: FontAwesomeIcons.plus,
           onPressed: () {
-            AppRoutes.navigateToScanner(context);
+            context.go("/scanner");
           },
         );
       }

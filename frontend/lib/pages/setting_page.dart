@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shelf_guardian/routes.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -27,7 +27,7 @@ class _SettingPageState extends State<SettingPage> {
           children: [
             TextButton(
                 onPressed: () {
-                  AppRoutes.navigateToHome(context);
+                  context.go("/");
                 },
                 child: const Text("Back to Home Page"))
           ],
