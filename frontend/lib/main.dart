@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moment_dart/moment_dart.dart';
-import 'package:shelf_guardian/controller/product_controller.dart';
+import 'package:shelf_guardian/controller/settings_controller.dart';
+import 'package:shelf_guardian/controller/user_controller.dart';
 import 'package:shelf_guardian/routes.dart';
 
 void main() {
@@ -14,15 +15,17 @@ class ShelfGuardianApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProductController(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SettingsController()),
+        BlocProvider(create: (context) => UserController()),
+      ],
       child: MaterialApp.router(
         title: 'Shelf Guardian',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        routerDelegate: routes.routerDelegate,
-        routeInformationParser: routes.routeInformationParser,
+        routerConfig: routes,
       ),
     );
   }

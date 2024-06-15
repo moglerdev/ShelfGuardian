@@ -1,12 +1,13 @@
 import 'package:go_router/go_router.dart';
-import 'package:shelf_guardian/pages/home_page.dart';
+import 'package:shelf_guardian/pages/filter_page.dart';
+import 'package:shelf_guardian/pages/products_page.dart';
 import 'package:shelf_guardian/pages/scanner_page.dart';
 import 'package:shelf_guardian/pages/setting_page.dart';
 
 final routes = GoRouter(routes: [
   GoRoute(
     path: "/",
-    builder: (context, state) => const HomePage(),
+    builder: (context, state) => const ProductsPage(),
   ),
   GoRoute(
     path: "/scanner",
@@ -21,7 +22,7 @@ final routes = GoRouter(routes: [
     builder: (context, state) => const SettingPage(),
   ),
   GoRoute(
-    path: "/search",
-    builder: (context, state) => const HomePage(),
+    path: "/filter",
+    builder: (context, state) => const FilterPage(),
   ),
 ]);
