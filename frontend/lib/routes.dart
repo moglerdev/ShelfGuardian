@@ -21,6 +21,11 @@ final routes = GoRouter(routes: [
         return EditorPage(code: id);
       }),
   GoRoute(
+      path: "/editor",
+      builder: (context, state) {
+        return const EditorPage(code: "");
+      }),
+  GoRoute(
     path: "/settings",
     builder: (context, state) => const SettingPage(),
   ),
