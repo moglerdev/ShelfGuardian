@@ -4,16 +4,16 @@ import 'package:moment_dart/moment_dart.dart';
 import 'package:shelf_guardian/common/theme.dart';
 import 'package:shelf_guardian/models/product_model.dart';
 
-class ProductView extends StatelessWidget {
+class ProductItem extends StatelessWidget {
   final Product product;
-  final void Function(bool?) onSelected;
+  final void Function(bool) onSelectChanged;
   final void Function() onTap;
   final bool isSelected;
 
-  const ProductView(
+  const ProductItem(
       {super.key,
       required this.product,
-      required this.onSelected,
+      required this.onSelectChanged,
       required this.isSelected,
       required this.onTap});
 
@@ -25,7 +25,7 @@ class ProductView extends StatelessWidget {
 
     return GestureDetector(
       onLongPress: () {
-        onSelected(!isSelected);
+        onSelectChanged(!isSelected);
       },
       onTap: () {
         onTap();
@@ -63,52 +63,12 @@ class ProductView extends StatelessWidget {
                 ),
               ],
             )),
-            Checkbox(value: isSelected, onChanged: onSelected)
+            Checkbox(
+                value: isSelected,
+                onChanged: (selected) {
+                  onSelectChanged(!isSelected);
+                })
           ])),
     );
-  }
-}
-
-class ProductListView extends StatelessWidget {
-  final List<Product> products;
-  final List<Product> selectedProducts;
-  final void Function(Product, bool?) onSelected;
-  final ScrollController scrollController;
-
-  const ProductListView(
-      {super.key,
-      required this.products,
-      required this.onSelected,
-      required this.selectedProducts,
-      required this.scrollController});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        child: ListView.builder(
-            controller: scrollController,
-            itemCount: products.length + 1,
-            itemBuilder: (context, index) {
-              if (index == products.length) {
-                return const SizedBox(height: 100);
-              }
-              final product = products[index];
-              final isSelected = selectedProducts.contains(product);
-              return Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: ProductView(
-                      product: product,
-                      isSelected: isSelected,
-                      onTap: () {
-                        if (selectedProducts.isNotEmpty) {
-                          onSelected(product, !isSelected);
-                          return;
-                        }
-                      },
-                      onSelected: (selected) {
-                        onSelected(product, selected);
-                      }));
-            }));
   }
 }
