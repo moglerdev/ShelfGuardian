@@ -82,7 +82,7 @@ class ScannerPage extends StatelessWidget {
                 FloatingActionButtonLocation.centerFloat,
             body: BarcodeScanner(
               onScanned: (barcode) {
-                context.go("/editor/${barcode.displayValue}");
+                context.push("/editor/${barcode.displayValue}");
               },
             )));
   }
