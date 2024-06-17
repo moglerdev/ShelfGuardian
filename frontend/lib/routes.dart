@@ -4,12 +4,11 @@ import 'package:shelf_guardian/filter/filter_page.dart';
 import 'package:shelf_guardian/scanner/views/scanner_page.dart';
 import 'package:shelf_guardian/settings/setting_page.dart';
 import 'package:shelf_guardian/product/views/product_page.dart';
-import 'package:shelf_guardian/views/test.dart';
 
 final routes = GoRouter(routes: [
   GoRoute(
     path: "/",
-    builder: (context, state) => const HomePage(),
+    builder: (context, state) => const ProductPage(),
   ),
   GoRoute(
     path: "/scanner",
