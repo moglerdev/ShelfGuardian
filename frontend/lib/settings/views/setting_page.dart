@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -25,6 +27,13 @@ class _SettingPageState extends State<SettingPage> {
         ),
         body: Column(
           children: [
+            TextButton(
+                onPressed: () async {
+                  final route = GoRouter.of(context);
+                  await context.read<AuthControllerCubit>().logout();
+                  route.go("/");
+                },
+                child: const Text("Sign Out")),
             TextButton(
                 onPressed: () {
                   context.go("/");

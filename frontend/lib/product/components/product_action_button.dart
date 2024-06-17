@@ -17,7 +17,7 @@ class ProductActionButton extends StatelessWidget {
         SGIconButton(
             icon: FontAwesomeIcons.gear,
             onPressed: () {
-              context.push("/setting");
+              context.push("/settings");
             }),
         const SizedBox(width: 10),
         SGIconButton(

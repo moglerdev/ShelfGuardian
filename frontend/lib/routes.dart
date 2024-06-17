@@ -5,7 +5,7 @@ import 'package:shelf_guardian/auth/views/sign_in_page.dart';
 import 'package:shelf_guardian/editor/views/editor_page.dart';
 import 'package:shelf_guardian/filter/filter_page.dart';
 import 'package:shelf_guardian/scanner/views/scanner_page.dart';
-import 'package:shelf_guardian/settings/setting_page.dart';
+import 'package:shelf_guardian/settings/views/setting_page.dart';
 import 'package:shelf_guardian/product/views/product_page.dart';
 
 final routes = GoRouter(
