@@ -1,4 +1,4 @@
-import 'package:shelf_guardian/models/product_model.dart';
+import 'package:shelf_guardian/product/models/product_model.dart';
 
 abstract class ProductListState {
   List<Product> getProducts();

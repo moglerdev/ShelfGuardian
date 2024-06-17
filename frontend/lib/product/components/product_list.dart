@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_guardian/product/components/product_item.dart';
-import 'package:shelf_guardian/models/product_model.dart';
+import 'package:shelf_guardian/product/models/product_model.dart';
 
 class ProductList extends StatelessWidget {
   final List<Product> products;
