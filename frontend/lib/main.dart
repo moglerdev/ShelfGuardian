@@ -13,7 +13,7 @@ Future<void> main() async {
   await Supabase.initialize(
     url: 'https://kong.mogler.dev/',
     anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzE4NTc1MjAwLAogICJleHAiOiAxODc2MzQxNjAwCn0.eTDeiCu4cGlRez4RXd9UUZZu-6OQ22i88EEAnI7PsCA',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAiaHR0cHM6Ly9rb25nLm1vZ2xlci5kZXYiLAogICJpYXQiOiAxNzE4NTc1MjAwLAogICJleHAiOiAxODc2MzQxNjAwCn0.gpqnw1nl7iXFrpVOf4rh6XgmFkgvk-85zEkwWaFg5M0',
   );
   runApp(const ShelfGuardianApp());
 }
