@@ -10,7 +10,11 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductControllerCubit(),
+      create: (context) {
+        var ctrl = ProductControllerCubit();
+        ctrl.initProducts();
+        return ctrl;
+      },
       child: Scaffold(
           appBar: AppBar(
             title: const Text('Shelf Guardian'),

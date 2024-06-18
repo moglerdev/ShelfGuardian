@@ -4,6 +4,11 @@ abstract class ProductListState {
   List<Product> getProducts();
 }
 
+class ProductListEmpty extends ProductListState {
+  @override
+  List<Product> getProducts() => [];
+}
+
 class ProductListLoading extends ProductListState {
   @override
   List<Product> getProducts() => [];

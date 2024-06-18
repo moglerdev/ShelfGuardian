@@ -1,9 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
+import 'package:shelf_guardian/supabase.dart';
 
 abstract class ProductController {
-  void initProducts(List<Product> products);
+  Future<bool> initProducts();
 
   bool addProduct(Product product);
 
@@ -22,11 +23,32 @@ abstract class ProductController {
 
 class ProductControllerCubit extends Cubit<ProductListState>
     implements ProductController {
-  ProductControllerCubit() : super(ProductListFilled(Product.products));
+  ProductControllerCubit() : super(ProductListEmpty());
 
   @override
-  void initProducts(List<Product> products) {
-    emit(ProductListFilled(products));
+  Future<bool> initProducts() async {
+    emit(ProductListLoading());
+    var result = await SupabaseClientInstance.supabaseClient
+        .from("products_items")
+        .select(
+            "id, price_in_cents, expired_at, products_meta(barcode, name, description)");
+    if (result.isEmpty) {
+      emit(ProductListEmpty());
+      return false;
+    } else {
+      List<Product> products = result.map((e) {
+        var meta = DbProductMeta.fromJson(e);
+        var item = DbProductItem.fromJson(e);
+        return Product(
+            name: meta.name,
+            description: meta.description,
+            priceInCents: item.priceInCents.toInt(),
+            image: "https://via.placeholder.com/150",
+            expiredAt: item.expiredAt);
+      }).toList();
+      emit(ProductListFilled(products));
+      return true;
+    }
   }
 
   @override

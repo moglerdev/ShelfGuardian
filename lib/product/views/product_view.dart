@@ -32,6 +32,10 @@ class ProductPageView extends StatelessWidget {
               }
             },
             selectedProducts: selectedProducts);
+      } else if (state is ProductListEmpty) {
+        return const Center(
+          child: Text('No products found'),
+        );
       }
 
       return const Center(
