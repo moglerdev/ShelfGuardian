@@ -20,7 +20,7 @@ final routes = GoRouter(
       ),
       GoRoute(
         path: "/scanner",
-        builder: (context, state) => ScannerPage(),
+        builder: (context, state) => const ScannerPage(),
       ),
       GoRoute(
           path: "/editor/:id",
