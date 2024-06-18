@@ -15,16 +15,17 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _signIn() async {
+    final router = GoRouter.of(context);
     final sm = ScaffoldMessenger.of(context);
     final controller = context.read<AuthControllerCubit>();
-    final isSuccess =
-        await controller.login(_emailController.text, _passwordController.text);
+    final isSuccess = await controller.signIn(
+        _emailController.text, _passwordController.text);
 
     if (isSuccess) {
       sm.showSnackBar(
         const SnackBar(content: Text('Signed in successfully!')),
       );
-      context.pushReplacement('/');
+      router.pushReplacement('/');
     } else {
       sm.showSnackBar(
         const SnackBar(content: Text("Something went wrong!")),
@@ -69,6 +70,19 @@ class _SignInPageState extends State<SignInPage> {
             ElevatedButton(
               onPressed: _signIn,
               child: const Text('Sign In'),
+            ),
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () {
+                context.push('/auth/sign-up');
+              },
+              child: const Text('Create Account'),
+            ),
+            TextButton(
+              onPressed: () {
+                context.push('/auth/forgot-password');
+              },
+              child: const Text('Forgot Password'),
             ),
           ],
         ),

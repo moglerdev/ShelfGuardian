@@ -10,5 +10,9 @@ class SupabaseClientInstance {
   static final SupabaseClient supabaseClient = SupabaseClient(
     SupabaseCredentials.supabaseUrl,
     SupabaseCredentials.supabaseAnonKey,
+    authOptions: const AuthClientOptions(
+      autoRefreshToken: true,
+    ),
+    storageOptions: const StorageClientOptions(),
   );
 }

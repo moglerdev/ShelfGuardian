@@ -11,7 +11,15 @@ import 'package:shelf_guardian/product/views/product_page.dart';
 final routes = GoRouter(
     routes: [
       GoRoute(
-        path: "/sign-in",
+        path: "/auth/sign-in",
+        builder: (context, state) => const SignInPage(),
+      ),
+      GoRoute(
+        path: "/auth/sign-up",
+        builder: (context, state) => const SignInPage(),
+      ),
+      GoRoute(
+        path: "/auth/forgot-password",
         builder: (context, state) => const SignInPage(),
       ),
       GoRoute(
@@ -44,11 +52,14 @@ final routes = GoRouter(
     ],
     redirect: (BuildContext context, GoRouterState state) {
       debugPrint(state.fullPath);
-      if (!AuthenticationState.of(context).isAuthenticated) {
-        return "/sign-in";
-      }
-      if (state.fullPath == "/sign-in") {
+      final isAuthRoute = state.fullPath!.startsWith("/auth");
+      final isAuthenticated = AuthenticationState.of(context).isAuthenticated;
+
+      if (isAuthenticated && isAuthRoute) {
         return "/";
+      } else if (!isAuthenticated && !isAuthRoute) {
+        return "/auth/sign-in";
       }
+
       return null;
     });

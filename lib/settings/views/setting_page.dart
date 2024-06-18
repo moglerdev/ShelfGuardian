@@ -30,7 +30,7 @@ class _SettingPageState extends State<SettingPage> {
             TextButton(
                 onPressed: () async {
                   final route = GoRouter.of(context);
-                  await context.read<AuthControllerCubit>().logout();
+                  await context.read<AuthControllerCubit>().signOut();
                   route.go("/");
                 },
                 child: const Text("Sign Out")),
