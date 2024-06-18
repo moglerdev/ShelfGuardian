@@ -11,11 +11,10 @@ class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
 
   @override
-  State createState() => _BarcodeScannerState();
+  State createState() => _ScannerPageState();
 }
 
-class _BarcodeScannerState extends State<ScannerPage>
-    with WidgetsBindingObserver {
+class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
   final MobileScannerController _controller = MobileScannerController();
   late final StreamSubscription<Object?>? _subscription;
   bool _isPaused = false;
