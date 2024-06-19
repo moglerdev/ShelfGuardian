@@ -27,7 +27,10 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
       _isPaused = true;
       final barcode = barcodes.barcodes.firstOrNull;
       if (barcode != null) {
-        context.pushReplacement('/editor/${barcode.displayValue}');
+        // TODO: On navigate back to scanner page, reactivate camera;
+        // TODO: disable camera when navigating to editor page;
+        context.push(
+            '/editor/${barcode.displayValue}'); // Future gets resolved when back button is pressed
       }
     }
   }
@@ -71,7 +74,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
             floatingActionButton: ScannerActionButton(
               controller: _controller,
               onEdit: () {
-                context.pushReplacement('/editor');
+                context.push('/editor');
               },
             ),
             floatingActionButtonLocation:
@@ -85,25 +88,27 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
   }
 
   @override
-  Future<void> dispose() async {
-    // Stop listening to lifecycle changes.
-    WidgetsBinding.instance.removeObserver(this);
-    // Stop listening to the barcode events.
-    await _subscription?.cancel();
-    // Dispose the widget itself.
-    super.dispose();
-    // Finally, dispose of the controller.
-    await _controller.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
+    // Start listening to lifecycle changes.
+    WidgetsBinding.instance.addObserver(this);
 
     // Start listening to the barcode events.
     _subscription = _controller.barcodes.listen(_handleBarcode);
 
     // Finally, start the scanner itself.
     unawaited(_controller.start());
+  }
+
+  @override
+  Future<void> dispose() async {
+    super.dispose();
+    // Stop listening to lifecycle changes.
+    WidgetsBinding.instance.removeObserver(this);
+    // Stop listening to the barcode events.
+    await _subscription?.cancel();
+    // Dispose the widget itself.
+    // Finally, dispose of the controller.
+    await _controller.dispose();
   }
 }
