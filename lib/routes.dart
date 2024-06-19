@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_state.dart';
+import 'package:shelf_guardian/auth/views/forgot_password_page.dart';
 import 'package:shelf_guardian/auth/views/sign_in_page.dart';
+import 'package:shelf_guardian/auth/views/sign_up_page.dart';
 import 'package:shelf_guardian/editor/views/editor_page.dart';
 import 'package:shelf_guardian/filter/filter_page.dart';
 import 'package:shelf_guardian/scanner/views/scanner_page.dart';
@@ -16,11 +18,11 @@ final routes = GoRouter(
       ),
       GoRoute(
         path: "/auth/sign-up",
-        builder: (context, state) => const SignInPage(),
+        builder: (context, state) => const SignUpPage(),
       ),
       GoRoute(
         path: "/auth/forgot-password",
-        builder: (context, state) => const SignInPage(),
+        builder: (context, state) => const ForgotPasswordPage(),
       ),
       GoRoute(
         path: "/",

@@ -14,6 +14,11 @@ Future<void> main() async {
     url: SupabaseCredentials.supabaseUrl,
     anonKey: SupabaseCredentials.supabaseAnonKey,
   );
+
+  if (await loadSession()) {
+    debugPrint("Session restored");
+  }
+
   runApp(const ShelfGuardianApp());
 }
 

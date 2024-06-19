@@ -28,10 +28,8 @@ class ProductControllerCubit extends Cubit<ProductListState>
   @override
   Future<bool> initProducts() async {
     emit(ProductListLoading());
-    var result = await SupabaseClientInstance.supabaseClient
-        .from("products_items")
-        .select(
-            "id, price_in_cents, expired_at, products_meta(barcode, name, description)");
+    var result = await SBClient.supabaseClient.from("products_items").select(
+        "id, price_in_cents, expired_at, products_meta(barcode, name, description)");
     if (result.isEmpty) {
       emit(ProductListEmpty());
       return false;

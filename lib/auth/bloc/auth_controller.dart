@@ -12,46 +12,52 @@ abstract class AuthController {
 
 class AuthControllerCubit extends Cubit<AuthenticationState>
     implements AuthController {
-  AuthControllerCubit() : super(const Unauthenticated());
+  AuthControllerCubit() : super(const Unauthenticated()) {
+    final client = SBClient.supabaseClient;
+    if (client.auth.currentUser != null) {
+      emit(Authenticated(client.auth.currentUser!));
+    }
+  }
 
   @override
   Future<bool> signIn(String email, String password) async {
-    final client = SupabaseClientInstance.supabaseClient;
+    final client = SBClient.supabaseClient;
     final response = await client.auth.signInWithPassword(
       email: email,
       password: password,
     );
 
-    if (response.user == null) {
+    if (response.user == null || response.session == null) {
       return false;
     }
-
+    await saveSession();
     emit(Authenticated(response.user!));
     return true;
   }
 
   @override
   Future<bool> resetPassword(String email) async {
-    final client = SupabaseClientInstance.supabaseClient;
+    final client = SBClient.supabaseClient;
     client.auth.resetPasswordForEmail(email);
     return true;
   }
 
   @override
   Future<bool> signUp(String email, String password) async {
-    final client = SupabaseClientInstance.supabaseClient;
+    final client = SBClient.supabaseClient;
     final response = await client.auth.signUp(email: email, password: password);
 
     if (response.user == null) {
       return false;
     }
-
+    await saveSession();
     emit(Authenticated(response.user!));
     return true;
   }
 
   @override
   Future<bool> signOut() async {
+    clearSession();
     emit(const Unauthenticated());
     return true;
   }
