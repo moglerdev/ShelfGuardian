@@ -28,21 +28,25 @@ class ProductControllerCubit extends Cubit<ProductListState>
   @override
   Future<bool> initProducts() async {
     emit(ProductListLoading());
-    var result = await SBClient.supabaseClient.from("products_items").select(
-        "id, price_in_cents, expired_at, products_meta(barcode, name, description)");
+    var result = await SBClient.supabaseClient
+        .from("products_items")
+        .select(
+            "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
+        .order("expired_at", ascending: true);
     if (result.isEmpty) {
       emit(ProductListEmpty());
       return false;
     } else {
       List<Product> products = result.map((e) {
-        var meta = DbProductMeta.fromJson(e);
+        var meta =
+            DbProductMeta.fromJson(e["products_meta"] as Map<String, dynamic>);
         var item = DbProductItem.fromJson(e);
         return Product(
-            name: meta.name,
-            description: meta.description,
-            priceInCents: item.priceInCents.toInt(),
+            name: meta.name ?? "Unknown",
+            description: meta.description ?? "Unknown",
+            priceInCents: item.priceInCents ?? 0,
             image: "https://via.placeholder.com/150",
-            expiredAt: item.expiredAt);
+            expiredAt: item.expiredAt ?? DateTime.now());
       }).toList();
       emit(ProductListFilled(products));
       return true;
