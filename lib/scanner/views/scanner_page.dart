@@ -86,13 +86,14 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
 
   @override
   Future<void> dispose() async {
+    // Stop listening to lifecycle changes.
+    WidgetsBinding.instance.removeObserver(this);
     // Stop listening to the barcode events.
-    unawaited(_subscription?.cancel());
-    _subscription = null;
+    await _subscription?.cancel();
     // Dispose the widget itself.
     super.dispose();
     // Finally, dispose of the controller.
-    // await widget.controller.dispose();
+    await _controller.dispose();
   }
 
   @override
