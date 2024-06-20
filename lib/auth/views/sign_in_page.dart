@@ -43,7 +43,7 @@ class _SignInPageState extends State<SignInPage> {
         );
       } catch (e) {
         sm.showSnackBar(
-          const SnackBar(content: Text(e)),
+          const SnackBar(content: Text("$e")),
         );
       }
     }
