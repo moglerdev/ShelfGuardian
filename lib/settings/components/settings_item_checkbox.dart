@@ -8,7 +8,6 @@ class SettingsItemCheckbox extends StatelessWidget {
   final String name;
   final String description;
   final void Function(bool) onSelectChanged;
-  final void Function() onTap;
   final bool isSelected;
 
   const SettingsItemCheckbox(
@@ -16,8 +15,7 @@ class SettingsItemCheckbox extends StatelessWidget {
       required this.name,
       required this.description,
       required this.onSelectChanged,
-      required this.isSelected,
-      required this.onTap});
+      required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +26,6 @@ class SettingsItemCheckbox extends StatelessWidget {
     return GestureDetector(
         onLongPress: () {
           onSelectChanged(!isSelected);
-        },
-        onTap: () {
-          onTap();
         },
         child: Container(
           // height: 50,
