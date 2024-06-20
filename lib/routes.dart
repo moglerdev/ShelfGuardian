@@ -7,7 +7,7 @@ import 'package:shelf_guardian/auth/views/sign_up_page.dart';
 import 'package:shelf_guardian/editor/views/editor_page.dart';
 import 'package:shelf_guardian/filter/filter_page.dart';
 import 'package:shelf_guardian/scanner/views/scanner_page.dart';
-import 'package:shelf_guardian/settings/views/setting_page.dart';
+import 'package:shelf_guardian/settings/views/settings_page.dart';
 import 'package:shelf_guardian/product/views/product_page.dart';
 
 final routes = GoRouter(
@@ -45,7 +45,7 @@ final routes = GoRouter(
           }),
       GoRoute(
         path: "/settings",
-        builder: (context, state) => const SettingPage(),
+        builder: (context, state) => const SettingsPage(),
       ),
       GoRoute(
         path: "/filter",
