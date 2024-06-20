@@ -9,46 +9,47 @@ import 'package:shelf_guardian/filter/filter_page.dart';
 import 'package:shelf_guardian/scanner/views/scanner_page.dart';
 import 'package:shelf_guardian/settings/views/settings_page.dart';
 import 'package:shelf_guardian/product/views/product_page.dart';
+import 'package:shelf_guardian/common/routes_service.dart';
 
 final routes = GoRouter(
     routes: [
       GoRoute(
-        path: "/auth/sign-in",
+        path: NavigationServiceRoutes.signInRouteUri,
         builder: (context, state) => const SignInPage(),
       ),
       GoRoute(
-        path: "/auth/sign-up",
+        path: NavigationServiceRoutes.signUpRouteUri,
         builder: (context, state) => const SignUpPage(),
       ),
       GoRoute(
-        path: "/auth/forgot-password",
+        path: NavigationServiceRoutes.forgotPasswordRouteUri,
         builder: (context, state) => const ForgotPasswordPage(),
       ),
       GoRoute(
-        path: "/",
+        path: NavigationServiceRoutes.homeRouteUri,
         builder: (context, state) => const ProductPage(),
       ),
       GoRoute(
-        path: "/scanner",
+        path: NavigationServiceRoutes.scannerRouteUri,
         builder: (context, state) => const ScannerPage(),
       ),
       GoRoute(
-          path: "/editor/:id",
+          path: NavigationServiceRoutes.editorWithIdRouteUri(':id'),
           builder: (context, state) {
             final id = state.pathParameters['id'] ?? '';
             return EditorPage(code: id);
           }),
       GoRoute(
-          path: "/editor",
+          path: NavigationServiceRoutes.editorRouteUri,
           builder: (context, state) {
             return const EditorPage(code: "");
           }),
       GoRoute(
-        path: "/settings",
+        path: NavigationServiceRoutes.settingsRouteUri,
         builder: (context, state) => const SettingsPage(),
       ),
       GoRoute(
-        path: "/filter",
+        path: NavigationServiceRoutes.filterRouteUri,
         builder: (context, state) => const FilterPage(),
       ),
     ],
@@ -58,9 +59,9 @@ final routes = GoRouter(
       final isAuthenticated = AuthenticationState.of(context).isAuthenticated;
 
       if (isAuthenticated && isAuthRoute) {
-        return "/";
+        return NavigationServiceRoutes.homeRouteUri;
       } else if (!isAuthenticated && !isAuthRoute) {
-        return "/auth/sign-in";
+        return NavigationServiceRoutes.signInRouteUri;
       }
 
       return null;

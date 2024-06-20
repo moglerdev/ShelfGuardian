@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/common/routes_service.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -35,15 +36,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if (isSuccess) {
       sm.showSnackBar(
-        const SnackBar(content: Text('Signed in successfully!')),
+        const SnackBar(content: Text('Du wurdest erfolgreich registriert.')),
       );
-      router.pushReplacement('/');
+      router.pushReplacement(NavigationServiceRoutes.signInRouteUri);
     } else {
       sm.showSnackBar(
         const SnackBar(content: Text("Something went wrong!")),
       );
-      // Navigate to your home page or another page
-      // Navigator.pushReplacementNamed(context, '/home');
     }
   }
 
