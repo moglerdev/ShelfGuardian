@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/button.dart';
 import 'package:shelf_guardian/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
+import 'package:shelf_guardian/common/routes_service.dart';
 
 class ProductActionButton extends StatelessWidget {
   const ProductActionButton({super.key});
@@ -17,7 +18,7 @@ class ProductActionButton extends StatelessWidget {
         SGIconButton(
             icon: FontAwesomeIcons.gear,
             onPressed: () {
-              context.push("/settings");
+              context.push(NavigationServiceRoutes.settingsRouteUri);
             }),
         const SizedBox(width: 10),
         SGIconButton(
@@ -56,7 +57,7 @@ class ProductActionButton extends StatelessWidget {
           size: 50,
           icon: FontAwesomeIcons.plus,
           onPressed: () {
-            context.push("/scanner");
+            context.push(NavigationServiceRoutes.scannerRouteUri);
           },
         );
       }

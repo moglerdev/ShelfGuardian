@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shelf_guardian/scanner/bloc/scanner_controller.dart';
 import 'package:shelf_guardian/scanner/components/scanner_action_button.dart';
+import 'package:shelf_guardian/common/routes_service.dart';
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
@@ -30,7 +31,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
         // TODO: On navigate back to scanner page, reactivate camera;
         // TODO: disable camera when navigating to editor page;
         context.push(
-            '/editor/${barcode.displayValue}'); // Future gets resolved when back button is pressed
+            NavigationServiceRoutes.editorWithIdRouteUri(barcode.displayValue ?? '')); // Future gets resolved when back button is pressed
       }
     }
   }
@@ -74,7 +75,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
             floatingActionButton: ScannerActionButton(
               controller: _controller,
               onEdit: () {
-                context.push('/editor');
+                context.push(NavigationServiceRoutes.editorRouteUri);
               },
             ),
             floatingActionButtonLocation:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/common/routes_service.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -25,13 +26,11 @@ class _SignInPageState extends State<SignInPage> {
       sm.showSnackBar(
         const SnackBar(content: Text('Signed in successfully!')),
       );
-      router.pushReplacement('/');
+      router.pushReplacement(NavigationServiceRoutes.homeRouteUri);
     } else {
       sm.showSnackBar(
         const SnackBar(content: Text("Something went wrong!")),
       );
-      // Navigate to your home page or another page
-      // Navigator.pushReplacementNamed(context, '/home');
     }
   }
 
@@ -74,13 +73,13 @@ class _SignInPageState extends State<SignInPage> {
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                context.push('/auth/sign-up');
+                context.push(NavigationServiceRoutes.signUpRouteUri);
               },
               child: const Text('Create Account'),
             ),
             TextButton(
               onPressed: () {
-                context.push('/auth/forgot-password');
+                context.push(NavigationServiceRoutes.forgotPasswordRouteUri);
               },
               child: const Text('Forgot Password'),
             ),
