@@ -59,7 +59,7 @@ class SettingsItemCheckbox extends StatelessWidget {
                 child: Checkbox(
                     value: isSelected,
                     onChanged: (selected) {
-                      onSelectChanged(!isSelected);
+                      onSelectChanged(selected ?? false);
                     }))
           ]),
         ));

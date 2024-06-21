@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:moment_dart/moment_dart.dart';
 import 'package:shelf_guardian/common/theme.dart';
-import 'package:shelf_guardian/product/models/product_model.dart';
 
 class SettingsItemDescriptional extends StatelessWidget {
   final String name;
