@@ -30,6 +30,7 @@ class FilterControllerCubit extends Cubit<ProductListState>
     return true;
   }
 
+  @override
   void toggleSorting() {
     //TODO: implement toggleSorting
   }

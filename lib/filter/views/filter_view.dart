@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shelf_guardian/components/input_field.dart';
 import 'package:shelf_guardian/filter/components/filter_dropdown.dart';
 import 'package:shelf_guardian/filter/components/filter_range.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';

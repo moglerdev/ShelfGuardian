@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/button.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
-import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/filter/bloc/filter_controller.dart';
 
 class FilterActionButton extends StatelessWidget {
