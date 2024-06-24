@@ -24,8 +24,7 @@ class ProductActionButton extends StatelessWidget {
         SGIconButton(
           icon: FontAwesomeIcons.filter,
           onPressed: () {
-            // TODO Implement filter page
-            print("TODO: Implement filter page");
+            context.push(NavigationServiceRoutes.filterRouteUri);
           },
         ),
         const SizedBox(width: 10),

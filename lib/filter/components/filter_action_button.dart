@@ -5,18 +5,19 @@ import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/button.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
-import 'package:shelf_guardian/settings/bloc/settings_controller.dart';
+import 'package:shelf_guardian/filter/bloc/filter_controller.dart';
 
-class SettingsActionButton extends StatelessWidget {
-  const SettingsActionButton({super.key});
+class FilterActionButton extends StatelessWidget {
+  const FilterActionButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsControllerCubit, ProductListState>(
+    return BlocBuilder<FilterControllerCubit, ProductListState>(
         builder: (context, state) {
-      Widget rightBtn = SGIconButton(
-        icon: FontAwesomeIcons.ban,
+      Widget deleteFilterBtn = SGIconButton(
+        icon: FontAwesomeIcons.filterCircleXmark,
         onPressed: () {
+          context.read<FilterControllerCubit>().deleteFilter();
           context.pop();
         },
       );
@@ -24,18 +25,25 @@ class SettingsActionButton extends StatelessWidget {
         size: 50,
         icon: FontAwesomeIcons.floppyDisk,
         onPressed: () {
-          context.push(NavigationServiceRoutes.homeRouteUri);
+          context.read<FilterControllerCubit>().saveFilter();
+          context.pop();
+        },
+      );
+      Widget cancelBtn = SGIconButton(
+        icon: FontAwesomeIcons.ban,
+        onPressed: () {
+          context.pop();
         },
       );
       return Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Spacer(flex: 1),
-          const SizedBox(width: 50),
+          deleteFilterBtn,
           const Spacer(flex: 1),
           mainBtn,
           const Spacer(flex: 1),
-          rightBtn,
+          cancelBtn,
           const Spacer(flex: 1),
         ],
       );
