@@ -32,6 +32,7 @@ class ProductControllerCubit extends Cubit<ProductListState>
 
   @override
   Future<bool> initProducts() async {
+    // TODO: read filter options from local storage (Service Filter)
     emit(ProductListLoading());
     var result = await SBClient.supabaseClient
         .from("products_items")
