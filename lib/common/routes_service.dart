@@ -9,7 +9,5 @@ class NavigationServiceRoutes {
   static const String filterRouteUri = '/filter';
 
   static const String editorRouteUri = '/editor';
-  static String editorWithIdRouteUri(String id) {
-    return '$_authRouteUri/editor/$id';
-  }
+  static const String editorWithIdRouteUri = '$editorRouteUri/:id';
 }

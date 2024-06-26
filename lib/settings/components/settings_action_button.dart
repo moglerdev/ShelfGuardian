@@ -12,23 +12,23 @@ class SettingsActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsControllerCubit, ProductListState>(
+    return BlocBuilder<SettingsControllerCubit, SettingsState>(
         builder: (context, state) {
       Widget rightBtn = SGIconButton(
         icon: FontAwesomeIcons.ban,
         onPressed: () {
-          context.push(NavigationServiceRoutes.homeRouteUri);
+          context.go(NavigationServiceRoutes.homeRouteUri);
         },
       );
       Widget mainBtn = SGIconButton(
         size: 50,
         icon: FontAwesomeIcons.floppyDisk,
         onPressed: () {
-          context.push(NavigationServiceRoutes.homeRouteUri);
+          context.go(NavigationServiceRoutes.homeRouteUri);
         },
       );
       return Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Spacer(flex: 1),
           const SizedBox(width: 50),

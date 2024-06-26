@@ -34,7 +34,7 @@ final routes = GoRouter(
         builder: (context, state) => const ScannerPage(),
       ),
       GoRoute(
-          path: NavigationServiceRoutes.editorWithIdRouteUri(':id'),
+          path: NavigationServiceRoutes.editorWithIdRouteUri,
           builder: (context, state) {
             final id = state.pathParameters['id'] ?? '';
             return EditorPage(code: id);
