@@ -25,21 +25,29 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
       if (barcode != null) {
         // TODO: On navigate back to scanner page, reactivate camera;
         // TODO: disable camera when navigating to editor page;
-        await context.push(NavigationServiceRoutes.editorRouteUri.replaceAll(
-            ":id",
-            "$barcode")); // Future gets resolved when back button is pressed
+        await context.push(NavigationServiceRoutes.createWithBarcodeRouteUri
+            .replaceAll(":barcode",
+                "$barcode")); // Future gets resolved when back button is pressed
       }
     }
   }
 
   Future<void> _tryStart() async {
-    _subscription = _controller.barcodes.listen(_handleBarcode);
-    return await _controller.start();
+    try {
+      _subscription = _controller.barcodes.listen(_handleBarcode);
+      return await _controller.start();
+    } catch (e) {
+      debugPrint('Error: $e');
+    }
   }
 
   Future<void> _tryStop() async {
-    await _subscription?.cancel();
-    await _controller.stop();
+    try {
+      await _subscription?.cancel();
+      await _controller.stop();
+    } catch (e) {
+      debugPrint('Error: $e');
+    }
   }
 
   @override
@@ -81,13 +89,16 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
             floatingActionButton: ScannerActionButton(
               controller: _controller,
               onEdit: () {
-                context.push(NavigationServiceRoutes.editorRouteUri);
+                context.push(NavigationServiceRoutes.createRouteUri);
               },
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             body: MobileScanner(
               controller: _controller,
+              errorBuilder: (context, error, child) {
+                return Text('Error: $error');
+              },
             )));
   }
 
@@ -108,5 +119,12 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     // Stop listening to the barcode events.
     await _tryStop();
+    _controller.dispose();
+  }
+
+  @override
+  void reassemble() {
+    unawaited(_tryStop());
+    super.reassemble();
   }
 }
