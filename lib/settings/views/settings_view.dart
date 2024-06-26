@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/components/input_field.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
 import 'package:shelf_guardian/settings/components/settings_item_checkbox.dart';
@@ -19,8 +22,8 @@ class SettingsPageView extends StatelessWidget {
             value: "Tobi",
             icon: FontAwesomeIcons.arrowRightFromBracket,
             onIconTap: () {
-              context.read<SettingsControllerCubit>().logout();
-              //router.pushReplacement(NavigationServiceRoutes.signInRouteUri);
+              context.read<AuthControllerCubit>().signOut();
+              context.go(NavigationServiceRoutes.signInRouteUri);
             },
             enabled: false),
         const SettingsItemDescriptional(
