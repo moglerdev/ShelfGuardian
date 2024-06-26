@@ -1,32 +1,30 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class SettingsController {
   void toggleNotifications();
+
   void saveSettings();
 }
 
 class SettingsState {
   final bool notifications;
+
   const SettingsState({required this.notifications});
 }
 
 class SettingsControllerCubit extends Cubit<SettingsState>
     implements SettingsController {
-  static const storage = FlutterSecureStorage();
-
-  SettingsControllerCubit() : super(const SettingsState(notifications: false)){
+  SettingsControllerCubit() : super(const SettingsState(notifications: false)) {
     unawaited(init());
   }
 
-  Future<SettingsControllerCubit> init() async {
-    final cubit = SettingsControllerCubit();
-    final notificationsStr = await storage.read(key: 'notifications');
-    final notifications = notificationsStr == 'true';
+  Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final notifications = prefs.getBool('notifications') ?? false;
     emit(SettingsState(notifications: notifications));
-    return cubit;
   }
 
   @override
@@ -36,8 +34,7 @@ class SettingsControllerCubit extends Cubit<SettingsState>
 
   @override
   void saveSettings() async {
-    await storage.write(
-        key: 'notifications',
-        value: state.notifications.toString());
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('notifications', state.notifications);
   }
 }
