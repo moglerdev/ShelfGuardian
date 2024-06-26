@@ -6,7 +6,6 @@ import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/components/input_field.dart';
 import 'package:shelf_guardian/product/bloc/product_controller.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
 import 'package:shelf_guardian/settings/components/settings_item_checkbox.dart';
 import 'package:shelf_guardian/settings/components/settings_item_descriptional.dart';
 import 'package:shelf_guardian/settings/bloc/settings_controller.dart';
