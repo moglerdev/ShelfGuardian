@@ -18,22 +18,28 @@ class ScannerPage extends StatefulWidget {
 class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
   final MobileScannerController _controller = MobileScannerController();
   late final StreamSubscription<Object?>? _subscription;
-  bool _isPaused = false;
 
-  void _handleBarcode(BarcodeCapture barcodes) {
-    if (_isPaused) {
-      return;
-    }
+  void _handleBarcode(BarcodeCapture barcodes) async {
     if (mounted) {
-      _isPaused = true;
       final barcode = barcodes.barcodes.firstOrNull;
       if (barcode != null) {
         // TODO: On navigate back to scanner page, reactivate camera;
         // TODO: disable camera when navigating to editor page;
-        context.push(
-            NavigationServiceRoutes.editorWithIdRouteUri(barcode.displayValue ?? '')); // Future gets resolved when back button is pressed
+        await context.push(NavigationServiceRoutes.editorRouteUri.replaceAll(
+            ":id",
+            "$barcode")); // Future gets resolved when back button is pressed
       }
     }
+  }
+
+  Future<void> _tryStart() async {
+    _subscription = _controller.barcodes.listen(_handleBarcode);
+    return await _controller.start();
+  }
+
+  Future<void> _tryStop() async {
+    await _subscription?.cancel();
+    await _controller.stop();
   }
 
   @override
@@ -52,15 +58,15 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         // Restart the scanner when the app is resumed.
         // Don't forget to resume listening to the barcode events.
-        _subscription = _controller.barcodes.listen(_handleBarcode);
-
-        unawaited(_controller.start());
+        try {
+          unawaited(_tryStart());
+        } catch (e) {
+          debugPrint('Error: $e');
+        }
       case AppLifecycleState.inactive:
         // Stop the scanner when the app is paused.
         // Also stop the barcode events subscription.
-        unawaited(_subscription?.cancel());
-        _subscription = null;
-        unawaited(_controller.stop());
+        unawaited(_tryStop());
     }
   }
 
@@ -82,9 +88,6 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
                 FloatingActionButtonLocation.centerFloat,
             body: MobileScanner(
               controller: _controller,
-              errorBuilder: (context, error, child) {
-                return Text('Error: $error');
-              },
             )));
   }
 
@@ -94,11 +97,8 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     // Start listening to lifecycle changes.
     WidgetsBinding.instance.addObserver(this);
 
-    // Start listening to the barcode events.
-    _subscription = _controller.barcodes.listen(_handleBarcode);
-
     // Finally, start the scanner itself.
-    unawaited(_controller.start());
+    unawaited(_tryStart());
   }
 
   @override
@@ -107,9 +107,6 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     // Stop listening to lifecycle changes.
     WidgetsBinding.instance.removeObserver(this);
     // Stop listening to the barcode events.
-    await _subscription?.cancel();
-    // Dispose the widget itself.
-    // Finally, dispose of the controller.
-    await _controller.dispose();
+    await _tryStop();
   }
 }
