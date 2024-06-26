@@ -5,7 +5,7 @@ import 'package:shelf_guardian/auth/views/forgot_password_page.dart';
 import 'package:shelf_guardian/auth/views/sign_in_page.dart';
 import 'package:shelf_guardian/auth/views/sign_up_page.dart';
 import 'package:shelf_guardian/editor/views/editor_page.dart';
-import 'package:shelf_guardian/filter/filter_page.dart';
+import 'package:shelf_guardian/filter/views/filter_page.dart';
 import 'package:shelf_guardian/scanner/views/scanner_page.dart';
 import 'package:shelf_guardian/settings/views/settings_page.dart';
 import 'package:shelf_guardian/product/views/product_page.dart';
