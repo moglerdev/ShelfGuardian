@@ -1,4 +1,4 @@
-package com.example.shelf_guardian
+package dev.mogler.sg
 
 import io.flutter.embedding.android.FlutterActivity
 

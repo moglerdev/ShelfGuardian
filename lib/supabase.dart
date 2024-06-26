@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 const storage = FlutterSecureStorage();
+final gotrueStorageKey = SharedPreferencesGotrueAsyncStorage();
 
 class SupabaseCredentials {
   static const String supabaseUrl = 'https://kong.mogler.dev/';
@@ -15,8 +16,10 @@ class SBClient {
   static final SupabaseClient supabaseClient = SupabaseClient(
     SupabaseCredentials.supabaseUrl,
     SupabaseCredentials.supabaseAnonKey,
-    authOptions: const AuthClientOptions(
+    authOptions: AuthClientOptions(
       autoRefreshToken: true,
+      pkceAsyncStorage: gotrueStorageKey,
+      authFlowType: AuthFlowType.pkce,
     ),
     storageOptions: const StorageClientOptions(),
   );
