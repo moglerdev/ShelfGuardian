@@ -8,6 +8,7 @@ abstract class AuthController {
   Future<bool> resetPassword(String email);
 
   Future<bool> signOut();
+  String getUserEmail();
 }
 
 class AuthControllerCubit extends Cubit<AuthenticationState>
@@ -62,4 +63,7 @@ class AuthControllerCubit extends Cubit<AuthenticationState>
     emit(const Unauthenticated());
     return true;
   }
+
+  @override
+  String getUserEmail() => SBClient.supabaseClient.auth.currentUser?.email ?? "";
 }
