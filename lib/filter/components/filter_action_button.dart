@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/button.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
+import 'package:shelf_guardian/filter/services/filter_dao.dart';
 import 'package:shelf_guardian/filter/bloc/filter_controller.dart';
 
 class FilterActionButton extends StatelessWidget {
@@ -11,7 +11,7 @@ class FilterActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilterControllerCubit, ProductListState>(
+    return BlocBuilder<FilterControllerCubit, FilterDAO>(
         builder: (context, state) {
       Widget deleteFilterBtn = SGIconButton(
         icon: FontAwesomeIcons.filterCircleXmark,

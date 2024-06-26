@@ -4,17 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shelf_guardian/common/theme.dart';
 import 'package:shelf_guardian/components/button.dart';
 import 'package:shelf_guardian/filter/bloc/filter_controller.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
-
-enum FilterOptions {
-  bestBeforeDate('Mindesthaltbarkeitsdatum'),
-  name('Name'),
-  created('Erstellt am');
-
-  const FilterOptions(this.label);
-
-  final String label;
-}
+import 'package:shelf_guardian/filter/services/filter_dao.dart';
+import 'package:shelf_guardian/filter/services/filter_options.dart';
 
 class FilterDropdown extends StatelessWidget {
   const FilterDropdown({super.key});
@@ -22,7 +13,7 @@ class FilterDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController();
-    return BlocBuilder<FilterControllerCubit, ProductListState>(
+    return BlocBuilder<FilterControllerCubit, FilterDAO>(
         builder: (context, state) {
       return Container(
         // height: 50,
@@ -51,11 +42,18 @@ class FilterDropdown extends StatelessWidget {
                         color: ShelfGuardianColors.button,
                       ),
                       child: DropdownMenu<FilterOptions>(
+                        onSelected: (FilterOptions? value) {
+                          context
+                              .read<FilterControllerCubit>()
+                              .updateFilterOption(
+                                  value ?? FilterOptions.bestBeforeDate);
+                        },
                         textStyle: ShelfGuardianTextStyles.body1,
                         inputDecorationTheme: const InputDecorationTheme(
-                          border: InputBorder.none
-                        ),
-                        initialSelection: FilterOptions.bestBeforeDate,
+                            border: InputBorder.none),
+                        initialSelection: context
+                            .read<FilterControllerCubit>()
+                            .getSelectedFilter(),
                         controller: controller,
                         requestFocusOnTap: true,
                         dropdownMenuEntries: FilterOptions.values
@@ -67,18 +65,14 @@ class FilterDropdown extends StatelessWidget {
                           );
                         }).toList(),
                       ))),
-              GestureDetector(
-                  onTap: () {
-                    //Todo implement reverse order
-                  },
-                  child: SGIconButton(
-                    icon: context.read<FilterControllerCubit>().isDecending()
-                        ? FontAwesomeIcons.sortDown
-                        : FontAwesomeIcons.sortUp,
-                    onPressed: () {
-                      context.read<FilterControllerCubit>().toggleSorting();
-                    },
-                  )),
+              SGIconButton(
+                icon: context.watch<FilterControllerCubit>().isAscending()
+                    ? FontAwesomeIcons.sortUp
+                    : FontAwesomeIcons.sortDown,
+                onPressed: () {
+                  context.read<FilterControllerCubit>().toggleSortOrder();
+                },
+              ),
             ],
           )
         ]),
