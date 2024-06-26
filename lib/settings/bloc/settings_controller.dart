@@ -1,25 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
 
 abstract class SettingsController {
-  bool toggleNotifications(bool b);
-  void logout();
+  void toggleNotifications();
 }
 
-class SettingsControllerCubit extends Cubit<ProductListState>
+class SettingsState {
+  final bool notifications;
+  const SettingsState({required this.notifications});
+}
+
+class SettingsControllerCubit extends Cubit<SettingsState>
     implements SettingsController {
-  SettingsControllerCubit() : super(ProductListEmpty());
+  SettingsControllerCubit() : super(const SettingsState(notifications: false));
 
   @override
-  bool toggleNotifications(bool b) {
-    //TODO: implement Notifications
-    print("TODO: implement Notifications");
-    return b;
-  }
-
-  @override
-  void logout() {
-    //TODO: implement logout
-    print("TODO: implement logout");
+  void toggleNotifications() {
+    emit(SettingsState(notifications: !state.notifications));
   }
 }
