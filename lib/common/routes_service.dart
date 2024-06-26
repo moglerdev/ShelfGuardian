@@ -9,5 +9,6 @@ class NavigationServiceRoutes {
   static const String filterRouteUri = '/filter';
 
   static const String editorRouteUri = '/editor';
-  static const String editorWithIdRouteUri = '$editorRouteUri/:id';
+  static const String editRouterUri = '$editorRouteUri/open/:id';
+  static const String createRouteUri = '$editorRouteUri/create/:barcode';
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moment_dart/moment_dart.dart';
+import 'package:shelf_guardian/editor/bloc/editor_controller.dart';
 import 'package:shelf_guardian/product/components/product_action_button.dart';
-import 'package:shelf_guardian/product/bloc/product_controller.dart';
 
 class InputField extends StatefulWidget {
   final String label;
@@ -100,8 +100,9 @@ class _DatePickerTextFieldState extends State<DatePickerTextField> {
 
 class EditorPage extends StatefulWidget {
   final String code;
+  final int id;
 
-  const EditorPage({super.key, required this.code});
+  const EditorPage({super.key, required this.code, required this.id});
 
   @override
   State createState() => _EditorPageState();
@@ -111,7 +112,7 @@ class _EditorPageState extends State<EditorPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => ProductControllerCubit(),
+        create: (context) => EditorControllerCubit(widget.code, widget.id),
         child: Scaffold(
             appBar: AppBar(
               title: const Text('Editor'),
@@ -119,30 +120,43 @@ class _EditorPageState extends State<EditorPage> {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: const ProductActionButton(),
-            body: Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Barcode',
-                      ),
-                      controller: TextEditingController(text: widget.code),
-                    ),
-                    TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
-                      ),
-                      controller: TextEditingController(text: widget.code),
-                    ),
-                    const DatePickerTextField(),
-                    TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Preis',
-                      ),
-                      controller: TextEditingController(text: widget.code),
-                    ),
-                  ],
-                ))));
+            body: const EditorView()));
+  }
+}
+
+class EditorView extends StatelessWidget {
+  const EditorView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditorControllerCubit, EditorState>(
+      builder: (context, state) {
+        return Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Barcode',
+                  ),
+                  controller: TextEditingController(text: state.barcode),
+                ),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                  ),
+                  controller: TextEditingController(text: state.name),
+                ),
+                const DatePickerTextField(),
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Preis',
+                  ),
+                  controller: TextEditingController(text: "${state.price}"),
+                ),
+              ],
+            ));
+      },
+    );
   }
 }
