@@ -45,6 +45,7 @@ class AuthControllerCubit extends Cubit<AuthenticationState>
   @override
   Future<bool> signUp(String email, String password) async {
     final client = SBClient.supabaseClient;
+
     final response = await client.auth.signUp(email: email, password: password);
 
     if (response.user == null) {

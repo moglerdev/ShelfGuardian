@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -18,20 +19,30 @@ class _SignInPageState extends State<SignInPage> {
     final router = GoRouter.of(context);
     final sm = ScaffoldMessenger.of(context);
     final controller = context.read<AuthControllerCubit>();
-    final isSuccess = await controller.signIn(
-        _emailController.text, _passwordController.text);
+    try {
+      final isSuccess = await controller.signIn(
+          _emailController.text, _passwordController.text);
 
-    if (isSuccess) {
+      if (isSuccess) {
+        sm.showSnackBar(
+          const SnackBar(content: Text('Signed in successfully!')),
+        );
+        router.pushReplacement('/');
+      } else {
+        sm.showSnackBar(
+          const SnackBar(content: Text("Something went wrong!")),
+        );
+        // Navigate to your home page or another page
+        // Navigator.pushReplacementNamed(context, '/home');
+      }
+    } on AuthApiException {
       sm.showSnackBar(
-        const SnackBar(content: Text('Signed in successfully!')),
+        const SnackBar(content: Text("Please check your credentials!")),
       );
-      router.pushReplacement('/');
-    } else {
+    } catch (e) {
       sm.showSnackBar(
         const SnackBar(content: Text("Something went wrong!")),
       );
-      // Navigate to your home page or another page
-      // Navigator.pushReplacementNamed(context, '/home');
     }
   }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
@@ -21,9 +23,12 @@ abstract class ProductController {
   bool deselectProduct(Product product);
 }
 
+//TODO: Outsource Supabase logic in a service class and inject it into the controller
 class ProductControllerCubit extends Cubit<ProductListState>
     implements ProductController {
-  ProductControllerCubit() : super(ProductListEmpty());
+  ProductControllerCubit() : super(ProductListEmpty()) {
+    unawaited(initProducts());
+  }
 
   @override
   Future<bool> initProducts() async {
