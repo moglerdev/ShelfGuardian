@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moment_dart/moment_dart.dart';
 import 'package:shelf_guardian/editor/bloc/editor_controller.dart';
-import 'package:shelf_guardian/product/components/product_action_button.dart';
 
 class InputField extends StatefulWidget {
   final String label;
@@ -115,11 +114,11 @@ class _EditorPageState extends State<EditorPage> {
         create: (context) => EditorControllerCubit(widget.code, widget.id),
         child: Scaffold(
             appBar: AppBar(
-              title: const Text('Editor'),
+              title: Text(widget.id == -1 ? 'Create' : 'Edit'),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: const ProductActionButton(),
+            // floatingActionButton: const ProductActionButton(),
             body: const EditorView()));
   }
 }

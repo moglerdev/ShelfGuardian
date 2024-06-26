@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditorState {
@@ -35,7 +37,11 @@ class EditorState {
 class EditorControllerCubit extends Cubit<EditorState> {
   EditorControllerCubit(String barcode, int id)
       : super(EditorState('', DateTime.now(),
-            barcode: barcode, id: id, price: 0));
+            barcode: barcode, id: id, price: 0)) {
+    unawaited(load());
+  }
+
+  Future<void> load() async {}
 
   void updateBarcode(String barcode) {
     emit(state.copyWith(barcode: barcode));
