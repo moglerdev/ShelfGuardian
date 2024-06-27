@@ -25,36 +25,39 @@ class SettingsPageView extends StatelessWidget {
           child: CircularProgressIndicator(),
         );
       }
-      return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        InputField(
-            name: "User",
-            value: context.watch<AuthControllerCubit>().getUserEmail(),
-            icon: FontAwesomeIcons.arrowRightFromBracket,
-            onIconTap: () {
-              context.read<AuthControllerCubit>().signOut();
-              context.go(NavigationServiceRoutes.signInRouteUri);
-            },
-            enabled: false),
-        SettingsItemDescriptional(
-            name: "Produkte",
-            description: "Hier sehen sie die Anzahl "
-                "der Produkte in ihrem Inventar",
-            value: "$productAmmount"),
-        const SettingsItemDescriptional(
-            name: "Inventar Wert",
-            description:
-                "Hier wird der gesamte Warenwert ihres Inventars angegeben",
-            value: "XXX,XX€"),
-        SettingsItemCheckbox(
-          name: "Benachrichtigung",
-          description: "Wollen sie von uns Benachrichtigungen erhalten?"
-              "\n Bspw. Produkte, die bald MHD erreichen.",
-          onSelectChanged: (selected) {
-            context.read<SettingsControllerCubit>().toggleNotifications();
-          },
-          isSelected: state.notifications,
-        )
-      ]);
+      return ListView(
+          //mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InputField(
+                name: "User",
+                value: context.watch<AuthControllerCubit>().getUserEmail(),
+                icon: FontAwesomeIcons.arrowRightFromBracket,
+                onIconTap: () {
+                  context.read<AuthControllerCubit>().signOut();
+                  context.go(NavigationServiceRoutes.signInRouteUri);
+                },
+                enabled: false),
+            SettingsItemDescriptional(
+                name: "Produkte",
+                description: "Hier sehen sie die Anzahl "
+                    "der Produkte in ihrem Inventar",
+                value: "$productAmmount"),
+            const SettingsItemDescriptional(
+                name: "Inventar Wert",
+                description:
+                    "Hier wird der gesamte Warenwert ihres Inventars angegeben",
+                value: "XXX,XX€"),
+            SettingsItemCheckbox(
+              name: "Benachrichtigung",
+              description: "Wollen sie von uns Benachrichtigungen erhalten?"
+                  "\n Bspw. Produkte, die bald MHD erreichen.",
+              onSelectChanged: (selected) {
+                context.read<SettingsControllerCubit>().toggleNotifications();
+              },
+              isSelected: state.notifications,
+            ),
+            const SizedBox(height: 100),
+          ]);
     });
   }
 }
