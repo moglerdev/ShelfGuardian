@@ -18,10 +18,16 @@ class ScannerPage extends StatefulWidget {
 class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
   final MobileScannerController _controller = MobileScannerController();
   late final StreamSubscription<Object?>? _subscription;
+  bool pause = false;
 
   void _handleBarcode(BarcodeCapture barcodes) async {
-    if (mounted) {
+    if (mounted && !pause) {
+      pause = true;
+      await _controller.stop();
+      _subscription?.pause();
+      pause = true;
       final barcode = barcodes.barcodes.firstOrNull;
+      barcodes.barcodes.clear();
       if (barcode != null) {
         // TODO: On navigate back to scanner page, reactivate camera;
         // TODO: disable camera when navigating to editor page;
@@ -29,6 +35,9 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
             .replaceAll(":barcode",
                 "$barcode")); // Future gets resolved when back button is pressed
       }
+      _subscription?.resume();
+      await _controller.start();
+      pause = false;
     }
   }
 
