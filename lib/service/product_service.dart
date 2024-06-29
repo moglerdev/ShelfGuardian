@@ -7,6 +7,7 @@ abstract class ProductService {
   Future<List<Product>> getProducts();
   Future<bool> addProduct(Product product);
   Future<bool> removeProduct(Product product);
+  Future<bool> removeProducts(List<Product> products);
   Future<Product?> getProduct(int id);
   Future<Product?> getProductByBarcode(String barcode);
 
@@ -46,7 +47,7 @@ class ProductServiceSupabase implements ProductService {
   @override
   Future<bool> addProduct(Product product) async {
     var result = await SBClient.supabaseClient.from("products_items").upsert({
-      "meta_id": product.id,
+      "id": product.id,
       "price_in_cents": product.priceInCents,
       "expired_at": product.expiredAt
     });
@@ -58,8 +59,17 @@ class ProductServiceSupabase implements ProductService {
     var result = await SBClient.supabaseClient
         .from("products_items")
         .delete()
-        .eq("meta_id", product.id);
+        .eq("id", product.id);
     return result.error == null;
+  }
+
+  @override
+  Future<bool> removeProducts(List<Product> products) async {
+    var result = await SBClient.supabaseClient
+        .from("products_items")
+        .delete()
+        .inFilter("id", products.map((e) => e.id).toList());
+    return result == null;
   }
 
   @override
@@ -67,7 +77,7 @@ class ProductServiceSupabase implements ProductService {
     var result = await SBClient.supabaseClient
         .from("products_items")
         .select(
-            "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
+            "id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
         .eq("id", id);
     if (result.isEmpty) {
       return null;
