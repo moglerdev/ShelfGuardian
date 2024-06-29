@@ -63,6 +63,7 @@ class DbProductMeta {
 
 class Product extends Equatable {
   final int id;
+  final String barcode;
   final String name;
   final String description;
   final int priceInCents;
@@ -73,6 +74,7 @@ class Product extends Equatable {
 
   const Product({
     required this.id,
+    required this.barcode,
     required this.name,
     required this.description,
     required this.priceInCents,
@@ -82,5 +84,5 @@ class Product extends Equatable {
 
   @override
   List<Object?> get props =>
-      [name, description, priceInCents, image, expiredAt];
+      [name, barcode, description, priceInCents, image, expiredAt];
 }

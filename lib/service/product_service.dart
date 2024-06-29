@@ -33,6 +33,7 @@ class ProductServiceSupabase implements ProductService {
         var item = DbProductItem.fromJson(e);
         return Product(
             id: item.id ?? 0,
+            barcode: meta.barcode ?? "",
             name: meta.name ?? "Unknown",
             description: meta.description ?? "Unknown",
             priceInCents: item.priceInCents ?? 0,
@@ -67,7 +68,7 @@ class ProductServiceSupabase implements ProductService {
         .from("products_items")
         .select(
             "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
-        .eq("meta_id", id);
+        .eq("id", id);
     if (result.isEmpty) {
       return null;
     } else {
@@ -76,6 +77,7 @@ class ProductServiceSupabase implements ProductService {
       var item = DbProductItem.fromJson(result[0]);
       return Product(
           id: item.id ?? 0,
+          barcode: meta.barcode ?? "",
           name: meta.name ?? "Unknown",
           description: meta.description ?? "Unknown",
           priceInCents: item.priceInCents ?? 0,
@@ -84,6 +86,7 @@ class ProductServiceSupabase implements ProductService {
     }
   }
 
+  @override
   Future<Product?> getProductByBarcode(String barcode) async {
     var result = await SBClient.supabaseClient
         .from("products_meta")
@@ -95,6 +98,7 @@ class ProductServiceSupabase implements ProductService {
       var meta = DbProductMeta.fromJson(result[0]);
       return Product(
           id: meta.id ?? 0,
+          barcode: meta.barcode ?? "",
           name: meta.name ?? "Unknown",
           description: meta.description ?? "Unknown",
           priceInCents: 0,

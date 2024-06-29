@@ -33,7 +33,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
         // TODO: disable camera when navigating to editor page;
         await context.push(NavigationServiceRoutes.createWithBarcodeRouteUri
             .replaceAll(":barcode",
-                "$barcode")); // Future gets resolved when back button is pressed
+                "${barcode.displayValue}")); // Future gets resolved when back button is pressed
       }
       _subscription?.resume();
       await _controller.start();
