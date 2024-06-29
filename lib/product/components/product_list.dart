@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/product/components/product_item.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
 
@@ -35,6 +37,9 @@ class ProductList extends StatelessWidget {
                         if (selectedProducts.isNotEmpty) {
                           onSelectChanged(product, !isSelected);
                           return;
+                        } else {
+                          context.push(NavigationServiceRoutes.editRouterUri
+                              .replaceAll(":id", "${product.id}"));
                         }
                       },
                       onSelectChanged: (selected) {

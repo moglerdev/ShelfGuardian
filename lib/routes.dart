@@ -34,15 +34,25 @@ final routes = GoRouter(
         builder: (context, state) => const ScannerPage(),
       ),
       GoRoute(
-          path: NavigationServiceRoutes.editorWithIdRouteUri,
+          path: NavigationServiceRoutes.createWithBarcodeRouteUri,
           builder: (context, state) {
-            final id = state.pathParameters['id'] ?? '';
-            return EditorPage(code: id);
+            final barcode = state.pathParameters['barcode'] ?? '';
+            return EditorPage(code: barcode, id: -1);
           }),
       GoRoute(
-          path: NavigationServiceRoutes.editorRouteUri,
+          path: NavigationServiceRoutes.createRouteUri,
           builder: (context, state) {
-            return const EditorPage(code: "");
+            return const EditorPage(code: "", id: -1);
+          }),
+      GoRoute(
+          path: NavigationServiceRoutes.editRouterUri,
+          builder: (context, state) {
+            final idStr = state.pathParameters['id'] ?? '';
+            final id = int.tryParse(idStr) ?? -1;
+            return EditorPage(
+              code: "",
+              id: id,
+            );
           }),
       GoRoute(
         path: NavigationServiceRoutes.settingsRouteUri,
