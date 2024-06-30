@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 const storage = FlutterSecureStorage();
+const AUTH_STORE_KEY = "kong.mogler.dev:session";
 final gotrueStorageKey = SharedPreferencesGotrueAsyncStorage();
 
 class SupabaseCredentials {
@@ -30,15 +31,19 @@ Future<bool> loadSession() async {
   final user = client.auth.currentUser;
   if (user != null) {
     await storage.write(
-        key: 'kong.mogler.dev:session',
+        key: AUTH_STORE_KEY,
         value: client.auth.currentSession!.toJson().toString());
     return true;
   }
-  final session = await storage.read(key: "kong.mogler.dev:session");
+  final session = await storage.read(key: AUTH_STORE_KEY);
   if (session != null) {
-    final response = await client.auth.recoverSession(session);
-    if (response.user != null) {
-      return true;
+    try {
+      final response = await client.auth.recoverSession(session);
+      if (response.user != null) {
+        return await saveSession();
+      }
+    } catch (e) {
+      return false;
     }
   }
   return false;
@@ -51,10 +56,10 @@ Future<bool> saveSession() async {
     return false;
   }
   final strSession = jsonEncode(client.auth.currentSession!.toJson());
-  await storage.write(key: 'kong.mogler.dev:session', value: strSession);
+  await storage.write(key: AUTH_STORE_KEY, value: strSession);
   return true;
 }
 
 Future<void> clearSession() async {
-  await storage.delete(key: 'kong.mogler.dev:session');
+  await storage.delete(key: AUTH_STORE_KEY);
 }

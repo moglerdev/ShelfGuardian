@@ -13,7 +13,7 @@ class DbProductItem {
     required this.metaId,
     required this.priceInCents,
     required this.expiredAt,
-    required this.createdAt,
+    this.createdAt,
   });
 
   static DbProductItem fromJson(Map<String, dynamic> json) {
@@ -44,7 +44,7 @@ class DbProductMeta {
     required this.barcode,
     required this.name,
     required this.description,
-    required this.createdAt,
+    this.createdAt,
   });
 
   static DbProductMeta fromJson(Map<String, dynamic> json) {

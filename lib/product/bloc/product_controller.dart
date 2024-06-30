@@ -70,15 +70,9 @@ class ProductControllerCubit extends Cubit<ProductListState>
   @override
   Future<bool> removeSelectedProducts() async {
     if (state is ProductListSelected) {
-      List<Product> products = (state as ProductListSelected)
-          .products
-          .where((element) => !(state as ProductListSelected)
-              .selectedProducts
-              .contains(element))
-          .toList();
       await service
           .removeProducts((state as ProductListSelected).selectedProducts);
-      emit(ProductListFilled(products));
+      await initProducts();
       return true;
     }
     return false;
