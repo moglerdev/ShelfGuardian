@@ -22,7 +22,7 @@ class FilledEditorState implements EditorState {
   final String barcode;
   final int id;
   final String name;
-  final DateTime expiryDate;
+  final DateTime? expiryDate;
   final int price;
 
   const FilledEditorState(
@@ -34,9 +34,9 @@ class FilledEditorState implements EditorState {
   });
 
   static FilledEditorState createEmpty() {
-    return FilledEditorState(
+    return const FilledEditorState(
       '',
-      DateTime.now(),
+      null,
       barcode: '',
       id: -1,
       price: 0,
@@ -58,4 +58,24 @@ class FilledEditorState implements EditorState {
       price: price ?? this.price,
     );
   }
+
+  EditorState toSave() {
+    return SavingEditorState(
+      name,
+      expiryDate,
+      barcode: barcode,
+      id: id,
+      price: price,
+    );
+  }
+}
+
+class SavingEditorState extends FilledEditorState {
+  const SavingEditorState(
+    super.name,
+    super.expiryDate, {
+    required super.barcode,
+    required super.id,
+    required super.price,
+  });
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/editor/bloc/editor_state.dart';
+import 'package:shelf_guardian/product/models/product_model.dart';
 import 'package:shelf_guardian/service/product_service.dart';
 
 class EditorControllerCubit extends Cubit<EditorState> {
@@ -15,26 +16,26 @@ class EditorControllerCubit extends Cubit<EditorState> {
   Future<void> load() async {
     if (state.id < 0) {
       if (state.barcode.isEmpty) {
-        emit(FilledEditorState.createEmpty());
-        return;
+        return emit(FilledEditorState.createEmpty());
       }
       final p = await service.getProductByBarcode(state.barcode);
       if (p != null) {
-        emit(FilledEditorState(
+        return emit(FilledEditorState(
           p.name,
-          p.expiredAt,
+          null,
           barcode: state.barcode,
           id: p.id,
           price: p.priceInCents,
         ));
       } else {
-        emit(FilledEditorState.createEmpty().copyWith(barcode: state.barcode));
+        return emit(
+            FilledEditorState.createEmpty().copyWith(barcode: state.barcode));
       }
       // load meta data, because id is not set
     } else {
       final p = await service.getProduct(state.id);
       if (p != null) {
-        emit(FilledEditorState(
+        return emit(FilledEditorState(
           p.name,
           p.expiredAt,
           barcode: p.barcode,
@@ -42,45 +43,48 @@ class EditorControllerCubit extends Cubit<EditorState> {
           price: p.priceInCents,
         ));
       } else {
-        emit(FilledEditorState.createEmpty().copyWith(id: state.id));
+        return emit(FilledEditorState.createEmpty().copyWith(id: state.id));
       }
       // load data from database
     }
   }
 
-  void setBarcode(String barcode) {
+  void update({
+    String? barcode,
+    String? name,
+    double? price,
+    DateTime? expiryDate,
+  }) {
     if (state is FilledEditorState) {
-      emit((state as FilledEditorState).copyWith(barcode: barcode));
+      final priceInCents = price == null ? 0 : (price * 100).toInt();
+      emit((state as FilledEditorState).copyWith(
+        barcode: barcode,
+        name: name,
+        price: priceInCents,
+        expiryDate: expiryDate,
+      ));
     }
   }
 
-  void setName(String name) {
+  Future<Product?> save() async {
     if (state is FilledEditorState) {
-      emit((state as FilledEditorState).copyWith(name: name));
+      final p = state as FilledEditorState;
+      if (p.name.isEmpty) {
+        return null;
+      }
+      if (p.expiryDate == null) {
+        return null;
+      }
+      return service.saveProduct(Product(
+        id: p.id,
+        barcode: p.barcode,
+        name: p.name,
+        priceInCents: p.price,
+        description: '',
+        image: '',
+        expiredAt: p.expiryDate ?? DateTime.now(),
+      ));
     }
-  }
-
-  void setPrice(int price) {
-    if (state is FilledEditorState) {
-      emit((state as FilledEditorState).copyWith(price: price));
-    }
-  }
-
-  void setExpiryDate(DateTime expiryDate) {
-    if (state is FilledEditorState) {
-      emit((state as FilledEditorState).copyWith(expiryDate: expiryDate));
-    }
-  }
-
-  void save() {
-    if (state is FilledEditorState) {
-      // final p = state as FilledEditorState;
-      // service.saveProduct(Product(
-      //   id: p.id,
-      //   name: p.name,
-      //   priceInCents: p.price,
-      //   expiredAt: p.expiryDate,
-      // ));
-    }
+    return null;
   }
 }

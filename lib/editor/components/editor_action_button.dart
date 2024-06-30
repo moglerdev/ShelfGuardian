@@ -4,15 +4,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/button.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
-import 'package:shelf_guardian/settings/bloc/settings_controller.dart';
+import 'package:shelf_guardian/editor/bloc/editor_controller.dart';
+import 'package:shelf_guardian/editor/bloc/editor_state.dart';
 
-class SettingsActionButton extends StatelessWidget {
-  const SettingsActionButton({super.key});
+class EditorActionButton extends StatelessWidget {
+  const EditorActionButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsControllerCubit, SettingsState>(
+    return BlocBuilder<EditorControllerCubit, EditorState>(
         builder: (context, state) {
+      final router = GoRouter.of(context);
+      final sm = ScaffoldMessenger.of(context);
       Widget rightBtn = SGIconButton(
         icon: FontAwesomeIcons.ban,
         onPressed: () {
@@ -22,8 +25,23 @@ class SettingsActionButton extends StatelessWidget {
       Widget mainBtn = SGIconButton(
         size: 50,
         icon: FontAwesomeIcons.floppyDisk,
-        onPressed: () {
-          context.go(NavigationServiceRoutes.homeRouteUri);
+        onPressed: () async {
+          if (state is! FilledEditorState) {
+            return;
+          }
+          try {
+            final controller = context.read<EditorControllerCubit>();
+            final p = await controller.save();
+            if (p != null) {
+              router.pop();
+            } else {
+              sm.showSnackBar(
+                  const SnackBar(content: Text("Please correct the form!")));
+            }
+          } catch (e) {
+            sm.showSnackBar(
+                const SnackBar(content: Text("Something went wrong!")));
+          }
         },
       );
       return Row(

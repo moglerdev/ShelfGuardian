@@ -1,107 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moment_dart/moment_dart.dart';
 import 'package:shelf_guardian/editor/bloc/editor_controller.dart';
-import 'package:shelf_guardian/editor/bloc/editor_state.dart';
-
-class InputField extends StatefulWidget {
-  final String label;
-
-  const InputField({super.key, required this.label});
-
-  @override
-  State createState() => _InputState();
-}
-
-class _InputState extends State<InputField> {
-  TextEditingController controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.purple,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            'Bar Code',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: Colors.purple[200],
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: TextField(
-              controller: TextEditingController(text: '4 337256 366533'),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class DatePickerTextField extends StatefulWidget {
-  final void Function(DateTime)? onDateSelected;
-  final DateTime value;
-
-  const DatePickerTextField(this.value, {super.key, this.onDateSelected});
-
-  @override
-  State createState() => _DatePickerTextFieldState();
-}
-
-class _DatePickerTextFieldState extends State<DatePickerTextField> {
-  final TextEditingController _dateController = TextEditingController();
-
-  void _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: widget.value,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      widget.onDateSelected?.call(picked);
-      setState(() {
-        _dateController.text = Moment(picked).format("L");
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _dateController.text = Moment(widget.value).format("L");
-    return TextField(
-      controller: _dateController,
-      decoration: const InputDecoration(
-        labelText: 'Enter Date',
-      ),
-      readOnly: true,
-      onTap: () => _selectDate(context),
-    );
-  }
-}
+import 'package:shelf_guardian/editor/components/editor_action_button.dart';
+import 'package:shelf_guardian/editor/views/editor_view.dart';
 
 class EditorPage extends StatefulWidget {
   final String code;
@@ -115,69 +16,22 @@ class EditorPage extends StatefulWidget {
 
 class _EditorPageState extends State<EditorPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => EditorControllerCubit(widget.code, widget.id),
         child: Scaffold(
             appBar: AppBar(
-              title: Text(widget.id == -1 ? 'Create' : 'Edit'),
+              title: Text(widget.id < 0 ? 'Create' : 'Edit'),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: const EditorActionButton(),
             // floatingActionButton: const ProductActionButton(),
-            body: const EditorView()));
-  }
-}
-
-class EditorView extends StatelessWidget {
-  const EditorView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<EditorControllerCubit, EditorState>(
-      builder: (context, state) {
-        if (state is LoadingEditorState) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (state is! FilledEditorState) {
-          return const Center(child: Text('Something went wrong'));
-        }
-        final barcode = TextEditingController(text: state.barcode);
-        final name = TextEditingController(text: state.name);
-        final price = TextEditingController(text: "${state.price / 100}");
-        final expiryDate = state.expiryDate;
-
-        return Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Barcode',
-                  ),
-                  controller: barcode,
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                  ),
-                  controller: name,
-                ),
-                DatePickerTextField(
-                  expiryDate,
-                  onDateSelected: (p0) {
-                    context.read<EditorControllerCubit>().setExpiryDate(p0);
-                  },
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Preis',
-                  ),
-                  controller: price,
-                ),
-              ],
-            ));
-      },
-    );
+            body: EditorView(code: widget.code, id: widget.id)));
   }
 }

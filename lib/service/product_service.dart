@@ -7,8 +7,12 @@ abstract class ProductService {
   Future<List<Product>> getProducts();
   Future<bool> addProduct(Product product);
   Future<bool> removeProduct(Product product);
+  Future<bool> removeProducts(List<Product> products);
   Future<Product?> getProduct(int id);
   Future<Product?> getProductByBarcode(String barcode);
+  Future<Product?> saveProduct(Product product);
+  Future<int> getSummaryValue();
+  Future<int> getCount();
 
   static ProductService create() {
     return ProductServiceSupabase();
@@ -46,7 +50,7 @@ class ProductServiceSupabase implements ProductService {
   @override
   Future<bool> addProduct(Product product) async {
     var result = await SBClient.supabaseClient.from("products_items").upsert({
-      "meta_id": product.id,
+      "id": product.id,
       "price_in_cents": product.priceInCents,
       "expired_at": product.expiredAt
     });
@@ -58,8 +62,34 @@ class ProductServiceSupabase implements ProductService {
     var result = await SBClient.supabaseClient
         .from("products_items")
         .delete()
-        .eq("meta_id", product.id);
+        .eq("id", product.id);
     return result.error == null;
+  }
+
+  @override
+  Future<bool> removeProducts(List<Product> products) async {
+    var result = await SBClient.supabaseClient
+        .from("products_items")
+        .delete()
+        .inFilter("id", products.map((e) => e.id).toList());
+    return result == null;
+  }
+
+  @override
+  Future<int> getSummaryValue() async {
+    var result = await SBClient.supabaseClient
+        .from("products_items")
+        .select("price_in_cents");
+    return result
+        .map((e) => e["price_in_cents"] as int)
+        .reduce((value, element) {
+      return value + element;
+    });
+  }
+
+  @override
+  Future<int> getCount() async {
+    return await SBClient.supabaseClient.from("products_items").count();
   }
 
   @override
@@ -67,7 +97,7 @@ class ProductServiceSupabase implements ProductService {
     var result = await SBClient.supabaseClient
         .from("products_items")
         .select(
-            "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
+            "id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
         .eq("id", id);
     if (result.isEmpty) {
       return null;
@@ -104,6 +134,94 @@ class ProductServiceSupabase implements ProductService {
           priceInCents: 0,
           image: "https://via.placeholder.com/150",
           expiredAt: DateTime.now());
+    }
+  }
+
+  @override
+  Future<Product?> saveProduct(Product product) async {
+    var meta = await saveProductMeta(product);
+    if (meta == null) {
+      return null;
+    }
+    var item = await saveProductItem(product, meta);
+    if (item == null) {
+      return null;
+    }
+    return Product(
+        id: item.id ?? product.id,
+        barcode: meta.barcode ?? product.barcode,
+        name: meta.name ?? product.name,
+        description: meta.description ?? product.description,
+        priceInCents: item.priceInCents ?? product.priceInCents,
+        image: "https://via.placeholder.com/150",
+        expiredAt: item.expiredAt ?? product.expiredAt);
+  }
+
+  Future<DbProductMeta?> saveProductMeta(Product product) async {
+    var exist = await getProductByBarcode(product.barcode);
+    if (exist != null) {
+      // Update Barcode and Name
+      var result = await SBClient.supabaseClient.from("products_meta").upsert(
+          {"id": exist.id, "barcode": product.barcode, "name": product.name});
+      if (result != null) {
+        return null;
+      }
+      return DbProductMeta(
+          id: exist.id,
+          barcode: product.barcode,
+          name: product.name,
+          description: product.description);
+    } else {
+      // Create new Barcode and Name
+      var result = await SBClient.supabaseClient
+          .from("products_meta")
+          .insert({"barcode": product.barcode, "name": product.name}).select();
+      if (result.isEmpty) {
+        return null;
+      }
+      return DbProductMeta(
+          id: result.first["id"] as int,
+          barcode: product.barcode,
+          name: product.name,
+          description: product.description);
+    }
+  }
+
+  Future<DbProductItem?> saveProductItem(
+      Product product, DbProductMeta meta) async {
+    var exist = await getProduct(product.id);
+    if (exist != null) {
+      // Update Price and ExpiredAt
+      var result = await SBClient.supabaseClient.from("products_items").upsert({
+        "id": exist.id,
+        "meta_id": meta.id,
+        "price_in_cents": product.priceInCents,
+        "expired_at": product.expiredAt.toIso8601String()
+      });
+      if (result != null) {
+        return null;
+      }
+      return DbProductItem(
+          id: exist.id,
+          metaId: meta.id,
+          priceInCents: product.priceInCents,
+          expiredAt: product.expiredAt);
+    } else {
+      // Create new Price and ExpiredAt
+      var result = await SBClient.supabaseClient.from("products_items").insert({
+        "meta_id": meta.id,
+        "price_in_cents": product.priceInCents,
+        "expired_at": product.expiredAt.toIso8601String()
+      }).select();
+      if (result.isEmpty) {
+        return null;
+      }
+      return DbProductItem(
+          id: result.first["id"] as int,
+          metaId: meta.id,
+          priceInCents: product.priceInCents,
+          expiredAt: product.expiredAt,
+          createdAt: DateTime.now());
     }
   }
 }

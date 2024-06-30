@@ -12,7 +12,7 @@ abstract class ProductController {
 
   bool removeProduct(Product product);
 
-  bool removeSelectedProducts();
+  Future<bool> removeSelectedProducts();
 
   bool selectProduct(Product product);
 
@@ -68,15 +68,11 @@ class ProductControllerCubit extends Cubit<ProductListState>
   }
 
   @override
-  bool removeSelectedProducts() {
+  Future<bool> removeSelectedProducts() async {
     if (state is ProductListSelected) {
-      List<Product> products = (state as ProductListSelected)
-          .products
-          .where((element) => !(state as ProductListSelected)
-              .selectedProducts
-              .contains(element))
-          .toList();
-      emit(ProductListFilled(products));
+      await service
+          .removeProducts((state as ProductListSelected).selectedProducts);
+      await initProducts();
       return true;
     }
     return false;
