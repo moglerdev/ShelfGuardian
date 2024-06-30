@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/auth/bloc/auth_state.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignInView extends StatefulWidget {
+  const SignInView({super.key});
 
   @override
-  State createState() => _SignInPageState();
+  State createState() => _SignInViewState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInViewState extends State<SignInView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -28,7 +29,7 @@ class _SignInPageState extends State<SignInPage> {
         sm.showSnackBar(
           const SnackBar(content: Text('Signed in successfully!')),
         );
-        router.pushReplacement('/');
+        router.go('/');
       } else {
         sm.showSnackBar(
           const SnackBar(content: Text("Something went wrong!")),
@@ -48,57 +49,83 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (context.read<AuthControllerCubit>().state is AuthenticatedState) {
+      context.go('/');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign In'),
-      ),
-      body: AutofillGroup(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-          children: [
-            TextField(
-              autofillHints: const [AutofillHints.email],
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                hintText:
-                    'Enter your email or username', // Suggests input format
-                counterText: '', // Disable character counter for password field
-              ),
+    return AutofillGroup(
+      child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+        children: [
+          TextField(
+            autofillHints: const [AutofillHints.email],
+            controller: _emailController,
+            decoration: const InputDecoration(
+              labelText: 'Email',
+              hintText: 'Enter your email or username', // Suggests input format
+              counterText: '', // Disable character counter for password field
             ),
-            TextField(
-              autofillHints: const [AutofillHints.password],
-              autocorrect: false,
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                hintText: 'Enter your password', // Suggests input format
-                counterText: '', // Disable character counter for password field
-              ),
+          ),
+          TextField(
+            autofillHints: const [AutofillHints.password],
+            autocorrect: false,
+            controller: _passwordController,
+            obscureText: true,
+            decoration: const InputDecoration(
+              labelText: 'Password',
+              hintText: 'Enter your password', // Suggests input format
+              counterText: '', // Disable character counter for password field
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _signIn,
-              child: const Text('Sign In'),
-            ),
-            const SizedBox(height: 20),
-            TextButton(
-              onPressed: () {
-                context.push(NavigationServiceRoutes.signUpRouteUri);
-              },
-              child: const Text('Create Account'),
-            ),
-            TextButton(
-              onPressed: () {
-                context.push(NavigationServiceRoutes.forgotPasswordRouteUri);
-              },
-              child: const Text('Forgot Password'),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _signIn,
+            child: const Text('Sign In'),
+          ),
+          const SizedBox(height: 20),
+          TextButton(
+            onPressed: () {
+              context.push(NavigationServiceRoutes.signUpRouteUri);
+            },
+            child: const Text('Create Account'),
+          ),
+          TextButton(
+            onPressed: () {
+              context.push(NavigationServiceRoutes.forgotPasswordRouteUri);
+            },
+            child: const Text('Forgot Password'),
+          ),
+        ],
       ),
     );
+  }
+}
+
+class SignInPage extends StatelessWidget {
+  const SignInPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Sign In'),
+        ),
+        body: BlocBuilder<AuthControllerCubit, AuthenticationState>(
+          builder: (context, state) {
+            if (state is UnauthenticatedState) {
+              return const SignInView();
+            } else if (state is AuthenticatingState) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return const Center(
+              child: Text("data not found!"),
+            );
+          },
+        ));
   }
 }

@@ -29,7 +29,9 @@ class ProductList extends StatelessWidget {
                 return const SizedBox(height: 100);
               }
               final product = products[index];
-              final isSelected = selectedProducts.contains(product);
+              final isSelected = selectedProducts
+                  .where((element) => element.id == product.id)
+                  .isNotEmpty;
               final router = GoRouter.of(context);
               final controller = context.read<ProductControllerCubit>();
               return Container(

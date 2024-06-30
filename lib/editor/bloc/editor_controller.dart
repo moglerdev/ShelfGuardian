@@ -67,24 +67,34 @@ class EditorControllerCubit extends Cubit<EditorState> {
   }
 
   Future<Product?> save() async {
-    if (state is FilledEditorState) {
-      final p = state as FilledEditorState;
+    final p = state;
+    emit(LoadingEditorState(barcode: state.barcode, id: state.id));
+    if (p is FilledEditorState) {
       if (p.name.isEmpty) {
         return null;
       }
       if (p.expiryDate == null) {
         return null;
       }
-      return service.saveProduct(Product(
-        id: p.id,
-        barcode: p.barcode,
-        name: p.name,
-        priceInCents: p.price,
-        description: '',
-        image: '',
-        expiredAt: p.expiryDate ?? DateTime.now(),
-      ));
+      try {
+        final result = service.saveProduct(Product(
+          id: p.id,
+          barcode: p.barcode,
+          name: p.name,
+          priceInCents: p.price,
+          description: '',
+          image: '',
+          expiredAt: p.expiryDate ?? DateTime.now(),
+        ));
+        emit(p.copyWith(id: p.id));
+        return result;
+      } catch (e) {
+        emit(p.copyWith());
+        return null;
+      }
     }
+    emit(
+        FilledEditorState.createEmpty().copyWith(id: p.id, barcode: p.barcode));
     return null;
   }
 }
