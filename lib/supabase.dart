@@ -1,65 +1,24 @@
-import 'dart:convert';
-
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-const storage = FlutterSecureStorage();
-const AUTH_STORE_KEY = "kong.mogler.dev:session";
 final gotrueStorageKey = SharedPreferencesGotrueAsyncStorage();
 
 class SupabaseCredentials {
-  static const String supabaseUrl = 'https://kong.mogler.dev/';
+  static const String supabaseUrl = 'https://cvphrepnshydslopzqat.supabase.co';
   static const String supabaseAnonKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAiaHR0cHM6Ly9rb25nLm1vZ2xlci5kZXYiLAogICJpYXQiOiAxNzE4NTc1MjAwLAogICJleHAiOiAxODc2MzQxNjAwCn0.gpqnw1nl7iXFrpVOf4rh6XgmFkgvk-85zEkwWaFg5M0';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2cGhyZXBuc2h5ZHNsb3B6cWF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTk3NjQ4OTksImV4cCI6MjAzNTM0MDg5OX0.YlqQwhH28d4upTtYYx4eBpcbXxN4-gY9VVaLkNX1unk';
 }
 
-class SBClient {
-  static final SupabaseClient supabaseClient = SupabaseClient(
-    SupabaseCredentials.supabaseUrl,
-    SupabaseCredentials.supabaseAnonKey,
-    authOptions: AuthClientOptions(
-      autoRefreshToken: true,
-      pkceAsyncStorage: gotrueStorageKey,
-      authFlowType: AuthFlowType.pkce,
-    ),
-    storageOptions: const StorageClientOptions(),
-  );
-}
-
-Future<bool> loadSession() async {
-  final client = SBClient.supabaseClient;
-  final user = client.auth.currentUser;
-  if (user != null) {
-    await storage.write(
-        key: AUTH_STORE_KEY,
-        value: client.auth.currentSession!.toJson().toString());
-    return true;
+class SupabaseApi {
+  static SupabaseClient createClient() {
+    return SupabaseClient(
+      SupabaseCredentials.supabaseUrl,
+      SupabaseCredentials.supabaseAnonKey,
+      authOptions: AuthClientOptions(
+        autoRefreshToken: true,
+        pkceAsyncStorage: gotrueStorageKey,
+        authFlowType: AuthFlowType.pkce,
+      ),
+      storageOptions: const StorageClientOptions(),
+    );
   }
-  final session = await storage.read(key: AUTH_STORE_KEY);
-  if (session != null) {
-    try {
-      final response = await client.auth.recoverSession(session);
-      if (response.user != null) {
-        return await saveSession();
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-  return false;
-}
-
-Future<bool> saveSession() async {
-  final client = SBClient.supabaseClient;
-  final user = client.auth.currentUser;
-  if (user == null) {
-    return false;
-  }
-  final strSession = jsonEncode(client.auth.currentSession!.toJson());
-  await storage.write(key: AUTH_STORE_KEY, value: strSession);
-  return true;
-}
-
-Future<void> clearSession() async {
-  await storage.delete(key: AUTH_STORE_KEY);
 }

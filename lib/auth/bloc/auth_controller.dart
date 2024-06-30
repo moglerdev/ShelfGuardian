@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/auth/bloc/auth_state.dart';
-import 'package:shelf_guardian/supabase.dart';
+import 'package:shelf_guardian/service/user_service.dart';
 
 abstract class AuthController {
   Future<bool> signIn(String email, String password);
@@ -13,57 +15,59 @@ abstract class AuthController {
 
 class AuthControllerCubit extends Cubit<AuthenticationState>
     implements AuthController {
-  AuthControllerCubit() : super(const Unauthenticated()) {
-    final client = SBClient.supabaseClient;
-    if (client.auth.currentUser != null) {
-      emit(Authenticated(client.auth.currentUser!));
+  final service = UserService.create();
+
+  AuthControllerCubit() : super(const UnauthenticatedState()) {
+    if (service.isSignedIn()) {
+      emit(const AuthenticatedState());
+    } else {
+      unawaited(initSession());
+    }
+  }
+
+  Future<void> initSession() async {
+    emit(const AuthenticatingState());
+    if (await service.restoreSession()) {
+      emit(const AuthenticatedState());
+    } else {
+      emit(const UnauthenticatedState());
     }
   }
 
   @override
   Future<bool> signIn(String email, String password) async {
-    final client = SBClient.supabaseClient;
-    final response = await client.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
-
-    if (response.user == null || response.session == null) {
-      return false;
+    emit(const AuthenticatingState());
+    final result = await service.signIn(email, password);
+    if (result) {
+      emit(const AuthenticatedState());
     }
-    await saveSession();
-    emit(Authenticated(response.user!));
-    return true;
+    return result;
   }
 
   @override
   Future<bool> resetPassword(String email) async {
-    final client = SBClient.supabaseClient;
-    client.auth.resetPasswordForEmail(email);
-    return true;
+    return service.resetPassword(email);
   }
 
   @override
   Future<bool> signUp(String email, String password) async {
-    final client = SBClient.supabaseClient;
-
-    final response = await client.auth.signUp(email: email, password: password);
-
-    if (response.user == null) {
-      return false;
+    emit(const AuthenticatingState());
+    final result = await service.signUp(email, password);
+    if (result) {
+      emit(const AuthenticatedState());
+    } else {
+      emit(const UnauthenticatedState());
     }
-    await saveSession();
-    emit(Authenticated(response.user!));
-    return true;
+    return result;
   }
 
   @override
   Future<bool> signOut() async {
-    clearSession();
-    emit(const Unauthenticated());
-    return true;
+    emit(const UnauthenticatedState());
+    final result = await service.signOut();
+    return result;
   }
 
   @override
-  String getUserEmail() => SBClient.supabaseClient.auth.currentUser?.email ?? "";
+  String getUserEmail() => service.getUserEmail();
 }
