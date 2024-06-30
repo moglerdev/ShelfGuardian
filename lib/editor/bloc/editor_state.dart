@@ -58,24 +58,4 @@ class FilledEditorState implements EditorState {
       price: price ?? this.price,
     );
   }
-
-  EditorState toSave() {
-    return SavingEditorState(
-      name,
-      expiryDate,
-      barcode: barcode,
-      id: id,
-      price: price,
-    );
-  }
-}
-
-class SavingEditorState extends FilledEditorState {
-  const SavingEditorState(
-    super.name,
-    super.expiryDate, {
-    required super.barcode,
-    required super.id,
-    required super.price,
-  });
 }
