@@ -19,6 +19,14 @@ class FCMNotificationService implements NotificationService {
 
   @override
   Future<void> requestPermission() async {
-    await FirebaseMessaging.instance.requestPermission(provisional: true);
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
   }
 }

@@ -40,13 +40,6 @@ class SupabaseUserService implements UserService {
       return false;
     }
     await saveSession();
-    final token = await notification.generateToken();
-    if (token != null) {
-      await client.from("profiles").upsert({
-        "id": response.user!.id,
-        "fcm_token": token,
-      });
-    }
     return true;
   }
 
@@ -92,6 +85,13 @@ class SupabaseUserService implements UserService {
         final response = await client.auth.recoverSession(session);
         if (response.user != null) {
           await saveSession();
+          final token = await notification.generateToken();
+          if (token != null) {
+            await client.from("profiles").upsert({
+              "id": response.user!.id,
+              "fcm_token": token,
+            });
+          }
           return true;
         }
       } catch (e) {
