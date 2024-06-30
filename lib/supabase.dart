@@ -9,16 +9,14 @@ class SupabaseCredentials {
 }
 
 class SupabaseApi {
-  static SupabaseClient createClient() {
-    return SupabaseClient(
-      SupabaseCredentials.supabaseUrl,
-      SupabaseCredentials.supabaseAnonKey,
-      authOptions: AuthClientOptions(
-        autoRefreshToken: true,
-        pkceAsyncStorage: gotrueStorageKey,
-        authFlowType: AuthFlowType.pkce,
-      ),
-      storageOptions: const StorageClientOptions(),
-    );
-  }
+  static SupabaseClient client = SupabaseClient(
+    SupabaseCredentials.supabaseUrl,
+    SupabaseCredentials.supabaseAnonKey,
+    authOptions: AuthClientOptions(
+      autoRefreshToken: true,
+      pkceAsyncStorage: gotrueStorageKey,
+      authFlowType: AuthFlowType.pkce,
+    ),
+    storageOptions: const StorageClientOptions(),
+  );
 }

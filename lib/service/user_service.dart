@@ -25,7 +25,7 @@ abstract class UserService {
 final _storage = const FlutterSecureStorage();
 
 class SupabaseUserService implements UserService {
-  final client = SupabaseApi.createClient();
+  final client = SupabaseApi.client;
   final authStoreKey = "dev.mogler.sg::session";
   final notification = NotificationService.create();
 

@@ -20,7 +20,7 @@ abstract class ProductService {
 }
 
 class ProductServiceSupabase implements ProductService {
-  final client = SupabaseApi.createClient();
+  final client = SupabaseApi.client;
 
   @override
   Future<List<Product>> getProducts() async {
