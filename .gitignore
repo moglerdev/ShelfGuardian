@@ -49,3 +49,6 @@ __old/
 
 node_modules/
 local/
+
+.env
+service-account.json
