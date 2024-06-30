@@ -20,10 +20,12 @@ abstract class ProductService {
 }
 
 class ProductServiceSupabase implements ProductService {
+  final client = SupabaseApi.client;
+
   @override
   Future<List<Product>> getProducts() async {
     // TODO: read filter options from local storage (Service Filter)
-    var result = await SBClient.supabaseClient
+    var result = await client
         .from("products_items")
         .select(
             "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
@@ -49,7 +51,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<bool> addProduct(Product product) async {
-    var result = await SBClient.supabaseClient.from("products_items").upsert({
+    var result = await client.from("products_items").upsert({
       "id": product.id,
       "price_in_cents": product.priceInCents,
       "expired_at": product.expiredAt
@@ -59,16 +61,14 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<bool> removeProduct(Product product) async {
-    var result = await SBClient.supabaseClient
-        .from("products_items")
-        .delete()
-        .eq("id", product.id);
+    var result =
+        await client.from("products_items").delete().eq("id", product.id);
     return result.error == null;
   }
 
   @override
   Future<bool> removeProducts(List<Product> products) async {
-    var result = await SBClient.supabaseClient
+    var result = await client
         .from("products_items")
         .delete()
         .inFilter("id", products.map((e) => e.id).toList());
@@ -77,9 +77,10 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<int> getSummaryValue() async {
-    var result = await SBClient.supabaseClient
-        .from("products_items")
-        .select("price_in_cents");
+    var result = await client.from("products_items").select("price_in_cents");
+    if (result.isEmpty) {
+      return 0;
+    }
     return result
         .map((e) => e["price_in_cents"] as int)
         .reduce((value, element) {
@@ -89,12 +90,12 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<int> getCount() async {
-    return await SBClient.supabaseClient.from("products_items").count();
+    return await client.from("products_items").count();
   }
 
   @override
   Future<Product?> getProduct(int id) async {
-    var result = await SBClient.supabaseClient
+    var result = await client
         .from("products_items")
         .select(
             "id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
@@ -118,7 +119,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<Product?> getProductByBarcode(String barcode) async {
-    var result = await SBClient.supabaseClient
+    var result = await client
         .from("products_meta")
         .select("id, barcode, name, description, created_at")
         .eq("barcode", barcode);
@@ -161,7 +162,7 @@ class ProductServiceSupabase implements ProductService {
     var exist = await getProductByBarcode(product.barcode);
     if (exist != null) {
       // Update Barcode and Name
-      var result = await SBClient.supabaseClient.from("products_meta").upsert(
+      var result = await client.from("products_meta").upsert(
           {"id": exist.id, "barcode": product.barcode, "name": product.name});
       if (result != null) {
         return null;
@@ -173,7 +174,7 @@ class ProductServiceSupabase implements ProductService {
           description: product.description);
     } else {
       // Create new Barcode and Name
-      var result = await SBClient.supabaseClient
+      var result = await client
           .from("products_meta")
           .insert({"barcode": product.barcode, "name": product.name}).select();
       if (result.isEmpty) {
@@ -192,7 +193,7 @@ class ProductServiceSupabase implements ProductService {
     var exist = await getProduct(product.id);
     if (exist != null) {
       // Update Price and ExpiredAt
-      var result = await SBClient.supabaseClient.from("products_items").upsert({
+      var result = await client.from("products_items").upsert({
         "id": exist.id,
         "meta_id": meta.id,
         "price_in_cents": product.priceInCents,
@@ -208,7 +209,7 @@ class ProductServiceSupabase implements ProductService {
           expiredAt: product.expiredAt);
     } else {
       // Create new Price and ExpiredAt
-      var result = await SBClient.supabaseClient.from("products_items").insert({
+      var result = await client.from("products_items").insert({
         "meta_id": meta.id,
         "price_in_cents": product.priceInCents,
         "expired_at": product.expiredAt.toIso8601String()

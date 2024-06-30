@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "76032918491",
+    "project_id": "shelf-guardian",
+    "storage_bucket": "shelf-guardian.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76032918491:android:34b7500f7e11c3ddd05dfe",
+        "android_client_info": {
+          "package_name": "dev.mogler.sg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH4BOA2he028Y3fAY5kp8fQRUK0giBf1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
