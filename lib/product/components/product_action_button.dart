@@ -66,6 +66,7 @@ class ProductActionButton extends StatelessWidget {
       rightBtns.add(SGIconButton(
         icon: FontAwesomeIcons.magnifyingGlass,
         onPressed: () {
+          context.read<ProductControllerCubit>().toggleSearchState();
           // TODO Implement search page
           print("TODO: Implement search page");
         },

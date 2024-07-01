@@ -21,6 +21,8 @@ abstract class ProductController {
   bool deselectAllProducts();
 
   bool deselectProduct(Product product);
+
+  bool toggleSearchState();
 }
 
 //TODO: Outsource Supabase logic in a service class and inject it into the controller
@@ -80,7 +82,7 @@ class ProductControllerCubit extends Cubit<ProductListState>
 
   @override
   bool selectProduct(Product product) {
-    if (state is ProductListLoading) {
+    if (state is ProductListLoading || state is ProductSearchedList) {
       return false;
     }
     List<Product> products = state.getProducts();
@@ -95,7 +97,7 @@ class ProductControllerCubit extends Cubit<ProductListState>
 
   @override
   bool selectAllProducts() {
-    if (state is ProductListSelected || state is ProductListLoading) {
+    if (state is ProductListSelected || state is ProductListLoading || state is ProductSearchedList) {
       return false;
     }
     List<Product> products = state.getProducts();
@@ -129,6 +131,19 @@ class ProductControllerCubit extends Cubit<ProductListState>
             ..toList()));
       return true;
     }
+    return false;
+  }
+
+  @override
+  bool toggleSearchState() {
+    if (state is ProductSearchedList) {
+      emit(ProductListFilled((state.getProducts())));
+      return true;
+    } else if (state is ProductListFilled) {
+      emit(ProductSearchedList(state.getProducts(), "", []));
+      return true;
+    }
+    //TODO: Implement toast message (or make Searching functional above states)
     return false;
   }
 }

@@ -21,7 +21,7 @@ class SettingsPageView extends StatelessWidget {
           child: CircularProgressIndicator(),
         );
       }
-      return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+      return ListView(children: [
         InputField(
             name: "User",
             value: context.watch<AuthControllerCubit>().getUserEmail(),
@@ -49,7 +49,8 @@ class SettingsPageView extends StatelessWidget {
             context.read<SettingsControllerCubit>().toggleNotifications();
           },
           isSelected: state.notifications,
-        )
+        ),
+        const SizedBox(height: 100),
       ]);
     });
   }

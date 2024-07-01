@@ -33,14 +33,15 @@ class ProductListSelected extends ProductListState {
   ProductListSelected(this.products, this.selectedProducts);
 }
 
+
 // TODO: Implement ProductSearchedList
 class ProductSearchedList extends ProductListState {
   final List<Product> products;
   final String search;
-  final List<Product> hiddenProducts;
+  final List<Product> shownProducts;
 
   @override
   List<Product> getProducts() => products;
 
-  ProductSearchedList(this.products, this.search, this.hiddenProducts);
+  ProductSearchedList(this.products, this.search, this.shownProducts);
 }

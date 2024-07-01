@@ -11,8 +11,9 @@ class FilterPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FilterControllerCubit, FilterDAO>(
         builder: (context, state) {
-          return const Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          FilterDropdown(), FilterRange()
+          return ListView(children: const [
+          FilterDropdown(), FilterRange(),
+            SizedBox(height: 100),
           ]);
         });
   }

@@ -22,37 +22,40 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.only(left: 10, right: 10),
-        child: ListView.builder(
-            itemCount: products.length + 1,
-            itemBuilder: (context, index) {
-              if (index == products.length) {
-                return const SizedBox(height: 100);
-              }
-              final product = products[index];
-              final isSelected = selectedProducts
-                  .where((element) => element.id == product.id)
-                  .isNotEmpty;
-              final router = GoRouter.of(context);
-              final controller = context.read<ProductControllerCubit>();
-              return Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: ProductItem(
-                      product: product,
-                      isSelected: isSelected,
-                      onTap: () async {
-                        if (selectedProducts.isNotEmpty) {
-                          onSelectChanged(product, !isSelected);
-                          return;
-                        } else {
-                          await router.push(NavigationServiceRoutes
-                              .editRouterUri
-                              .replaceAll(":id", "${product.id}"));
-                          controller.initProducts();
-                        }
-                      },
-                      onSelectChanged: (selected) {
-                        onSelectChanged(product, selected);
-                      }));
-            }));
+        child: RefreshIndicator(
+          onRefresh: context.read<ProductControllerCubit>().initProducts,
+          child: ListView.builder(
+              itemCount: products.length + 1,
+              itemBuilder: (context, index) {
+                if (index == products.length) {
+                  return const SizedBox(height: 100);
+                }
+                final product = products[index];
+                final isSelected = selectedProducts
+                    .where((element) => element.id == product.id)
+                    .isNotEmpty;
+                final router = GoRouter.of(context);
+                final controller = context.read<ProductControllerCubit>();
+                return Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: ProductItem(
+                        product: product,
+                        isSelected: isSelected,
+                        onTap: () async {
+                          if (selectedProducts.isNotEmpty) {
+                            onSelectChanged(product, !isSelected);
+                            return;
+                          } else {
+                            await router.push(NavigationServiceRoutes
+                                .editRouterUri
+                                .replaceAll(":id", "${product.id}"));
+                            controller.initProducts();
+                          }
+                        },
+                        onSelectChanged: (selected) {
+                          onSelectChanged(product, selected);
+                        }));
+              }),
+        ));
   }
 }

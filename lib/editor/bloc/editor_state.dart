@@ -9,7 +9,9 @@ abstract class EditorState {
 }
 
 class LoadingEditorState implements EditorState {
+  @override
   final String barcode;
+  @override
   final int id;
 
   const LoadingEditorState({
@@ -19,7 +21,9 @@ class LoadingEditorState implements EditorState {
 }
 
 class FilledEditorState implements EditorState {
+  @override
   final String barcode;
+  @override
   final int id;
   final String name;
   final DateTime? expiryDate;

@@ -12,7 +12,7 @@ import 'package:shelf_guardian/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(Application());
+    await tester.pumpWidget(const Application());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

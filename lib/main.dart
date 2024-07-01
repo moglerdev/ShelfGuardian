@@ -31,10 +31,12 @@ Future<void> main() async {
   final service = UserService.create();
   await service.restoreSession();
 
-  runApp(Application());
+  runApp(const Application());
 }
 
 class Application extends StatefulWidget {
+  const Application({super.key});
+
   @override
   State<StatefulWidget> createState() => _Application();
 }
