@@ -19,7 +19,7 @@ class EditorActionButton extends StatelessWidget {
       Widget cancelBtn = SGIconButton(
         icon: FontAwesomeIcons.squareXmark,
         onPressed: () {
-          context.go(NavigationServiceRoutes.homeRouteUri);
+          router.go(NavigationServiceRoutes.homeRouteUri);
         },
       );
       Widget saveBtn = SGIconButton(
@@ -33,7 +33,7 @@ class EditorActionButton extends StatelessWidget {
             final controller = context.read<EditorControllerCubit>();
             final p = await controller.save();
             if (p != null) {
-              router.pop();
+              router.go(NavigationServiceRoutes.homeRouteUri);
             } else {
               sm.showSnackBar(
                   const SnackBar(content: Text("Please correct the form!")));

@@ -56,9 +56,8 @@ class ProductActionButton extends StatelessWidget {
         mainBtn = SGIconButton(
           size: 50,
           icon: FontAwesomeIcons.plus,
-          onPressed: () async {
-            await context.push(NavigationServiceRoutes.scannerRouteUri);
-            await controller.initProducts();
+          onPressed: () {
+            context.push(NavigationServiceRoutes.scannerRouteUri);
           },
         );
       }
