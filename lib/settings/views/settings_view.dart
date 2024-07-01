@@ -24,7 +24,7 @@ class SettingsPageView extends StatelessWidget {
       return ListView(children: [
         InputField(
             name: "User",
-            value: context.watch<AuthControllerCubit>().getUserEmail(),
+            controller: TextEditingController(text: state.email),
             icon: FontAwesomeIcons.arrowRightFromBracket,
             onIconTap: () {
               context.read<AuthControllerCubit>().signOut();

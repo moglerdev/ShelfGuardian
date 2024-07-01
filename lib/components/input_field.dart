@@ -4,7 +4,7 @@ import 'package:shelf_guardian/common/theme.dart';
 
 class InputField extends StatelessWidget {
   final String name;
-  final String value;
+  final String? value;
   final IconData? icon;
   final bool? enabled;
   final void Function()? onIconTap;
@@ -13,7 +13,7 @@ class InputField extends StatelessWidget {
   const InputField(
       {super.key,
       required this.name,
-      required this.value,
+      this.value,
       this.icon,
       this.enabled = true,
       this.onIconTap,
