@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/common/theme.dart';
 import 'package:shelf_guardian/filter/bloc/filter_controller.dart';
-import 'package:shelf_guardian/filter/components/filter_date_picker.dart';
+import 'package:shelf_guardian/components/date_picker.dart';
 import 'package:shelf_guardian/filter/services/filter_dao.dart';
 
 class FilterRange extends StatelessWidget {
@@ -34,7 +34,7 @@ class FilterRange extends StatelessWidget {
                 "Von",
                 style: ShelfGuardianTextStyles.body1,
               ),
-              FilterDatePicker(
+              DatePicker(
                   setDate: (pickedDate) {
                     context
                         .read<FilterControllerCubit>()
@@ -45,7 +45,7 @@ class FilterRange extends StatelessWidget {
                 "Bis",
                 style: ShelfGuardianTextStyles.body1,
               ),
-              FilterDatePicker(
+              DatePicker(
                   setDate: (pickedDate) {
                     context
                         .read<FilterControllerCubit>()

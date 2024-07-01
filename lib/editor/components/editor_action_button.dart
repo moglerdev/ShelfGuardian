@@ -16,13 +16,13 @@ class EditorActionButton extends StatelessWidget {
         builder: (context, state) {
       final router = GoRouter.of(context);
       final sm = ScaffoldMessenger.of(context);
-      Widget rightBtn = SGIconButton(
-        icon: FontAwesomeIcons.ban,
+      Widget cancelBtn = SGIconButton(
+        icon: FontAwesomeIcons.squareXmark,
         onPressed: () {
           context.go(NavigationServiceRoutes.homeRouteUri);
         },
       );
-      Widget mainBtn = SGIconButton(
+      Widget saveBtn = SGIconButton(
         size: 50,
         icon: FontAwesomeIcons.floppyDisk,
         onPressed: () async {
@@ -44,15 +44,21 @@ class EditorActionButton extends StatelessWidget {
           }
         },
       );
+      Widget scanBtn = SGIconButton(
+        icon: FontAwesomeIcons.cameraRetro,
+        onPressed: () {
+          context.push(NavigationServiceRoutes.scannerRouteUri);
+        },
+      );
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Spacer(flex: 1),
-          const SizedBox(width: 50),
+          cancelBtn,
           const Spacer(flex: 1),
-          mainBtn,
+          saveBtn,
           const Spacer(flex: 1),
-          rightBtn,
+          scanBtn,
           const Spacer(flex: 1),
         ],
       );

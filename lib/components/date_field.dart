@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shelf_guardian/common/theme.dart';
+import 'package:shelf_guardian/components/date_picker.dart';
 
-class InputField extends StatelessWidget {
+class DateField extends StatelessWidget {
   final String name;
-  final String value;
+  final void Function(DateTime) setDate;
+  final DateTime? date;
   final IconData? icon;
   final bool? enabled;
   final void Function()? onIconTap;
-  final TextEditingController? controller;
 
-  const InputField(
+  const DateField(
       {super.key,
       required this.name,
-      required this.value,
+      required this.date,
+      required this.setDate,
       this.icon,
       this.enabled = true,
-      this.onIconTap,
-      this.controller});
+      this.onIconTap});
 
   @override
   Widget build(BuildContext context) {
-    controller ?? TextEditingController(text: value);
-
     return Container(
       // height: 50,
       decoration: BoxDecoration(
@@ -47,14 +46,9 @@ class InputField extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                  child: TextField(
-                style: ShelfGuardianTextStyles.body1,
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 10, right: 10),
-                  border: InputBorder.none,
-                ),
-                controller: controller,
-                enabled: enabled,
+                  child: DatePicker(
+                setDate: setDate,
+                date: date,
               )),
               if (icon != null)
                 GestureDetector(

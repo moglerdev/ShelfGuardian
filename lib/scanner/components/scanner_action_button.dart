@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shelf_guardian/components/button.dart';
 import 'package:shelf_guardian/scanner/bloc/scanner_controller.dart';
@@ -85,6 +86,7 @@ class SwitchCameraButton extends StatelessWidget {
 class ScannerActionButton extends StatelessWidget {
   final MobileScannerController controller;
   final void Function() onEdit;
+
   const ScannerActionButton(
       {super.key, required this.controller, required this.onEdit});
 
@@ -92,27 +94,38 @@ class ScannerActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ScannerControllerCubit, ScannerState>(
         builder: (context, state) {
-      List<Widget> leftBtns = [
-        SwitchCameraButton(controller: controller),
-        const SizedBox(width: 10),
-      ];
-      Widget mainBtn = SGIconButton(
+      Widget toggleCamBtn = SwitchCameraButton(controller: controller);
+      Widget toggleLightBtn = ToggleFlashlightButton(
+        controller: controller,
+      );
+      Widget editorBtn = SGIconButton(
         size: 50,
         icon: FontAwesomeIcons.penToSquare,
         onPressed: () {
           onEdit();
         },
       );
-      List<Widget> rightBtns = [
-        const SizedBox(width: 10),
-        ToggleFlashlightButton(
-          controller: controller,
-        ),
-      ];
+      Widget cancelBtn = SGIconButton(
+        icon: FontAwesomeIcons.squareXmark,
+        onPressed: () {
+          context.pop();
+        },
+      );
       return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [...leftBtns, mainBtn, ...rightBtns],
+        children: [
+          const Spacer(flex: 1),
+          toggleCamBtn,
+          const SizedBox(width: 10),
+          toggleLightBtn,
+          const Spacer(flex: 1),
+          editorBtn,
+          const Spacer(flex: 1),
+          const SizedBox(width: 25),
+          cancelBtn,
+          const SizedBox(width: 25),
+          const Spacer(flex: 1),
+        ],
       );
     });
   }

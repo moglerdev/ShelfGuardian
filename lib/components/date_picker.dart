@@ -3,11 +3,11 @@ import 'package:intl/intl.dart';
 
 import 'package:shelf_guardian/common/theme.dart';
 
-class FilterDatePicker extends StatelessWidget {
+class DatePicker extends StatelessWidget {
   final void Function(DateTime) setDate;
   final DateTime? date;
 
-  const FilterDatePicker(
+  const DatePicker(
       {super.key, required this.setDate, required this.date});
 
   @override

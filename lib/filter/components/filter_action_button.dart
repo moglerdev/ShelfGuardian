@@ -29,7 +29,7 @@ class FilterActionButton extends StatelessWidget {
         },
       );
       Widget cancelBtn = SGIconButton(
-        icon: FontAwesomeIcons.ban,
+        icon: FontAwesomeIcons.squareXmark,
         onPressed: () {
           context.pop();
         },
