@@ -22,7 +22,7 @@ abstract class UserService {
   }
 }
 
-final _storage = const FlutterSecureStorage();
+const _storage = FlutterSecureStorage();
 
 class SupabaseUserService implements UserService {
   final client = SupabaseApi.client;
@@ -114,6 +114,6 @@ class SupabaseUserService implements UserService {
 
   @override
   String getUserEmail() {
-    return client.auth.currentUser?.email ?? "";
+    return client.auth.currentUser?.email ?? "Du wirst ja wohl wissen, wie du heißt!";
   }
 }
