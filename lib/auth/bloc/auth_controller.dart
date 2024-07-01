@@ -27,21 +27,32 @@ class AuthControllerCubit extends Cubit<AuthenticationState>
 
   Future<void> initSession() async {
     emit(const AuthenticatingState());
-    if (await service.restoreSession()) {
-      emit(const AuthenticatedState());
-    } else {
+    try {
+      if (await service.restoreSession()) {
+        emit(const AuthenticatedState());
+      } else {
+        emit(const UnauthenticatedState());
+      }
+    } catch (e) {
       emit(const UnauthenticatedState());
+      rethrow;
     }
   }
 
   @override
   Future<bool> signIn(String email, String password) async {
     emit(const AuthenticatingState());
-    final result = await service.signIn(email, password);
-    if (result) {
-      emit(const AuthenticatedState());
+    try {
+      if (await service.signIn(email, password)) {
+        emit(const AuthenticatedState());
+        return true;
+      }
+    } catch (e) {
+      emit(const UnauthenticatedState());
+      rethrow;
     }
-    return result;
+    emit(const UnauthenticatedState());
+    return false;
   }
 
   @override
@@ -52,20 +63,23 @@ class AuthControllerCubit extends Cubit<AuthenticationState>
   @override
   Future<bool> signUp(String email, String password) async {
     emit(const AuthenticatingState());
-    final result = await service.signUp(email, password);
-    if (result) {
-      emit(const AuthenticatedState());
-    } else {
+    try {
+      if (await service.signUp(email, password)) {
+        emit(const AuthenticatedState());
+        return true;
+      }
+    } catch (e) {
       emit(const UnauthenticatedState());
+      rethrow;
     }
-    return result;
+    emit(const UnauthenticatedState());
+    return false;
   }
 
   @override
   Future<bool> signOut() async {
     emit(const UnauthenticatedState());
-    final result = await service.signOut();
-    return result;
+    return await service.signOut();
   }
 
   @override
