@@ -7,9 +7,8 @@ import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/routes.dart';
 import 'package:shelf_guardian/service/notification_service.dart';
 import 'package:shelf_guardian/service/user_service.dart';
-import 'package:shelf_guardian/supabase.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shelf_guardian/supabase.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -19,6 +18,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await Api.init();
 
   final notification = NotificationService.create();
   await notification.requestPermission();
