@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
 import 'package:shelf_guardian/service/product_service.dart';
+import 'package:shelf_guardian/supabase.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class ProductController {
   Future<bool> initProducts();
@@ -29,9 +31,25 @@ abstract class ProductController {
 class ProductControllerCubit extends Cubit<ProductListState>
     implements ProductController {
   final service = ProductService.create();
+  final channel = Api.client.channel("products_items");
 
   ProductControllerCubit() : super(ProductListEmpty()) {
+    channel
+        .onPostgresChanges(
+          event: PostgresChangeEvent.all,
+          schema: "public",
+          callback: (payload) {
+            unawaited(initProducts());
+          },
+        )
+        .subscribe();
     unawaited(initProducts());
+  }
+
+  @override
+  Future<void> close() {
+    channel.unsubscribe();
+    return super.close();
   }
 
   @override
@@ -97,7 +115,9 @@ class ProductControllerCubit extends Cubit<ProductListState>
 
   @override
   bool selectAllProducts() {
-    if (state is ProductListSelected || state is ProductListLoading || state is ProductSearchedList) {
+    if (state is ProductListSelected ||
+        state is ProductListLoading ||
+        state is ProductSearchedList) {
       return false;
     }
     List<Product> products = state.getProducts();

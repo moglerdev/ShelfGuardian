@@ -25,7 +25,7 @@ abstract class UserService {
 const _storage = FlutterSecureStorage();
 
 class SupabaseUserService implements UserService {
-  final client = SupabaseApi.client;
+  final client = Api.client;
   final authStoreKey = "dev.mogler.sg::session";
   final notification = NotificationService.create();
 
@@ -114,6 +114,7 @@ class SupabaseUserService implements UserService {
 
   @override
   String getUserEmail() {
-    return client.auth.currentUser?.email ?? "Du wirst ja wohl wissen, wie du heißt!";
+    return client.auth.currentUser?.email ??
+        "Du wirst ja wohl wissen, wie du heißt!";
   }
 }
