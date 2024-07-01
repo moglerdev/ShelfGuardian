@@ -16,11 +16,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Moment.setGlobalLocalization(MomentLocalizations.de());
 
-  await Supabase.initialize(
-    url: SupabaseCredentials.supabaseUrl,
-    anonKey: SupabaseCredentials.supabaseAnonKey,
-  );
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
