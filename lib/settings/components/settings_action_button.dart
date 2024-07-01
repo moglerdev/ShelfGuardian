@@ -14,7 +14,7 @@ class SettingsActionButton extends StatelessWidget {
     return BlocBuilder<SettingsControllerCubit, SettingsState>(
         builder: (context, state) {
       Widget cancelBtn = SGIconButton(
-        icon: FontAwesomeIcons.ban,
+        icon: FontAwesomeIcons.squareXmark,
         onPressed: () {
           context.go(NavigationServiceRoutes.homeRouteUri);
         },

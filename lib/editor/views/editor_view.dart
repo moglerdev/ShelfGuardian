@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shelf_guardian/components/date_field.dart';
+import 'package:shelf_guardian/components/input_field.dart';
 import 'package:shelf_guardian/editor/bloc/editor_controller.dart';
 import 'package:shelf_guardian/editor/bloc/editor_state.dart';
-import 'package:shelf_guardian/editor/components/date_picker.dart';
 
 class EditorView extends StatefulWidget {
   final String code;
   final int id;
+
   const EditorView({super.key, required this.code, required this.id});
 
   @override
@@ -51,38 +53,35 @@ class _EditorViewState extends State<EditorView> {
           });
         }
 
-        return Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Barcode',
-                  ),
-                  controller: barcodeController,
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                  ),
-                  controller: nameController,
-                ),
-                DatePickerTextField(
-                  state.expiryDate,
-                  onDateSelected: (p0) {
-                    context
-                        .read<EditorControllerCubit>()
-                        .update(expiryDate: p0);
-                  },
-                ),
-                TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Preis',
-                  ),
-                  controller: priceController,
-                ),
-              ],
-            ));
+        return ListView(
+          children: [
+            InputField(
+              name: "Bar Code",
+              value: barcodeController.text,
+              controller: barcodeController,
+            ),
+            InputField(
+              name: "Name",
+              value: nameController.text,
+              controller: nameController,
+            ),
+            DateField(
+              name: "Mindesthaltbarkeitsdatum",
+              date: state.expiryDate,
+              setDate: (p0) {
+                context.read<EditorControllerCubit>().update(expiryDate: p0);
+              },
+            ),
+            InputField(
+              name: "Preis",
+              value: priceController.text,
+              controller: priceController,
+            ),
+            const Text(
+                "Hier designt Chris noch einen wunderschönen Picture Selector hin"),
+            const SizedBox(height: 80),
+          ],
+        );
       },
     );
   }
