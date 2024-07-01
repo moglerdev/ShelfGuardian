@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
-import 'package:shelf_guardian/supabase.dart';
+import 'package:shelf_guardian/service/product_service.dart';
 
 abstract class ProductController {
   Future<bool> initProducts();
@@ -12,7 +12,7 @@ abstract class ProductController {
 
   bool removeProduct(Product product);
 
-  bool removeSelectedProducts();
+  Future<bool> removeSelectedProducts();
 
   bool selectProduct(Product product);
 
@@ -28,6 +28,8 @@ abstract class ProductController {
 //TODO: Outsource Supabase logic in a service class and inject it into the controller
 class ProductControllerCubit extends Cubit<ProductListState>
     implements ProductController {
+  final service = ProductService.create();
+
   ProductControllerCubit() : super(ProductListEmpty()) {
     unawaited(initProducts());
   }
@@ -36,26 +38,12 @@ class ProductControllerCubit extends Cubit<ProductListState>
   Future<bool> initProducts() async {
     // TODO: read filter options from local storage (Service Filter)
     emit(ProductListLoading());
-    var result = await SBClient.supabaseClient
-        .from("products_items")
-        .select(
-            "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
-        .order("expired_at", ascending: true);
-    if (result.isEmpty) {
+
+    final products = await service.getProducts();
+    if (products.isEmpty) {
       emit(ProductListEmpty());
       return false;
     } else {
-      List<Product> products = result.map((e) {
-        var meta =
-            DbProductMeta.fromJson(e["products_meta"] as Map<String, dynamic>);
-        var item = DbProductItem.fromJson(e);
-        return Product(
-            name: meta.name ?? "Unknown",
-            description: meta.description ?? "Unknown",
-            priceInCents: item.priceInCents ?? 0,
-            image: "https://via.placeholder.com/150",
-            expiredAt: item.expiredAt ?? DateTime.now());
-      }).toList();
       emit(ProductListFilled(products));
       return true;
     }
@@ -82,15 +70,11 @@ class ProductControllerCubit extends Cubit<ProductListState>
   }
 
   @override
-  bool removeSelectedProducts() {
+  Future<bool> removeSelectedProducts() async {
     if (state is ProductListSelected) {
-      List<Product> products = (state as ProductListSelected)
-          .products
-          .where((element) => !(state as ProductListSelected)
-              .selectedProducts
-              .contains(element))
-          .toList();
-      emit(ProductListFilled(products));
+      await service
+          .removeProducts((state as ProductListSelected).selectedProducts);
+      await initProducts();
       return true;
     }
     return false;

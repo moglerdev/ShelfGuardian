@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/auth/bloc/auth_state.dart';
 import 'package:shelf_guardian/auth/views/forgot_password_page.dart';
 import 'package:shelf_guardian/auth/views/sign_in_page.dart';
@@ -14,10 +16,6 @@ import 'package:shelf_guardian/common/routes_service.dart';
 final routes = GoRouter(
     routes: [
       GoRoute(
-        path: NavigationServiceRoutes.signInRouteUri,
-        builder: (context, state) => const SignInPage(),
-      ),
-      GoRoute(
         path: NavigationServiceRoutes.signUpRouteUri,
         builder: (context, state) => const SignUpPage(),
       ),
@@ -27,22 +25,41 @@ final routes = GoRouter(
       ),
       GoRoute(
         path: NavigationServiceRoutes.homeRouteUri,
-        builder: (context, state) => const ProductPage(),
+        builder: (context, state) {
+          return BlocBuilder<AuthControllerCubit, AuthenticationState>(
+              builder: (context, state) {
+            if (state is AuthenticatedState) {
+              return const ProductPage();
+            } else {
+              return const SignInPage();
+            }
+          });
+        },
       ),
       GoRoute(
         path: NavigationServiceRoutes.scannerRouteUri,
         builder: (context, state) => const ScannerPage(),
       ),
       GoRoute(
-          path: NavigationServiceRoutes.editorWithIdRouteUri,
+          path: NavigationServiceRoutes.createWithBarcodeRouteUri,
           builder: (context, state) {
-            final id = state.pathParameters['id'] ?? '';
-            return EditorPage(code: id);
+            final barcode = state.pathParameters['barcode'] ?? '';
+            return EditorPage(code: barcode, id: -1);
           }),
       GoRoute(
-          path: NavigationServiceRoutes.editorRouteUri,
+          path: NavigationServiceRoutes.createRouteUri,
           builder: (context, state) {
-            return const EditorPage(code: "");
+            return const EditorPage(code: "", id: -1);
+          }),
+      GoRoute(
+          path: NavigationServiceRoutes.editRouterUri,
+          builder: (context, state) {
+            final idStr = state.pathParameters['id'] ?? '';
+            final id = int.tryParse(idStr) ?? -1;
+            return EditorPage(
+              code: "",
+              id: id,
+            );
           }),
       GoRoute(
         path: NavigationServiceRoutes.settingsRouteUri,
@@ -56,12 +73,14 @@ final routes = GoRouter(
     redirect: (BuildContext context, GoRouterState state) {
       debugPrint(state.fullPath);
       final isAuthRoute = state.fullPath!.startsWith("/auth");
-      final isAuthenticated = AuthenticationState.of(context).isAuthenticated;
+      final isAuthenticated =
+          AuthenticationState.of(context) is AuthenticatedState;
 
       if (isAuthenticated && isAuthRoute) {
         return NavigationServiceRoutes.homeRouteUri;
       } else if (!isAuthenticated && !isAuthRoute) {
-        return NavigationServiceRoutes.signInRouteUri;
+        if (state.fullPath == "/") return null;
+        return "/";
       }
 
       return null;

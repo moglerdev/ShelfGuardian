@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shelf_guardian/common/routes_service.dart';
+import 'package:shelf_guardian/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/product/components/product_item.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
-import 'package:shelf_guardian/product/bloc/product_controller.dart';
 
 class ProductList extends StatelessWidget {
   final List<Product> products;
@@ -29,16 +31,25 @@ class ProductList extends StatelessWidget {
                   return const SizedBox(height: 100);
                 }
                 final product = products[index];
-                final isSelected = selectedProducts.contains(product);
+                final isSelected = selectedProducts
+                    .where((element) => element.id == product.id)
+                    .isNotEmpty;
+                final router = GoRouter.of(context);
+                final controller = context.read<ProductControllerCubit>();
                 return Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     child: ProductItem(
                         product: product,
                         isSelected: isSelected,
-                        onTap: () {
+                        onTap: () async {
                           if (selectedProducts.isNotEmpty) {
                             onSelectChanged(product, !isSelected);
                             return;
+                          } else {
+                            await router.push(NavigationServiceRoutes
+                                .editRouterUri
+                                .replaceAll(":id", "${product.id}"));
+                            controller.initProducts();
                           }
                         },
                         onSelectChanged: (selected) {

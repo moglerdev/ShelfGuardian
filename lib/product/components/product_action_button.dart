@@ -14,6 +14,7 @@ class ProductActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductControllerCubit, ProductListState>(
         builder: (context, state) {
+      final controller = context.read<ProductControllerCubit>();
       List<Widget> leftBtns = [
         SGIconButton(
             icon: FontAwesomeIcons.gear,
@@ -35,28 +36,29 @@ class ProductActionButton extends StatelessWidget {
         rightBtns.add(SGIconButton(
           icon: FontAwesomeIcons.rectangleXmark,
           onPressed: () {
-            context.read<ProductControllerCubit>().deselectAllProducts();
+            controller.deselectAllProducts();
           },
         ));
         mainBtn = SGIconButton(
           size: 50,
           icon: FontAwesomeIcons.trash,
           onPressed: () {
-            context.read<ProductControllerCubit>().removeSelectedProducts();
+            controller.removeSelectedProducts();
           },
         );
       } else {
         rightBtns.add(SGIconButton(
           icon: FontAwesomeIcons.checkToSlot,
           onPressed: () {
-            context.read<ProductControllerCubit>().selectAllProducts();
+            controller.selectAllProducts();
           },
         ));
         mainBtn = SGIconButton(
           size: 50,
           icon: FontAwesomeIcons.plus,
-          onPressed: () {
-            context.push(NavigationServiceRoutes.scannerRouteUri);
+          onPressed: () async {
+            await context.push(NavigationServiceRoutes.scannerRouteUri);
+            await controller.initProducts();
           },
         );
       }

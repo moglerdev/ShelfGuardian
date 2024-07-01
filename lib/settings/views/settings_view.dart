@@ -5,11 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/components/input_field.dart';
-import 'package:shelf_guardian/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/settings/components/settings_item_checkbox.dart';
 import 'package:shelf_guardian/settings/components/settings_item_descriptional.dart';
 import 'package:shelf_guardian/settings/bloc/settings_controller.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
 
 class SettingsPageView extends StatelessWidget {
   const SettingsPageView({super.key});
@@ -18,46 +16,42 @@ class SettingsPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsControllerCubit, SettingsState>(
         builder: (context, state) {
-      var productController = context.watch<ProductControllerCubit>();
-      var productAmmount = productController.state.getProducts().length;
-      if (productController.state is ProductListLoading) {
+      if (state is! SettingsStateLoaded) {
         return const Center(
           child: CircularProgressIndicator(),
         );
       }
-      return ListView(
-          //mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            InputField(
-                name: "User",
-                value: context.watch<AuthControllerCubit>().getUserEmail(),
-                icon: FontAwesomeIcons.arrowRightFromBracket,
-                onIconTap: () {
-                  context.read<AuthControllerCubit>().signOut();
-                  context.go(NavigationServiceRoutes.signInRouteUri);
-                },
-                enabled: false),
-            SettingsItemDescriptional(
-                name: "Produkte",
-                description: "Hier sehen sie die Anzahl "
-                    "der Produkte in ihrem Inventar",
-                value: "$productAmmount"),
-            const SettingsItemDescriptional(
-                name: "Inventar Wert",
-                description:
-                    "Hier wird der gesamte Warenwert ihres Inventars angegeben",
-                value: "XXX,XX€"),
-            SettingsItemCheckbox(
-              name: "Benachrichtigung",
-              description: "Wollen sie von uns Benachrichtigungen erhalten?"
-                  "\n Bspw. Produkte, die bald MHD erreichen.",
-              onSelectChanged: (selected) {
-                context.read<SettingsControllerCubit>().toggleNotifications();
-              },
-              isSelected: state.notifications,
-            ),
-            const SizedBox(height: 100),
-          ]);
+      return ListView(children: [
+        InputField(
+            name: "User",
+            value: context.watch<AuthControllerCubit>().getUserEmail(),
+            icon: FontAwesomeIcons.arrowRightFromBracket,
+            onIconTap: () {
+              context.read<AuthControllerCubit>().signOut();
+              context.go(NavigationServiceRoutes.signInRouteUri);
+            },
+            enabled: false),
+        SettingsItemDescriptional(
+            name: "Produkte",
+            description: "Hier sehen sie die Anzahl "
+                "der Produkte in ihrem Inventar",
+            value: "${state.summaryItems}"),
+        SettingsItemDescriptional(
+            name: "Inventar Wert",
+            description:
+                "Hier wird der gesamte Warenwert ihres Inventars angegeben",
+            value: "${state.summaryValue / 100} €"),
+        SettingsItemCheckbox(
+          name: "Benachrichtigung",
+          description: "Wollen sie von uns Benachrichtigungen erhalten?"
+              "\n Bspw. Produkte, die bald MHD erreichen.",
+          onSelectChanged: (selected) {
+            context.read<SettingsControllerCubit>().toggleNotifications();
+          },
+          isSelected: state.notifications,
+        ),
+        const SizedBox(height: 100),
+      ]);
     });
   }
 }
