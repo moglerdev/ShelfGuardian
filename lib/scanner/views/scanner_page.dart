@@ -7,6 +7,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shelf_guardian/scanner/bloc/scanner_controller.dart';
 import 'package:shelf_guardian/scanner/components/scanner_action_button.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
+import 'package:shelf_guardian/service/easter_egg_service.dart';
 
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
@@ -21,6 +22,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
   bool pause = false;
 
   void _handleBarcode(BarcodeCapture barcodes) async {
+    final router = GoRouter.of(context);
     if (mounted && !pause) {
       pause = true;
       await _controller.stop();
@@ -28,12 +30,17 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
       pause = true;
       final barcode = barcodes.barcodes.firstOrNull;
       barcodes.barcodes.clear();
-      if (barcode != null) {
-        // TODO: On navigate back to scanner page, reactivate camera;
-        // TODO: disable camera when navigating to editor page;
-        await context.push(NavigationServiceRoutes.createWithBarcodeRouteUri
+      if (barcode != null && barcode.displayValue!.isNotEmpty) {
+        final strCode = barcode.displayValue!;
+        // our little easter egg ;)
+        if (await EasterEggService.instance.isRickRoll(strCode) &&
+            await EasterEggService.instance.openRickRoll()) {
+          return;
+        }
+        final code = Uri.encodeComponent(barcode.displayValue!);
+        await router.push(NavigationServiceRoutes.createWithBarcodeRouteUri
             .replaceAll(":barcode",
-                "${barcode.displayValue}")); // Future gets resolved when back button is pressed
+                code)); // Future gets resolved when back button is pressed
       }
       _subscription?.resume();
       await _controller.start();
