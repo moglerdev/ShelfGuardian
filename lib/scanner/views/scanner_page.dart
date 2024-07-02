@@ -35,6 +35,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
         // our little easter egg ;)
         if (await EasterEggService.instance.isRickRoll(strCode) &&
             await EasterEggService.instance.openRickRoll()) {
+          router.go(NavigationServiceRoutes.homeRouteUri);
           return;
         }
         final code = Uri.encodeComponent(barcode.displayValue!);
@@ -42,9 +43,13 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
             .replaceAll(":barcode",
                 code)); // Future gets resolved when back button is pressed
       }
-      _subscription?.resume();
-      await _controller.start();
-      pause = false;
+      try {
+        _subscription?.resume();
+        await _controller.start();
+        pause = false;
+      } catch (e) {
+        router.go(NavigationServiceRoutes.homeRouteUri);
+      }
     }
   }
 
