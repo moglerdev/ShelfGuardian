@@ -78,19 +78,19 @@ class _SignInViewState extends State<SignInView> {
           ),
           SGTextButton(
             onPressed: _signIn,
-            buttonText: 'Sign In',
+            buttonText: 'Anmelden',
           ),
           SGTextButton(
             onPressed: () {
               context.push(NavigationServiceRoutes.signUpRouteUri);
             },
-            buttonText: 'Create Account',
+            buttonText: 'Registrieren',
           ),
           SGTextButton(
             onPressed: () {
               context.push(NavigationServiceRoutes.forgotPasswordRouteUri);
             },
-            buttonText: 'Forgot Password',
+            buttonText: 'Passwort vergessen',
           ),
         ],
       ),
@@ -105,7 +105,7 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Sign In'),
+          title: const Text('Anmelden'),
         ),
         body: BlocBuilder<AuthControllerCubit, AuthenticationState>(
           builder: (context, state) {
