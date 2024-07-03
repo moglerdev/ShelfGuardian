@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_guardian/common/theme.dart';
+import 'package:shelf_guardian/components/checkbox.dart';
 
 class SettingsItemCheckbox extends StatelessWidget {
   final String name;
@@ -49,18 +50,10 @@ class SettingsItemCheckbox extends StatelessWidget {
                 ),
               ],
             )),
-            Container(
-                margin: const EdgeInsets.only(left: 10),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: ShelfGuardianColors.button,
+            SGCheckBox(
+                  onSelectChanged: (selected) { onSelectChanged(selected);},
+                  isSelected: isSelected,
                 ),
-                child: Checkbox(
-                    value: isSelected,
-                    onChanged: (selected) {
-                      onSelectChanged(selected ?? false);
-                    }))
           ]),
         ));
   }
