@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
@@ -25,6 +26,8 @@ abstract class ProductController {
   bool deselectProduct(Product product);
 
   bool toggleSearchState();
+
+  bool updateShownProducts(List<Product> shownProducts);
 }
 
 //TODO: Outsource Supabase logic in a service class and inject it into the controller
@@ -160,10 +163,26 @@ class ProductControllerCubit extends Cubit<ProductListState>
       emit(ProductListFilled((state.getProducts())));
       return true;
     } else if (state is ProductListFilled) {
-      emit(ProductSearchedList(state.getProducts(), "", []));
+      emit(ProductSearchedList(state.getProducts(), state.getProducts(), TextEditingController(), updateShownProducts, ""));
       return true;
     }
     //TODO: Implement toast message (or make Searching functional above states)
     return false;
   }
+
+  @override
+  bool updateShownProducts(List<Product> shownProducts) {
+  if (state is ProductSearchedList) {
+    state.dispose();
+    emit(ProductSearchedList(
+      (state as ProductSearchedList).products,
+      shownProducts,
+      (state as ProductSearchedList).searchController,
+      (state as ProductSearchedList).updateShownProducts,
+      (state as ProductSearchedList).lastSearchText,
+    ));
+    return true;
+  }
+  return false;
+}
 }

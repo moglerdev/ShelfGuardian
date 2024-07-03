@@ -35,23 +35,19 @@ class ProductPageView extends StatelessWidget {
             },
             selectedProducts: selectedProducts);
       } else if (state is ProductSearchedList) {
-        final products = state.products;
-        final search = state.search;
+        final products = context.watch<ProductControllerCubit>().state.getProducts();
         return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           InputField(
               name: "Suche",
-              value: search,
+              controller: state.searchController,
               icon: FontAwesomeIcons.squareXmark,
-              onIconTap: () {}),
+              onIconTap: () {
+                state.searchController.clear();}),
           Expanded(
               child: ProductList(
                   products: products,
-                  onSelectChanged: (product, selected) {
-                    context
-                        .read<ProductControllerCubit>()
-                        .selectProduct(product);
-                  },
-                  selectedProducts: state.products))
+                  onSelectChanged: (product, selected) {},
+                  selectedProducts: const []))
         ]);
       } else if (state is ProductListEmpty) {
         return const Center(

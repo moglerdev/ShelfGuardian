@@ -66,8 +66,10 @@ class ProductActionButton extends StatelessWidget {
         icon: FontAwesomeIcons.magnifyingGlass,
         onPressed: () {
           context.read<ProductControllerCubit>().toggleSearchState();
+          if(state is ProductSearchedList) {
+            context.read<ProductControllerCubit>().state.dispose();
+          }
           // TODO Implement search page
-          print("TODO: Implement search page");
         },
       ));
       return Row(
