@@ -162,7 +162,7 @@ class ProductControllerCubit extends Cubit<ProductListState>
     if (state is ProductSearchedList) {
       emit(ProductListFilled((state.getProducts())));
       return true;
-    } else if (state is ProductListFilled) {
+    } else if (state is ProductListFilled || state is ProductListSelected) {
       emit(ProductSearchedList(state.getProducts(), state.getProducts(), TextEditingController(), updateShownProducts, ""));
       return true;
     }
