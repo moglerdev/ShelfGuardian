@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
+import 'package:shelf_guardian/components/input_field.dart';
+import 'package:shelf_guardian/components/text_button.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -23,7 +25,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     if (isSuccess) {
       sm.showSnackBar(
-        const SnackBar(content: Text('Passwort erfolgreich zurückgesetzt.')),
+        const SnackBar(content: Text('Email zum Zurücksetzen des Passworts wurde gesendet!')),
       );
       router.pushReplacement(NavigationServiceRoutes.signInRouteUri);
     } else {
@@ -41,19 +43,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         ),
         body: AutofillGroup(
           child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
             children: [
-              TextField(
+              InputField(
                 autofillHints: const [AutofillHints.email],
                 controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
+                name: 'Email',
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
+              SGTextButton(
                 onPressed: _resetPassword,
-                child: const Text('Send reset password email'),
+                buttonText: 'Passwort zurücksetzen',
               ),
             ],
           ),
