@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moment_dart/moment_dart.dart';
 import 'package:shelf_guardian/common/theme.dart';
+import 'package:shelf_guardian/product/bloc/product_controller.dart';
+import 'package:shelf_guardian/product/bloc/product_state.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
 
 class ProductItem extends StatelessWidget {
@@ -63,11 +66,13 @@ class ProductItem extends StatelessWidget {
                 ),
               ],
             )),
-            Checkbox(
-                value: isSelected,
-                onChanged: (selected) {
-                  onSelectChanged(!isSelected);
-                })
+            if (context.read<ProductControllerCubit>().state
+                is! ProductSearchedList)
+              Checkbox(
+                  value: isSelected,
+                  onChanged: (selected) {
+                    onSelectChanged(!isSelected);
+                  })
           ])),
     );
   }
