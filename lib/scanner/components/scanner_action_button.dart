@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:shelf_guardian/components/button.dart';
+import 'package:shelf_guardian/components/icon_button.dart';
 import 'package:shelf_guardian/scanner/bloc/scanner_controller.dart';
 
 class ToggleFlashlightButton extends StatelessWidget {
