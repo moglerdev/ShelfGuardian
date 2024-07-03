@@ -6,6 +6,7 @@ import 'package:shelf_guardian/common/theme.dart';
 import 'package:shelf_guardian/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
+import 'package:shelf_guardian/components/checkbox.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
@@ -68,11 +69,10 @@ class ProductItem extends StatelessWidget {
             )),
             if (context.read<ProductControllerCubit>().state
                 is! ProductSearchedList)
-              Checkbox(
-                  value: isSelected,
-                  onChanged: (selected) {
-                    onSelectChanged(!isSelected);
-                  })
+              SGCheckBox(
+                onSelectChanged: (selected) { onSelectChanged(selected);},
+                isSelected: isSelected,
+              ),
           ])),
     );
   }
