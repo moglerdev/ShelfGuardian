@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
+import 'package:shelf_guardian/components/input_field.dart';
+import 'package:shelf_guardian/components/text_button.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -50,41 +52,30 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Sign In'),
+          title: const Text('Registrieren'),
         ),
         body: AutofillGroup(
           child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
             children: [
-              TextField(
+              InputField(
                 autofillHints: const [AutofillHints.email],
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
+                controller: _emailController, name: 'Email',
               ),
-              TextField(
+              InputField(
                 autofillHints: const [AutofillHints.newPassword],
-                autocorrect: false,
+                isPassword: true,
                 controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Your Password',
-                ),
+                name: 'Passwort',
               ),
-              TextField(
+              InputField(
                 autofillHints: const [AutofillHints.newPassword],
-                autocorrect: false,
+                isPassword: true,
                 controller: _repeatedPasswordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Repeat your Password',
-                ),
+                name: 'Passwort wiederholen',
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
+              SGTextButton(
                 onPressed: _signUp,
-                child: const Text('Create Account'),
+                buttonText: 'Registrieren',
               ),
             ],
           ),

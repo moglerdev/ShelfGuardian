@@ -9,15 +9,26 @@ class InputField extends StatelessWidget {
   final bool? enabled;
   final void Function()? onIconTap;
   final TextEditingController? controller;
+  final Iterable<String>? autofillHints;
+  final bool isPassword;
+  final void Function()? onSubmitted;
 
-  const InputField(
-      {super.key,
-      required this.name,
-      this.value,
-      this.icon,
-      this.enabled = true,
-      this.onIconTap,
-      this.controller});
+  const InputField({super.key,
+    required this.name,
+    this.value,
+    this.icon,
+    this.enabled = true,
+    this.onIconTap,
+    this.controller,
+    this.autofillHints,
+    this.isPassword = false,
+    this.onSubmitted});
+
+  void submit(String value) {
+    if(onSubmitted != null) {
+      onSubmitted!();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +59,18 @@ class InputField extends StatelessWidget {
             children: [
               Expanded(
                   child: TextField(
-                style: ShelfGuardianTextStyles.body1,
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 10, right: 10),
-                  border: InputBorder.none,
-                ),
-                controller: controller,
-                enabled: enabled,
-              )),
+
+                      onSubmitted: submit,
+                      autofillHints: autofillHints,
+                      style: ShelfGuardianTextStyles.body1,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 10, right: 10),
+                        border: InputBorder.none,
+                      ),
+                      controller: controller,
+                      enabled: enabled,
+                      autocorrect: !isPassword,
+                      obscureText: isPassword)),
               if (icon != null)
                 GestureDetector(
                   onTap: () {

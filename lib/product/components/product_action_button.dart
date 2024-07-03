@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shelf_guardian/components/button.dart';
+import 'package:shelf_guardian/components/icon_button.dart';
 import 'package:shelf_guardian/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/product/bloc/product_state.dart';
 import 'package:shelf_guardian/common/routes_service.dart';

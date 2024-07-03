@@ -4,7 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/auth/bloc/auth_state.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
+import 'package:shelf_guardian/components/input_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'package:shelf_guardian/components/text_button.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
@@ -60,45 +63,34 @@ class _SignInViewState extends State<SignInView> {
   Widget build(BuildContext context) {
     return AutofillGroup(
       child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
         children: [
-          TextField(
+          InputField(
             autofillHints: const [AutofillHints.email],
             controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: 'Email',
-              hintText: 'Enter your email or username', // Suggests input format
-              counterText: '', // Disable character counter for password field
-            ),
+            name: 'Email',
           ),
-          TextField(
+          InputField(
             autofillHints: const [AutofillHints.password],
-            autocorrect: false,
+            isPassword: true,
             controller: _passwordController,
-            obscureText: true,
-            decoration: const InputDecoration(
-              labelText: 'Password',
-              hintText: 'Enter your password', // Suggests input format
-              counterText: '', // Disable character counter for password field
-            ),
+            name: 'Passwort',
+            onSubmitted: _signIn,
           ),
-          const SizedBox(height: 20),
-          ElevatedButton(
+          SGTextButton(
             onPressed: _signIn,
-            child: const Text('Sign In'),
+            buttonText: 'Anmelden',
           ),
-          const SizedBox(height: 20),
-          TextButton(
+          SGTextButton(
             onPressed: () {
               context.push(NavigationServiceRoutes.signUpRouteUri);
             },
-            child: const Text('Create Account'),
+            buttonText: 'Registrieren',
           ),
-          TextButton(
+          SGTextButton(
             onPressed: () {
               context.push(NavigationServiceRoutes.forgotPasswordRouteUri);
             },
-            child: const Text('Forgot Password'),
+            buttonText: 'Passwort vergessen',
           ),
         ],
       ),
@@ -113,7 +105,7 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Sign In'),
+          title: const Text('Anmelden'),
         ),
         body: BlocBuilder<AuthControllerCubit, AuthenticationState>(
           builder: (context, state) {
