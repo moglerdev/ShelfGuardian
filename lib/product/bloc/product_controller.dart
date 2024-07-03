@@ -173,7 +173,7 @@ class ProductControllerCubit extends Cubit<ProductListState>
   @override
   bool updateShownProducts(List<Product> shownProducts) {
   if (state is ProductSearchedList) {
-    state.dispose();
+    state.disposeListener();
     emit(ProductSearchedList(
       (state as ProductSearchedList).products,
       shownProducts,

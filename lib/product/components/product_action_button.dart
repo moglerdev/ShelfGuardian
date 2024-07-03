@@ -67,7 +67,7 @@ class ProductActionButton extends StatelessWidget {
         onPressed: () {
           context.read<ProductControllerCubit>().toggleSearchState();
           if(state is ProductSearchedList) {
-            context.read<ProductControllerCubit>().state.dispose();
+            context.read<ProductControllerCubit>().state.disposeListener();
           }
           // TODO Implement search page
         },
