@@ -49,6 +49,7 @@ class ProductActionButton extends StatelessWidget {
       } else {
         rightBtns.add(SGIconButton(
           icon: FontAwesomeIcons.checkToSlot,
+          disabled: state is ProductSearchedList,
           onPressed: () {
             controller.selectAllProducts();
           },

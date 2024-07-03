@@ -21,3 +21,18 @@ class ShelfGuardianTextStyles {
       fontWeight: FontWeight.normal
   );
 }
+
+class ShelfGuardianButtonStyles {
+  static ButtonStyle buttonEnabled = ButtonStyle(
+    shape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
+    backgroundColor: const WidgetStatePropertyAll(ShelfGuardianColors.button),
+    iconColor: const WidgetStatePropertyAll(ShelfGuardianColors.icon),
+  );
+  static ButtonStyle buttonDisabled = ButtonStyle(
+    shape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
+    backgroundColor: const WidgetStatePropertyAll(ShelfGuardianColors.disabled),
+    iconColor: const WidgetStatePropertyAll(ShelfGuardianColors.icon),
+  );
+}

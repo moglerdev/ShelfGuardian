@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-final iconStyle = ButtonStyle(
-  shape: WidgetStatePropertyAll(
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
-  backgroundColor: const WidgetStatePropertyAll(Color(0xFF8367C7)),
-  iconColor: const WidgetStatePropertyAll(Color(0xFFFFFFFF)),
-);
+import 'package:shelf_guardian/common/theme.dart';
 
 class SGIconButton extends StatelessWidget {
   final IconData icon;
   final void Function() onPressed;
   final double size;
+  final bool disabled;
+
 //
   const SGIconButton(
-      {super.key, required this.icon, required this.onPressed, this.size = 35});
+      {super.key,
+      required this.icon,
+      required this.onPressed,
+      this.size = 35,
+      this.disabled = false});
+
 //
   @override
   Widget build(BuildContext context) {
-    var style = iconStyle.copyWith(
+    var style = disabled
+        ? ShelfGuardianButtonStyles.buttonDisabled
+        : ShelfGuardianButtonStyles.buttonEnabled;
+    style = style.copyWith(
         fixedSize: WidgetStateProperty.all(Size(size + 20, size + 20)));
     return IconButton(
       iconSize: size,
@@ -27,13 +31,13 @@ class SGIconButton extends StatelessWidget {
         icon,
         shadows: const [
           Shadow(
-            color: Color.fromARGB(110, 0, 0, 0),
+            color: ShelfGuardianColors.button,
             offset: Offset(0, 2),
             blurRadius: 10,
           )
         ],
       ),
-      onPressed: onPressed,
+      onPressed: disabled ? () {} : onPressed,
     );
   }
 }
