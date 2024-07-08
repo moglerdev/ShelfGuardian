@@ -3,6 +3,7 @@ import 'package:shelf_guardian/product/models/product_model.dart';
 
 abstract class ProductListState {
   List<Product> getProducts();
+  List<Product> getSearchedProducts() => [];
   void disposeListener() {}
 }
 
@@ -64,7 +65,10 @@ class ProductSearchedList extends ProductListState {
   }
 
   @override
-  List<Product> getProducts() => shownProducts;
+  List<Product> getProducts() => products;
+
+  @override
+  List<Product> getSearchedProducts() => shownProducts;
 
   @override
   void disposeListener() {

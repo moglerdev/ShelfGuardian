@@ -35,7 +35,7 @@ class ProductPageView extends StatelessWidget {
             },
             selectedProducts: selectedProducts);
       } else if (state is ProductSearchedList) {
-        final products = context.watch<ProductControllerCubit>().state.getProducts();
+        final products = context.watch<ProductControllerCubit>().state.getSearchedProducts();
         return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           InputField(
               name: "Suche",
