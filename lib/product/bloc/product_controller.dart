@@ -166,7 +166,6 @@ class ProductControllerCubit extends Cubit<ProductListState>
       emit(ProductSearchedList(state.getProducts(), state.getProducts(), TextEditingController(), updateShownProducts, ""));
       return true;
     }
-    //TODO: Implement toast message (or make Searching functional above states)
     return false;
   }
 

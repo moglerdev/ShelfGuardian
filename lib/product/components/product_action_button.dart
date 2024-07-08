@@ -66,9 +66,15 @@ class ProductActionButton extends StatelessWidget {
       rightBtns.add(SGIconButton(
         icon: FontAwesomeIcons.magnifyingGlass,
         onPressed: () {
-          context.read<ProductControllerCubit>().toggleSearchState();
+          bool toggleAllowed = context.read<ProductControllerCubit>().toggleSearchState();
           if(state is ProductSearchedList) {
             context.read<ProductControllerCubit>().state.disposeListener();
+          }
+          if(!toggleAllowed) {
+            final sm = ScaffoldMessenger.of(context);
+            sm.showSnackBar(
+              const SnackBar(content: Text('Ich kann gerade nichts suchen!')),
+            );
           }
           // TODO Implement search page
         },
