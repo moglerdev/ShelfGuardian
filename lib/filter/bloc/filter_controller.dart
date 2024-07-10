@@ -20,6 +20,8 @@ abstract class FilterController {
 
 class FilterControllerCubit extends Cubit<FilterDAO>
     implements FilterController {
+
+  final filterService = FilterService.create();
   FilterControllerCubit()
       : super(FilterDAO(
             dateFrom: DateTime.now(),
@@ -30,7 +32,7 @@ class FilterControllerCubit extends Cubit<FilterDAO>
   }
 
   Future<void> init() async {
-    final filterData = await FilterService.load();
+    final filterData = await filterService.load();
 
     emit(FilterDAO(
       dateFrom: filterData.dateFrom,
@@ -42,7 +44,7 @@ class FilterControllerCubit extends Cubit<FilterDAO>
 
   @override
   void saveFilter() {
-    FilterService.save(
+    filterService.save(
       FilterDAO(
       dateFrom: state.dateFrom,
       dateTo: state.dateTo,
@@ -60,8 +62,8 @@ class FilterControllerCubit extends Cubit<FilterDAO>
       filterOption: FilterOptions.bestBeforeDate,
       isAscending: false,
     ));
-    FilterService.deleteDateFrom();
-    FilterService.deleteDateTo();
+    filterService.deleteDateFrom();
+    filterService.deleteDateTo();
     saveFilter();
     // Todo: add a toast message to confirm the filter has been deleted
   }
