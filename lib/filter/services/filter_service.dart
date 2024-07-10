@@ -4,25 +4,21 @@ import 'package:shelf_guardian/filter/services/filter_options.dart';
 import 'package:shelf_guardian/filter/services/filter_dao.dart';
 
 class FilterService {
-  static Future<void> save({
-    DateTime? dateFrom,
-    DateTime? dateTo,
-    FilterOptions? filterOption,
-    bool? isAscending,
-  }) async {
+  static Future<void> save(FilterDAO filterData) async {
+
     final prefs = await SharedPreferences.getInstance();
 
-    if (dateFrom != null) {
-      prefs.setInt('dateFrom', dateFrom.millisecondsSinceEpoch);
+    if (filterData.dateFrom != null) {
+      prefs.setInt('dateFrom', filterData.dateFrom!.millisecondsSinceEpoch);
     }
-    if (dateTo != null) {
-      prefs.setInt('dateTo', dateTo.millisecondsSinceEpoch);
+    if (filterData.dateTo != null) {
+      prefs.setInt('dateTo', filterData.dateTo!.millisecondsSinceEpoch);
     }
-    if (filterOption != null) {
-      prefs.setString('filterOption', filterOption.toString());
+    if (filterData.filterOption != null) {
+      prefs.setString('filterOption', filterData.filterOption!.toString());
     }
-    if (isAscending != null) {
-      prefs.setBool('isAscending', isAscending);
+    if (filterData.isAscending != null) {
+      prefs.setBool('isAscending', filterData.isAscending!);
     }
   }
 
