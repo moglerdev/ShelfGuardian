@@ -43,11 +43,12 @@ class FilterControllerCubit extends Cubit<FilterDAO>
   @override
   void saveFilter() {
     FilterService.save(
+      FilterDAO(
       dateFrom: state.dateFrom,
       dateTo: state.dateTo,
       filterOption: state.filterOption,
       isAscending: state.isAscending,
-    );
+      ));
     // Todo: add a toast message to confirm the filter has been saved
   }
 
