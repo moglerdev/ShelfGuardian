@@ -3,8 +3,23 @@ import 'package:shelf_guardian/filter/services/filter_options.dart';
 
 import 'package:shelf_guardian/filter/services/filter_dao.dart';
 
-class FilterService {
-  static Future<void> save(FilterDAO filterData) async {
+abstract class FilterService {
+  Future<void> save(FilterDAO filterData);
+
+  Future<FilterDAO> load();
+
+  void deleteDateFrom();
+
+  void deleteDateTo();
+
+  static FilterService create() {
+    return FilterServiceImpl();
+  }
+}
+
+class FilterServiceImpl implements FilterService {
+  @override
+  Future<void> save(FilterDAO filterData) async {
 
     final prefs = await SharedPreferences.getInstance();
 
@@ -22,7 +37,8 @@ class FilterService {
     }
   }
 
-  static Future<FilterDAO> load() async {
+  @override
+  Future<FilterDAO> load() async {
     final prefs = await SharedPreferences.getInstance();
 
     final dateFromEpoch = prefs.getInt('dateFrom');
@@ -45,12 +61,14 @@ class FilterService {
     );
   }
 
-  static void deleteDateFrom() async {
+  @override
+  void deleteDateFrom() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('dateFrom');
   }
 
-  static void deleteDateTo() async {
+  @override
+  void deleteDateTo() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('dateTo');
   }
