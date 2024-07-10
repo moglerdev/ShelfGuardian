@@ -47,7 +47,7 @@ class EditorActionButton extends StatelessWidget {
       Widget scanBtn = SGIconButton(
         icon: FontAwesomeIcons.cameraRetro,
         onPressed: () {
-          context.push(NavigationServiceRoutes.scannerRouteUri);
+          context.pop();
         },
       );
       return Row(
