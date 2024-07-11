@@ -77,9 +77,6 @@ class _EditorViewState extends State<EditorView> {
               value: priceController.text,
               controller: priceController,
             ),
-            const Text(
-                "Hier designt Chris noch einen wunderschönen Picture Selector hin"),
-            const SizedBox(height: 80),
           ],
         );
       },
