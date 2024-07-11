@@ -48,7 +48,7 @@ Deno.serve(async (req) => {
         message: {
           token: fcmToken,
           notification: {
-            title: `Notification from Supabase`,
+            title: `Produkt Update`,
             body: payload.record.body,
           },
         },
