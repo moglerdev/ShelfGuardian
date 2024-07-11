@@ -26,7 +26,7 @@ class FilterControllerCubit extends Cubit<FilterDAO>
       : super(FilterDAO(
             dateFrom: DateTime.now(),
             dateTo: DateTime.now(),
-            filterOption: FilterOptions.bestBeforeDate,
+            filterOption: FilterOptions.expired_at,
             isAscending: false)) {
     unawaited(init());
   }
@@ -37,7 +37,7 @@ class FilterControllerCubit extends Cubit<FilterDAO>
     emit(FilterDAO(
       dateFrom: filterData.dateFrom,
       dateTo: filterData.dateTo,
-      filterOption: filterData.filterOption ?? FilterOptions.bestBeforeDate,
+      filterOption: filterData.filterOption ?? FilterOptions.expired_at,
       isAscending: filterData.isAscending ?? false,
     ));
   }
@@ -59,7 +59,7 @@ class FilterControllerCubit extends Cubit<FilterDAO>
     emit(FilterDAO(
       dateFrom: null,
       dateTo: null,
-      filterOption: FilterOptions.bestBeforeDate,
+      filterOption: FilterOptions.expired_at,
       isAscending: false,
     ));
     filterService.deleteDateFrom();

@@ -1,7 +1,8 @@
 enum FilterOptions {
-  bestBeforeDate('Mindesthaltbarkeitsdatum'),
+  expired_at('Mindesthaltbarkeitsdatum'),
   name('Name'),
-  created('Erstellt am');
+  created_at('Erstellt am'),
+  price_in_cents('Preis');
 
   const FilterOptions(this.label);
 

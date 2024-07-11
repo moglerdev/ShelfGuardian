@@ -45,6 +45,7 @@ class FilterServiceImpl implements FilterService {
     final dateToEpoch = prefs.getInt('dateTo');
     final filterOptionString = prefs.getString('filterOption');
     final isAscending = prefs.getBool('isAscending');
+    final filterOption = FilterOptions.values.where((e) => e.toString() == filterOptionString).firstOrNull;
 
     return FilterDAO(
       dateFrom: dateFromEpoch != null
@@ -53,9 +54,8 @@ class FilterServiceImpl implements FilterService {
       dateTo: dateToEpoch != null
           ? DateTime.fromMillisecondsSinceEpoch(dateToEpoch)
           : null,
-      filterOption: filterOptionString != null
-          ? FilterOptions.values
-              .firstWhere((e) => e.toString() == filterOptionString)
+      filterOption: filterOption != null || filterOptionString != null
+          ? filterOption
           : null,
       isAscending: isAscending,
     );

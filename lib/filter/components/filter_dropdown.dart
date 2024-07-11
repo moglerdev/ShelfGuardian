@@ -46,7 +46,7 @@ class FilterDropdown extends StatelessWidget {
                           context
                               .read<FilterControllerCubit>()
                               .updateFilterOption(
-                                  value ?? FilterOptions.bestBeforeDate);
+                                  value ?? FilterOptions.expired_at);
                         },
                         textStyle: ShelfGuardianTextStyles.body1,
                         inputDecorationTheme: const InputDecorationTheme(

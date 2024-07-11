@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:shelf_guardian/filter/services/filter_service.dart';
 import 'package:shelf_guardian/product/models/product_model.dart';
 import 'package:shelf_guardian/supabase.dart';
 
@@ -22,15 +23,24 @@ abstract class ProductService {
 class ProductServiceSupabase implements ProductService {
   final client = Api.client;
   final channel = Api.client.channel("products_items");
+  final filter = FilterService.create();
 
   @override
   Future<List<Product>> getProducts() async {
-    // TODO: read filter options from local storage (Service Filter)
-    var result = await client
+    final _filter = await filter.load();
+    final from = _filter.dateFrom;
+    final to = _filter.dateTo;
+
+    var select = client
         .from("products_items")
         .select(
-            "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)")
-        .order("expired_at", ascending: true);
+            "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)");
+
+    select = from != null ? select.gte("expired_at", from) : select;
+    select = to != null ? select.lte("expired_at", to) : select;
+
+    final result = await select.order(_filter.filterOption?.name ?? "expired_at", ascending: _filter.isAscending != null ? _filter.isAscending! : true);
+
     if (result.isEmpty) {
       return [];
     } else {
