@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moment_dart/moment_dart.dart';
 import 'package:shelf_guardian/common/theme.dart';
-import 'package:shelf_guardian/product/bloc/product_controller.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
-import 'package:shelf_guardian/product/models/product_model.dart';
+import 'package:shelf_guardian/features/product/bloc/product_controller.dart';
+import 'package:shelf_guardian/features/product/bloc/product_state.dart';
+import 'package:shelf_guardian/features/product/models/product_model.dart';
 import 'package:shelf_guardian/components/checkbox.dart';
 
 class ProductItem extends StatelessWidget {
@@ -70,7 +70,9 @@ class ProductItem extends StatelessWidget {
             if (context.read<ProductControllerCubit>().state
                 is! ProductSearchedList)
               SGCheckBox(
-                onSelectChanged: (selected) { onSelectChanged(selected);},
+                onSelectChanged: (selected) {
+                  onSelectChanged(selected);
+                },
                 isSelected: isSelected,
               ),
           ])),

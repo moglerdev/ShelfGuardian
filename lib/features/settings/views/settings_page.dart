@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/settings/views/settings_view.dart';
-import 'package:shelf_guardian/settings/bloc/settings_controller.dart';
-import 'package:shelf_guardian/settings/components/settings_action_button.dart';
+import 'package:shelf_guardian/features/settings/views/settings_view.dart';
+import 'package:shelf_guardian/features/settings/bloc/settings_controller.dart';
+import 'package:shelf_guardian/features/settings/components/settings_action_button.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shelf_guardian/filter/services/filter_options.dart';
+import 'package:shelf_guardian/features/filter/services/filter_options.dart';
 
-import 'package:shelf_guardian/filter/services/filter_dao.dart';
+import 'package:shelf_guardian/features/filter/services/filter_dao.dart';
 
 abstract class FilterService {
   Future<void> save(FilterDAO filterData);
@@ -20,7 +20,6 @@ abstract class FilterService {
 class FilterServiceImpl implements FilterService {
   @override
   Future<void> save(FilterDAO filterData) async {
-
     final prefs = await SharedPreferences.getInstance();
 
     if (filterData.dateFrom != null) {
@@ -45,7 +44,9 @@ class FilterServiceImpl implements FilterService {
     final dateToEpoch = prefs.getInt('dateTo');
     final filterOptionString = prefs.getString('filterOption');
     final isAscending = prefs.getBool('isAscending');
-    final filterOption = FilterOptions.values.where((e) => e.toString() == filterOptionString).firstOrNull;
+    final filterOption = FilterOptions.values
+        .where((e) => e.toString() == filterOptionString)
+        .firstOrNull;
 
     return FilterDAO(
       dateFrom: dateFromEpoch != null

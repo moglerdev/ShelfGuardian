@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/components/date_field.dart';
 import 'package:shelf_guardian/components/input_field.dart';
-import 'package:shelf_guardian/editor/bloc/editor_controller.dart';
-import 'package:shelf_guardian/editor/bloc/editor_state.dart';
+import 'package:shelf_guardian/features/editor/bloc/editor_controller.dart';
+import 'package:shelf_guardian/features/editor/bloc/editor_state.dart';
 
 class EditorView extends StatefulWidget {
   final String code;

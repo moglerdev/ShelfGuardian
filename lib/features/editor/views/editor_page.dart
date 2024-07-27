@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/editor/bloc/editor_controller.dart';
-import 'package:shelf_guardian/editor/bloc/editor_state.dart';
-import 'package:shelf_guardian/editor/components/editor_action_button.dart';
-import 'package:shelf_guardian/editor/views/editor_view.dart';
+import 'package:shelf_guardian/features/editor/bloc/editor_controller.dart';
+import 'package:shelf_guardian/features/editor/bloc/editor_state.dart';
+import 'package:shelf_guardian/features/editor/components/editor_action_button.dart';
+import 'package:shelf_guardian/features/editor/views/editor_view.dart';
 
 class EditorPage extends StatefulWidget {
   final String code;

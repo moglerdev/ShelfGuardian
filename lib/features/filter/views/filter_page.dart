@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/filter/views/filter_view.dart';
-import 'package:shelf_guardian/filter/bloc/filter_controller.dart';
-import 'package:shelf_guardian/product/bloc/product_controller.dart';
-import 'package:shelf_guardian/filter/components/filter_action_button.dart';
-
+import 'package:shelf_guardian/features/filter/views/filter_view.dart';
+import 'package:shelf_guardian/features/filter/bloc/filter_controller.dart';
+import 'package:shelf_guardian/features/product/bloc/product_controller.dart';
+import 'package:shelf_guardian/features/filter/components/filter_action_button.dart';
 
 class FilterPage extends StatelessWidget {
   const FilterPage({super.key});
@@ -25,7 +24,7 @@ class FilterPage extends StatelessWidget {
             title: const Text('Filter'),
           ),
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerFloat,
           floatingActionButton: const FilterActionButton(),
           body: const FilterPageView()),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/features/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/components/input_field.dart';
 import 'package:shelf_guardian/components/text_button.dart';
@@ -59,7 +59,8 @@ class _SignUpPageState extends State<SignUpPage> {
             children: [
               InputField(
                 autofillHints: const [AutofillHints.email],
-                controller: _emailController, name: 'Email',
+                controller: _emailController,
+                name: 'Email',
               ),
               InputField(
                 autofillHints: const [AutofillHints.newPassword],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/features/auth/bloc/auth_controller.dart';
 
 abstract class AuthenticationState {
   const AuthenticationState();

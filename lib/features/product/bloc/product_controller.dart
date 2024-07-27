@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/product/models/product_model.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
+import 'package:shelf_guardian/features/product/models/product_model.dart';
+import 'package:shelf_guardian/features/product/bloc/product_state.dart';
 import 'package:shelf_guardian/service/product_service.dart';
 import 'package:shelf_guardian/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -163,7 +163,8 @@ class ProductControllerCubit extends Cubit<ProductListState>
       emit(ProductListFilled((state.getProducts())));
       return true;
     } else if (state is ProductListFilled || state is ProductListSelected) {
-      emit(ProductSearchedList(state.getProducts(), state.getProducts(), TextEditingController(), updateShownProducts, ""));
+      emit(ProductSearchedList(state.getProducts(), state.getProducts(),
+          TextEditingController(), updateShownProducts, ""));
       return true;
     }
     return false;
@@ -171,17 +172,17 @@ class ProductControllerCubit extends Cubit<ProductListState>
 
   @override
   bool updateShownProducts(List<Product> shownProducts) {
-  if (state is ProductSearchedList) {
-    state.disposeListener();
-    emit(ProductSearchedList(
-      (state as ProductSearchedList).products,
-      shownProducts,
-      (state as ProductSearchedList).searchController,
-      (state as ProductSearchedList).updateShownProducts,
-      (state as ProductSearchedList).lastSearchText,
-    ));
-    return true;
+    if (state is ProductSearchedList) {
+      state.disposeListener();
+      emit(ProductSearchedList(
+        (state as ProductSearchedList).products,
+        shownProducts,
+        (state as ProductSearchedList).searchController,
+        (state as ProductSearchedList).updateShownProducts,
+        (state as ProductSearchedList).lastSearchText,
+      ));
+      return true;
+    }
+    return false;
   }
-  return false;
-}
 }

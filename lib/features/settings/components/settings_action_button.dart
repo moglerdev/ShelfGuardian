@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/icon_button.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
-import 'package:shelf_guardian/settings/bloc/settings_controller.dart';
+import 'package:shelf_guardian/features/settings/bloc/settings_controller.dart';
 
 class SettingsActionButton extends StatelessWidget {
   const SettingsActionButton({super.key});

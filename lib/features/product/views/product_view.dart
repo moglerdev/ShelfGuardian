@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
-import 'package:shelf_guardian/product/components/product_list.dart';
-import 'package:shelf_guardian/product/bloc/product_controller.dart';
+import 'package:shelf_guardian/features/product/bloc/product_state.dart';
+import 'package:shelf_guardian/features/product/components/product_list.dart';
+import 'package:shelf_guardian/features/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/components/input_field.dart';
 
 class ProductPageView extends StatelessWidget {
@@ -35,14 +35,16 @@ class ProductPageView extends StatelessWidget {
             },
             selectedProducts: selectedProducts);
       } else if (state is ProductSearchedList) {
-        final products = context.watch<ProductControllerCubit>().state.getSearchedProducts();
+        final products =
+            context.watch<ProductControllerCubit>().state.getSearchedProducts();
         return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           InputField(
               name: "Suche",
               controller: state.searchController,
               icon: FontAwesomeIcons.squareXmark,
               onIconTap: () {
-                state.searchController.clear();}),
+                state.searchController.clear();
+              }),
           Expanded(
               child: ProductList(
                   products: products,

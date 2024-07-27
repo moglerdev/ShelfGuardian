@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/auth/bloc/auth_state.dart';
+import 'package:shelf_guardian/features/auth/bloc/auth_state.dart';
 import 'package:shelf_guardian/service/user_service.dart';
 
 abstract class AuthController {

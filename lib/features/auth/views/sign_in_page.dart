@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
-import 'package:shelf_guardian/auth/bloc/auth_state.dart';
+import 'package:shelf_guardian/features/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/features/auth/bloc/auth_state.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/components/input_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

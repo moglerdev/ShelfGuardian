@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/common/theme.dart';
-import 'package:shelf_guardian/filter/bloc/filter_controller.dart';
+import 'package:shelf_guardian/features/filter/bloc/filter_controller.dart';
 import 'package:shelf_guardian/components/date_picker.dart';
-import 'package:shelf_guardian/filter/services/filter_dao.dart';
+import 'package:shelf_guardian/features/filter/services/filter_dao.dart';
 
 class FilterRange extends StatelessWidget {
   const FilterRange({super.key});

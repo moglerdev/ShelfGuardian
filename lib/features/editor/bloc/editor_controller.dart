@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shelf_guardian/editor/bloc/editor_state.dart';
-import 'package:shelf_guardian/product/models/product_model.dart';
+import 'package:shelf_guardian/features/editor/bloc/editor_state.dart';
+import 'package:shelf_guardian/features/product/models/product_model.dart';
 import 'package:shelf_guardian/service/product_service.dart';
 
 class EditorControllerCubit extends Cubit<EditorState> {

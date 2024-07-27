@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moment_dart/moment_dart.dart';
-import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/features/auth/bloc/auth_controller.dart';
 import 'package:shelf_guardian/routes.dart';
 import 'package:shelf_guardian/service/notification_service.dart';
 import 'package:shelf_guardian/service/user_service.dart';

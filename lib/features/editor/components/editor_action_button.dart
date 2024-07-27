@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/icon_button.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
-import 'package:shelf_guardian/editor/bloc/editor_controller.dart';
-import 'package:shelf_guardian/editor/bloc/editor_state.dart';
+import 'package:shelf_guardian/features/editor/bloc/editor_controller.dart';
+import 'package:shelf_guardian/features/editor/bloc/editor_state.dart';
 
 class EditorActionButton extends StatelessWidget {
   const EditorActionButton({super.key});

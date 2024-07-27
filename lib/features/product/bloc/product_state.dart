@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:shelf_guardian/product/models/product_model.dart';
+import 'package:shelf_guardian/features/product/models/product_model.dart';
 
 abstract class ProductListState {
   List<Product> getProducts();
@@ -36,7 +36,6 @@ class ProductListSelected extends ProductListState {
   ProductListSelected(this.products, this.selectedProducts);
 }
 
-
 // TODO: Implement ProductSearchedList
 class ProductSearchedList extends ProductListState {
   final List<Product> products;
@@ -45,7 +44,8 @@ class ProductSearchedList extends ProductListState {
   void Function(List<Product>) updateShownProducts;
   String lastSearchText;
 
-  ProductSearchedList(this.products, this.shownProducts, this.searchController, this.updateShownProducts, this.lastSearchText) {
+  ProductSearchedList(this.products, this.shownProducts, this.searchController,
+      this.updateShownProducts, this.lastSearchText) {
     searchController.addListener(_onSearchChanged);
   }
 
@@ -57,10 +57,11 @@ class ProductSearchedList extends ProductListState {
   }
 
   void searchProducts(String query) {
-    if(searchController.text.isEmpty) {
+    if (searchController.text.isEmpty) {
       updateShownProducts(products);
     } else {
-      updateShownProducts(products.where((product) => product.name.contains(query)).toList());
+      updateShownProducts(
+          products.where((product) => product.name.contains(query)).toList());
     }
   }
 

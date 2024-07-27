@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/icon_button.dart';
-import 'package:shelf_guardian/product/bloc/product_controller.dart';
-import 'package:shelf_guardian/product/bloc/product_state.dart';
+import 'package:shelf_guardian/features/product/bloc/product_controller.dart';
+import 'package:shelf_guardian/features/product/bloc/product_state.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 
 class ProductActionButton extends StatelessWidget {
@@ -66,11 +66,12 @@ class ProductActionButton extends StatelessWidget {
       rightBtns.add(SGIconButton(
         icon: FontAwesomeIcons.magnifyingGlass,
         onPressed: () {
-          bool toggleAllowed = context.read<ProductControllerCubit>().toggleSearchState();
-          if(state is ProductSearchedList) {
+          bool toggleAllowed =
+              context.read<ProductControllerCubit>().toggleSearchState();
+          if (state is ProductSearchedList) {
             context.read<ProductControllerCubit>().state.disposeListener();
           }
-          if(!toggleAllowed) {
+          if (!toggleAllowed) {
             final sm = ScaffoldMessenger.of(context);
             sm.showSnackBar(
               const SnackBar(content: Text('Ich kann gerade nichts suchen!')),

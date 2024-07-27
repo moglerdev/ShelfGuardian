@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:shelf_guardian/filter/services/filter_options.dart';
-import 'package:shelf_guardian/filter/services/filter_dao.dart';
-import 'package:shelf_guardian/filter/services/filter_service.dart';
+import 'package:shelf_guardian/features/filter/services/filter_options.dart';
+import 'package:shelf_guardian/features/filter/services/filter_dao.dart';
+import 'package:shelf_guardian/features/filter/services/filter_service.dart';
 
 abstract class FilterController {
   void saveFilter();
@@ -20,7 +20,6 @@ abstract class FilterController {
 
 class FilterControllerCubit extends Cubit<FilterDAO>
     implements FilterController {
-
   final filterService = FilterService.create();
   FilterControllerCubit()
       : super(FilterDAO(
@@ -44,13 +43,12 @@ class FilterControllerCubit extends Cubit<FilterDAO>
 
   @override
   void saveFilter() {
-    filterService.save(
-      FilterDAO(
+    filterService.save(FilterDAO(
       dateFrom: state.dateFrom,
       dateTo: state.dateTo,
       filterOption: state.filterOption,
       isAscending: state.isAscending,
-      ));
+    ));
     // Todo: add a toast message to confirm the filter has been saved
   }
 

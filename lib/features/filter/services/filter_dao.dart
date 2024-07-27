@@ -1,4 +1,4 @@
-import 'package:shelf_guardian/filter/services/filter_options.dart';
+import 'package:shelf_guardian/features/filter/services/filter_options.dart';
 
 class FilterDAO {
   final DateTime? dateFrom;

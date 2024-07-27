@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:shelf_guardian/scanner/bloc/scanner_controller.dart';
-import 'package:shelf_guardian/scanner/components/scanner_action_button.dart';
+import 'package:shelf_guardian/features/scanner/bloc/scanner_controller.dart';
+import 'package:shelf_guardian/features/scanner/components/scanner_action_button.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/service/easter_egg_service.dart';
 
