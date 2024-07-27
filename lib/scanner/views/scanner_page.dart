@@ -33,7 +33,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
       if (barcode != null && barcode.displayValue!.isNotEmpty) {
         final strCode = barcode.displayValue!;
         // our little easter egg ;)
-        if (await EasterEggService.instance.isRickRoll(strCode) &&
+        if (EasterEggService.instance.isRickRoll(strCode) &&
             await EasterEggService.instance.openRickRoll()) {
           router.go(NavigationServiceRoutes.homeRouteUri);
           return;

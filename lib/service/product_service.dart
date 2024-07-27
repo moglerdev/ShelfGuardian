@@ -27,19 +27,18 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<List<Product>> getProducts() async {
-    final _filter = await filter.load();
-    final from = _filter.dateFrom;
-    final to = _filter.dateTo;
+    final f = await filter.load();
+    final from = f.dateFrom;
+    final to = f.dateTo;
 
-    var select = client
-        .from("products_items")
-        .select(
-            "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)");
+    var select = client.from("products_items").select(
+        "id, meta_id, price_in_cents, expired_at, created_at, products_meta(id, barcode, name, description, created_at)");
 
     select = from != null ? select.gte("expired_at", from) : select;
     select = to != null ? select.lte("expired_at", to) : select;
 
-    final result = await select.order(_filter.filterOption?.name ?? "expired_at", ascending: _filter.isAscending != null ? _filter.isAscending! : true);
+    final result = await select.order(f.filterOption?.name ?? "expired_at",
+        ascending: f.isAscending != null ? f.isAscending! : true);
 
     if (result.isEmpty) {
       return [];
