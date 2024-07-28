@@ -13,7 +13,7 @@ Introducing **Shelf Guardian**, your ultimate solution for managing product dura
 
 ## Features
 
-### Authentication
+### User-based Product Management with Authentication
 
 Products are assigned to users, so before anyone can add products, they must create an account and sign in.
 
@@ -119,11 +119,11 @@ When you scan a barcode, the app checks in the background to see if the barcode 
 
 Additionally, if you update the name of a product, all products with the same barcode will be notified of the change. This ensures that any name update is applied universally to all products sharing that barcode, keeping your inventory consistent.
 
-### Notifications
+### Daily Notifications for Expiring Products
 
 Shelf Guardian sends daily notifications to your device for products that are about to expire. These notifications are sent at 8:00 AM and will list all products expiring either on that day or the following day. If there are no products nearing expiration, no notification will be sent, ensuring you only receive relevant alerts.
 
-### Synchronization
+### Real Time Synchronization
 
 Shelf Guardian ensures real-time synchronization across all devices linked to the same account. Any changes made on one device, such as adding, updating, or deleting a product, are instantly reflected on all other devices. This allows you to seamlessly manage your inventory from multiple devices without worrying about data discrepancies.
 
@@ -135,13 +135,43 @@ For a fun surprise, scan the QR code below using the app's scanner. It will take
 
 ## Technologies
 
+### Backend
+
+As the backend, we use [Supabase](https://supabase.io/), an open-source Firebase alternative. Supabase provides a real-time database, authentication, and storage services, making it easy to build and scale applications. We use Supabase for user authentication, real-time synchronization, and data storage.
+
+### Storage
+
+To store device specific data, we use the local storage of the device. This allows us to save the filter settings, search results, and other device-specific data. The local storage is cleared when the user logs out.
+
+For the Session Token, we use the `SharedPreferences` of the device. This allows us to store the token securely and access it when needed. The token is cleared when the user logs out.
+
+### Notifications
+
+To send notifications, we use the `FhirbaseMessaging` service from Google Firebase. This service allows us to send notifications to all devices linked to the same account. We use this service to send daily notifications for products nearing their minimum durability dates. We created a Supabase Edge Function to send the notification to `FhirbaseMessaging`, and created a background service that triggers the Edge Function every day at 8:00 AM.
+
+### Barcode Recognition
+
+For barcode recognition, we use the `mobile_scanner` package. This package allows us to scan barcodes using the device's camera. We use this package to scan barcodes.
+
 ### Dependencies
 
 ### Permissions
 
+- `android.permission.CAMERA`: Required to use the camera for barcode scanning.
+- `android.permission.INTERNET`: Required to connect to the Supabase API and send notifications.
+
 ### Problems during development
 
+#### Barcode Scanner
+
+The barcode scanner was the most challenging part of the app. We had to find a package that could scan barcodes and recognize them. We tried several packages, but most of them were outdated or not working. We finally found the `mobile_scanner` package, but has also pitfalls. The package is not well documented, and has some issue with hot reloading / hot restarting. We had to implement some workarounds to make it work.
+
 ## Future
+
+- **Product Categories**: Add categories to products to better organize your inventory.
+- **Product Images**: Allow users to add images to products for easier identification.
+- **Product Details**: Add more details to products, such as weight, volume, and manufacturer.
+- **Advertisement**: Integrate advertisements to generate revenue and support the app's development.
 
 ## License
 
