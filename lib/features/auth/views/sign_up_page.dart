@@ -34,14 +34,20 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    final isSuccess = await controller.signUp(_emailController.text, password);
-
-    if (isSuccess) {
-      sm.showSnackBar(
-        const SnackBar(content: Text('Du wurdest erfolgreich registriert.')),
-      );
-      router.pushReplacement(NavigationServiceRoutes.signInRouteUri);
-    } else {
+    try {
+      final isSuccess =
+          await controller.signUp(_emailController.text, password);
+      if (isSuccess) {
+        sm.showSnackBar(
+          const SnackBar(content: Text('Du wurdest erfolgreich registriert.')),
+        );
+        router.pushReplacement(NavigationServiceRoutes.signInRouteUri);
+      } else {
+        sm.showSnackBar(
+          const SnackBar(content: Text("Something went wrong!")),
+        );
+      }
+    } catch (e) {
       sm.showSnackBar(
         const SnackBar(content: Text("Something went wrong!")),
       );
