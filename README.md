@@ -56,6 +56,7 @@ When a product is selected, the action buttons change. The main button in the ce
       </td>
     </tr>
 </table>
+
 #### Add a New Product
 
 To add a new product, click the `+` button in the bottom right corner. This takes you to the `Scanner` page, where you can scan the product's barcode. If the barcode is not recognized, you can manually enter the product information. If recognized, the product information is filled in automatically, and you only need to enter the minimum durability date.
