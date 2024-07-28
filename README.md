@@ -19,15 +19,15 @@ Products are assigned to users, so before anyone can add products, they must cre
 
 - **Sign In Page**: This is the start page when someone opens the app for the first time or if no valid authentication token is stored. Authentication tokens are invalidated once they expire.
 
-  ![Sign In](./docs/pages/auth/sign-in-page.png)
+  <img src="./docs/pages/auth/sign-in-page.png" alt="Sign In" width="260"/>
 
 - **Sign Up Page**: Accessible when the user clicks on "Registrieren." Here, users can create an account, but they must verify it through a verification email from Supabase before using the app.
-
-  ![Sign Up](./docs/pages/auth/sign-up-page.png)
+ 
+  <img src="./docs/pages/auth/sign-up-page.png" alt="Sign Up" width="260"/>
 
 - **Forgot Password Page**: If a user forgets their password, they can recover their account. Supabase will send a recovery email allowing the user to reset their password.
-
-  ![Forgot Password](./docs/pages/auth/forgot-password.png)
+  
+  <img src="./docs/pages/auth/forgot-password.png" alt="Forgot Password" width="260"/>
 
 ### Manage Products
 
@@ -39,14 +39,23 @@ You can select one or multiple products from the list to remove. To select a pro
 
 When a product is selected, the action buttons change. The main button in the center becomes the delete button for the selected items. The button on the right allows you to deselect items. If no items are selected, the main button adds a new product, and the right button selects all products.
 
-- **Nothing selected** :
-
-  ![Home Page](./docs/pages/home-page.png)
-
-- **Items selected**:
-
-  ![Selected](./docs/pages/selected-page.png)
-
+<table>
+  <thead>
+    <tr>
+      <th>Nothing Selected</th>
+      <th>Something Selected</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img src="./docs/pages/home-page.png" alt="Home Page" width="260"/>
+      </td>
+      <td>
+        <img src="./docs/pages/selected-page.png" alt="Selected Page" width="260"/>
+      </td>
+    </tr>
+</table>
 #### Add a New Product
 
 To add a new product, click the `+` button in the bottom right corner. This takes you to the `Scanner` page, where you can scan the product's barcode. If the barcode is not recognized, you can manually enter the product information. If recognized, the product information is filled in automatically, and you only need to enter the minimum durability date.
@@ -57,13 +66,23 @@ After scanning, you are taken to the `Create` page to enter the minimum durabili
 
 Once saved, you are redirected back to the `Home` page, where your new product appears in the list. If you have another device with the same account, the new product will be synchronized to it via Supabase Realtime Database.
 
-- **Scanner Page**:
-
-  <img src="./docs/pages/scanner-page.png" alt="Scanner Page" width="340"/>
-
-- **Create Page**:
-
-  ![Create Page](./docs/pages/create-page.png)
+<table>
+  <thead>
+    <tr>
+      <th>Scanner Page</th>
+      <th>Create Page</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img src="./docs/pages/scanner-page.png" alt="Scanner Page" width="260"/>
+      </td>
+      <td>
+        <img src="./docs/pages/create-page.png" alt="Create Page" width="260"/>
+      </td>
+    </tr>
+</table>
 
 #### Update a Product
 
@@ -71,7 +90,7 @@ To update a product, click on it in the list. This navigates to the `Update` pag
 
 After saving, you are redirected back to the `Home` page, where the updated product appears in the list. Any device with the same account will receive the updated product.
 
-![Update Page](./docs/pages/update-page.png)
+<img src="./docs/pages/update-page.png" alt="Editor Page" width="260"/>
 
 #### Delete a Product
 
@@ -85,13 +104,13 @@ You can filter products using various criteria. The filter button, which is the 
 
 The applied filter is saved in the local storage, so you don't need to reapply it every time you open the app. To remove the filter, click the filter button again and select the left button (filter icon with a times icon).
 
-![Filter Page](./docs/pages/filter-page.png)
+<img src="./docs/pages/filter-page.png" alt="Filter Page" width="260"/>
 
 #### Search Products
 
 If you have many products and need to find a specific one, you can use the search function. Click the last button in the action list, which has a magnifying glass icon, to open the `Search` bar. Enter the name of the product you are looking for. The search is case-insensitive and looks for the entered text within the product names. If the product is found, it will be highlighted in the list. If not, a message will display stating that no product was found.
 
-![Search Bar](./docs/pages/search-page.png)
+<img src="./docs/pages/search-page.png" alt="Search Page" width="260"/>
 
 ### Recognize Existing Barcode
 
