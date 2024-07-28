@@ -135,6 +135,12 @@ For a fun surprise, scan the QR code below using the app's scanner. It will take
 
 ## Technologies
 
+### State Management
+
+For our states we used the `bloc` package. This package allows us to manage the state of the app in a structured way. We created several blocs for the different pages and functionalities of the app. The blocs are responsible for managing the state of the app and updating the UI accordingly.
+
+But we separated our logic out in services to keep the blocs clean and focused on the state management. The services are responsible for the business logic of the app, such as fetching data from the backend, updating the local storage, and sending notifications. Also we can switch the backend easily by changing the services. 
+
 ### Backend
 
 As the backend, we use [Supabase](https://supabase.io/), an open-source Firebase alternative. Supabase provides a real-time database, authentication, and storage services, making it easy to build and scale applications. We use Supabase for user authentication, real-time synchronization, and data storage.
