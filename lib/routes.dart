@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shelf_guardian/auth/bloc/auth_controller.dart';
-import 'package:shelf_guardian/auth/bloc/auth_state.dart';
-import 'package:shelf_guardian/auth/views/forgot_password_page.dart';
-import 'package:shelf_guardian/auth/views/sign_in_page.dart';
-import 'package:shelf_guardian/auth/views/sign_up_page.dart';
-import 'package:shelf_guardian/editor/views/editor_page.dart';
-import 'package:shelf_guardian/filter/views/filter_page.dart';
-import 'package:shelf_guardian/scanner/views/scanner_page.dart';
-import 'package:shelf_guardian/settings/views/settings_page.dart';
-import 'package:shelf_guardian/product/views/product_page.dart';
+import 'package:shelf_guardian/features/auth/bloc/auth_controller.dart';
+import 'package:shelf_guardian/features/auth/bloc/auth_state.dart';
+import 'package:shelf_guardian/features/auth/views/forgot_password_page.dart';
+import 'package:shelf_guardian/features/auth/views/sign_in_page.dart';
+import 'package:shelf_guardian/features/auth/views/sign_up_page.dart';
+import 'package:shelf_guardian/features/editor/views/editor_page.dart';
+import 'package:shelf_guardian/features/filter/views/filter_page.dart';
+import 'package:shelf_guardian/features/scanner/views/scanner_page.dart';
+import 'package:shelf_guardian/features/settings/views/settings_page.dart';
+import 'package:shelf_guardian/features/product/views/product_page.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 
 final routes = GoRouter(

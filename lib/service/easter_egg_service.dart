@@ -8,7 +8,12 @@ abstract class EasterEggService {
 }
 
 class EasterEggServiceImpl implements EasterEggService {
-  final rickRollUri = Uri.parse('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+  final Uri rickRollUri =
+      Uri.parse('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+  final Future<bool> Function(Uri url, {LaunchMode mode}) launcher;
+
+  EasterEggServiceImpl({this.launcher = launchUrl});
+
   @override
   bool isRickRoll(String url) {
     return url.contains('watch?v=dQw4w9WgXcQ');
@@ -16,6 +21,6 @@ class EasterEggServiceImpl implements EasterEggService {
 
   @override
   Future<bool> openRickRoll() async {
-    return await launchUrl(rickRollUri, mode: LaunchMode.externalApplication);
+    return await launcher(rickRollUri, mode: LaunchMode.externalApplication);
   }
 }

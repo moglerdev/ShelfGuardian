@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:shelf_guardian/filter/services/filter_service.dart';
-import 'package:shelf_guardian/product/models/product_model.dart';
+import 'package:shelf_guardian/features/filter/services/filter_service.dart';
+import 'package:shelf_guardian/features/product/models/product_model.dart';
 import 'package:shelf_guardian/supabase.dart';
 
 abstract class ProductService {
