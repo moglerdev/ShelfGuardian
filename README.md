@@ -128,7 +128,7 @@ Shelf Guardian ensures real-time synchronization across all devices linked to th
 
 ### Easter Egg
 
-For a fun surprise, scan the QR code below. It will take you to the YouTube video [Rick Astley - Never Gonna Give You Up](https://www.youtube.com/watch?v=dQw4w9WgXcQ), playing the iconic song. This playful Easter egg is our way of adding a bit of fun to your experience with Shelf Guardian.
+For a fun surprise, scan the QR code below using the app's scanner. It will take you to the YouTube video [Rick Astley - Never Gonna Give You Up](https://www.youtube.com/watch?v=dQw4w9WgXcQ), playing the iconic song. This playful Easter egg is our way of adding a bit of fun to your experience with Shelf Guardian.
 
 <img src="./docs/egg.jpeg" alt="Easter Egg" width="240"/>
 
@@ -141,3 +141,20 @@ For a fun surprise, scan the QR code below. It will take you to the YouTube vide
 ### Problems during development
 
 ## Future
+
+## License
+
+    Copyright (C) 2024 Christopher R. Jäger, Tobias Stoehr and Jona Böcker
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
