@@ -91,7 +91,7 @@ The applied filter is saved in the local storage, so you don't need to reapply i
 
 If you have many products and need to find a specific one, you can use the search function. Click the last button in the action list, which has a magnifying glass icon, to open the `Search` bar. Enter the name of the product you are looking for. The search is case-insensitive and looks for the entered text within the product names. If the product is found, it will be highlighted in the list. If not, a message will display stating that no product was found.
 
-![Search Bar](./docs/pages/search-bar.png)
+![Search Bar](./docs/pages/search-page.png)
 
 ### Recognize Existing Barcode
 
