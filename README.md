@@ -173,6 +173,24 @@ For barcode recognition, we use the `mobile_scanner` package. This package allow
 
 ### Dependencies
 
+```yaml
+dependencies:
+  # ...
+  font_awesome_flutter: ^10.7.0 # FontAwesome icons for Flutter applications.
+  moment_dart: ^2.1.0  # Library for working with dates and times in Dart, similar to Moment.js.
+  flutter_bloc: ^8.1.5  # BLoC (Business Logic Component) pattern library for state management.
+  mobile_scanner: ^5.1.1  # scanning barcodes and QR codes using the device camera.
+  go_router: ^14.1.4  # A declarative router for Flutter, supporting deep linking, URL navigation, and more.
+  supabase_flutter: ^2.5.6  # Flutter library for Supabase, an open-source backend as a service.
+  flutter_secure_storage: ^9.2.2  # storing data securely in keychains and keystores.
+  shared_preferences: ^2.2.3  # accessing shared preferences on Android and iOS.
+  firebase_messaging: ^15.0.2  # Firebase Cloud Messaging, enabling push notifications.
+  firebase_core: ^3.1.1  # Firebase Core, required for using other Firebase services.
+  url_launcher: ^6.3.0  # launching URLs in the mobile platform.
+  app_settings: ^5.1.1  # open various settings screens on iOS and Android.
+  connectivity_plus: ^6.0.4  # accessing network connectivity status on Android and iOS.
+```
+
 ### Permissions
 
 - **Camera**: Barcode Scanner (mobile_scanner)
