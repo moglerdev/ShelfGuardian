@@ -1,5 +1,10 @@
 ![logo](./assets/app_icon.png)
 
+
+> Example Account
+> E-Mail: julian.htwg@example.com
+> Password: Htwg123
+
 # Shelf Guardian
 
 ## Description
