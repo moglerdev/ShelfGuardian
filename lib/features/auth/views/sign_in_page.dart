@@ -30,21 +30,21 @@ class _SignInViewState extends State<SignInView> {
 
       if (isSuccess) {
         sm.showSnackBar(
-          const SnackBar(content: Text('Signed in successfully!')),
+          const SnackBar(content: Text('Erfolgreich angemeldet!')),
         );
         router.go('/');
       } else {
         sm.showSnackBar(
-          const SnackBar(content: Text("Something went wrong!")),
+          const SnackBar(content: Text("Etwas ist schiefgelaufen!")),
         );
       }
     } on AuthApiException {
       sm.showSnackBar(
-        const SnackBar(content: Text("Please check your credentials!")),
+        const SnackBar(content: Text("Überprüfen Sie Ihre Eingaben!")),
       );
     } catch (e) {
       sm.showSnackBar(
-        const SnackBar(content: Text("Something went wrong!")),
+        const SnackBar(content: Text("Etwas ist schiefgelaufen!")),
       );
     }
   }
@@ -113,7 +113,7 @@ class SignInPage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             return const Center(
-              child: Text("data not found!"),
+              child: Text("Etwas ist schiefgelaufen!"),
             );
           },
         ));

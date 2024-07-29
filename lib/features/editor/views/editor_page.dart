@@ -27,7 +27,7 @@ class _EditorPageState extends State<EditorPage> {
         create: (context) => EditorControllerCubit(widget.code, widget.id),
         child: Scaffold(
             appBar: AppBar(
-              title: Text(widget.id < 0 ? 'Create' : 'Edit'),
+              title: Text(widget.id < 0 ? 'Hinzufügen' : 'Bearbeiten'),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,

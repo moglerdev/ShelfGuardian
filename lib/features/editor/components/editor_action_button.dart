@@ -35,12 +35,12 @@ class EditorActionButton extends StatelessWidget {
             if (p != null) {
               router.go(NavigationServiceRoutes.homeRouteUri);
             } else {
-              sm.showSnackBar(
-                  const SnackBar(content: Text("Please correct the form!")));
+              sm.showSnackBar(const SnackBar(
+                  content: Text("Bitte füllen Sie alle Felder aus!")));
             }
           } catch (e) {
             sm.showSnackBar(
-                const SnackBar(content: Text("Something went wrong!")));
+                const SnackBar(content: Text("Etwas ist schiefgelaufen!")));
           }
         },
       );

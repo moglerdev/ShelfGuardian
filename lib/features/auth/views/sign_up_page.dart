@@ -29,7 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if (password != repeatedPassword) {
       sm.showSnackBar(
-        const SnackBar(content: Text('Passwords do not match!')),
+        const SnackBar(content: Text('Passwörter stimmen nicht überein!')),
       );
       return;
     }
@@ -44,12 +44,12 @@ class _SignUpPageState extends State<SignUpPage> {
         router.pushReplacement(NavigationServiceRoutes.signInRouteUri);
       } else {
         sm.showSnackBar(
-          const SnackBar(content: Text("Something went wrong!")),
+          const SnackBar(content: Text("Etwas ist schiefgelaufen!")),
         );
       }
     } catch (e) {
       sm.showSnackBar(
-        const SnackBar(content: Text("Something went wrong!")),
+        const SnackBar(content: Text("Etwas ist schiefgelaufen!")),
       );
     }
   }

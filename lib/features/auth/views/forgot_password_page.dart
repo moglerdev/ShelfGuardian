@@ -32,7 +32,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       router.pushReplacement(NavigationServiceRoutes.signInRouteUri);
     } else {
       sm.showSnackBar(
-        const SnackBar(content: Text("Something went wrong!")),
+        const SnackBar(content: Text("Etwas ist schiefgelaufen!")),
       );
     }
   }

@@ -105,7 +105,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
         create: (context) => ScannerControllerCubit(),
         child: Scaffold(
             appBar: AppBar(
-              title: const Text('Scanner'),
+              title: const Text('Barcode Scanner'),
             ),
             floatingActionButton: ScannerActionButton(
               controller: _controller,
@@ -118,7 +118,8 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
             body: MobileScanner(
               controller: _controller,
               errorBuilder: (context, error, child) {
-                return Text('Error: $error');
+                // if debug mode, show error
+                return Text('Bitte erlaube den Zugriff auf die Kamera');
               },
             )));
   }
