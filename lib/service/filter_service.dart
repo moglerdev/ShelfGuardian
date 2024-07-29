@@ -1,7 +1,31 @@
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shelf_guardian/features/filter/services/filter_options.dart';
+// ignore_for_file: constant_identifier_names
 
-import 'package:shelf_guardian/features/filter/services/filter_dao.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class FilterDAO {
+  final DateTime? dateFrom;
+  final DateTime? dateTo;
+  final FilterOptions? filterOption;
+  final bool? isAscending;
+
+  FilterDAO({
+    this.dateFrom,
+    this.dateTo,
+    this.filterOption,
+    this.isAscending,
+  });
+}
+
+enum FilterOptions {
+  expired_at('Mindesthaltbarkeitsdatum'),
+  name('Name'),
+  created_at('Erstellt am'),
+  price_in_cents('Preis');
+
+  const FilterOptions(this.label);
+
+  final String label;
+}
 
 abstract class FilterService {
   Future<void> save(FilterDAO filterData);
