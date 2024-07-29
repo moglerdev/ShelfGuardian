@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shelf_guardian/components/icon_button.dart';
-import 'package:shelf_guardian/features/filter/services/filter_dao.dart';
 import 'package:shelf_guardian/features/filter/bloc/filter_controller.dart';
+import 'package:shelf_guardian/service/filter_service.dart';
 
+/// A button that displays filter-related actions.
 class FilterActionButton extends StatelessWidget {
   const FilterActionButton({super.key});
 

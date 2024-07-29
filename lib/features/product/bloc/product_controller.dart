@@ -8,34 +8,60 @@ import 'package:shelf_guardian/service/product_service.dart';
 import 'package:shelf_guardian/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+/// The abstract class representing the contract for a product controller.
+/// It defines methods for initializing products, adding and removing products,
+/// selecting and deselecting products, and updating the list of shown products.
 abstract class ProductController {
+  /// Initializes the list of products.
+  /// Returns `true` if the initialization is successful, `false` otherwise.
   Future<bool> initProducts();
 
+  /// Adds a product to the list.
+  /// Returns `true` if the product is successfully added, `false` otherwise.
   bool addProduct(Product product);
 
+  /// Removes a product from the list.
+  /// Returns `true` if the product is successfully removed, `false` otherwise.
   bool removeProduct(Product product);
 
+  /// Removes all selected products from the list.
+  /// Returns `true` if the removal is successful, `false` otherwise.
   Future<bool> removeSelectedProducts();
 
+  /// Selects a product in the list.
+  /// Returns `true` if the product is successfully selected, `false` otherwise.
   bool selectProduct(Product product);
 
+  /// Selects all products in the list.
+  /// Returns `true` if all products are successfully selected, `false` otherwise.
   bool selectAllProducts();
 
+  /// Deselects all products in the list.
+  /// Returns `true` if all products are successfully deselected, `false` otherwise.
   bool deselectAllProducts();
 
+  /// Deselects a product in the list.
+  /// Returns `true` if the product is successfully deselected, `false` otherwise.
   bool deselectProduct(Product product);
 
+  /// Toggles the search state of the product list.
+  /// Returns `true` if the search state is successfully toggled, `false` otherwise.
   bool toggleSearchState();
 
+  /// Updates the list of shown products.
+  /// Returns `true` if the update is successful, `false` otherwise.
   bool updateShownProducts(List<Product> shownProducts);
 }
 
-//TODO: Outsource Supabase logic in a service class and inject it into the controller
+/// The implementation of the [ProductController] using the Cubit pattern.
+/// It manages the state of the product list and interacts with the [ProductService].
 class ProductControllerCubit extends Cubit<ProductListState>
     implements ProductController {
   final service = ProductService.create();
   final channel = Api.client.channel("products_items");
 
+  /// Creates a new instance of [ProductControllerCubit].
+  /// It initializes the product list and subscribes to changes in the database.
   ProductControllerCubit() : super(ProductListEmpty()) {
     channel
         .onPostgresChanges(
@@ -57,7 +83,6 @@ class ProductControllerCubit extends Cubit<ProductListState>
 
   @override
   Future<bool> initProducts() async {
-    // TODO: read filter options from local storage (Service Filter)
     emit(ProductListLoading());
 
     final products = await service.getProducts();

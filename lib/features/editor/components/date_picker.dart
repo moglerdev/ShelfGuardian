@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 
+/// A text field widget that allows the user to select a date using a date picker.
 class DatePickerTextField extends StatefulWidget {
   final void Function(DateTime)? onDateSelected;
   final DateTime? value;
 
+  /// Creates a [DatePickerTextField].
+  ///
+  /// The [value] parameter is the initial date value to display in the text field.
+  /// The [onDateSelected] parameter is a callback function that will be called when a date is selected.
   const DatePickerTextField(this.value, {super.key, this.onDateSelected});
 
   @override
@@ -14,6 +19,7 @@ class DatePickerTextField extends StatefulWidget {
 class _DatePickerTextFieldState extends State<DatePickerTextField> {
   final TextEditingController _dateController = TextEditingController();
 
+  /// Opens the date picker dialog and updates the selected date in the text field.
   void _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,

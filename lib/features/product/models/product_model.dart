@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:equatable/equatable.dart';
 
+/// Represents a product item stored in the database.
 class DbProductItem {
   final int? id;
   final int? metaId;
@@ -16,6 +17,7 @@ class DbProductItem {
     this.createdAt,
   });
 
+  /// Creates a [DbProductItem] instance from a JSON object.
   static DbProductItem fromJson(Map<String, dynamic> json) {
     return DbProductItem(
       id: json['id'] == null ? null : json['id'] as int,
@@ -32,6 +34,7 @@ class DbProductItem {
   }
 }
 
+/// Represents the metadata of a product stored in the database.
 class DbProductMeta {
   final int? id;
   final String? barcode;
@@ -47,6 +50,7 @@ class DbProductMeta {
     this.createdAt,
   });
 
+  /// Creates a [DbProductMeta] instance from a JSON object.
   static DbProductMeta fromJson(Map<String, dynamic> json) {
     return DbProductMeta(
       id: json['id'] == null ? null : json['id'] as int,
@@ -61,6 +65,7 @@ class DbProductMeta {
   }
 }
 
+/// Represents a product.
 class Product extends Equatable {
   final int id;
   final String barcode;
@@ -70,6 +75,7 @@ class Product extends Equatable {
   final String image;
   final DateTime expiredAt;
 
+  /// Returns `true` if the product is expired, `false` otherwise.
   bool get isExpired => DateTime.now().isAfter(expiredAt);
 
   const Product({

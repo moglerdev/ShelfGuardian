@@ -5,6 +5,7 @@ import 'package:shelf_guardian/features/editor/bloc/editor_state.dart';
 import 'package:shelf_guardian/features/editor/components/editor_action_button.dart';
 import 'package:shelf_guardian/features/editor/views/editor_view.dart';
 
+/// A page that displays an editor for code editing.
 class EditorPage extends StatefulWidget {
   final String code;
   final int id;

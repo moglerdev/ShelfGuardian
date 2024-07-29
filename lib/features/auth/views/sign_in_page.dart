@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:shelf_guardian/components/text_button.dart';
 
+/// The view for the sign-in screen.
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
 
@@ -20,6 +21,7 @@ class _SignInViewState extends State<SignInView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  /// Handles the sign-in process.
   Future<void> _signIn() async {
     final router = GoRouter.of(context);
     final sm = ScaffoldMessenger.of(context);
@@ -96,6 +98,7 @@ class _SignInViewState extends State<SignInView> {
   }
 }
 
+/// The sign-in page widget.
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
 

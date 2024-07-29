@@ -9,6 +9,7 @@ import 'package:shelf_guardian/features/scanner/components/scanner_action_button
 import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/service/easter_egg_service.dart';
 
+/// The page that displays the barcode scanner.
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
 
@@ -21,6 +22,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
   late final StreamSubscription<Object?>? _subscription;
   bool pause = false;
 
+  /// Handles the barcode capture event.
   void _handleBarcode(BarcodeCapture barcodes) async {
     final router = GoRouter.of(context);
     if (mounted && !pause) {
@@ -53,6 +55,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     }
   }
 
+  /// Tries to start the barcode scanner.
   Future<void> _tryStart() async {
     try {
       _subscription = _controller.barcodes.listen(_handleBarcode);
@@ -62,6 +65,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
     }
   }
 
+  /// Tries to stop the barcode scanner.
   Future<void> _tryStop() async {
     try {
       await _subscription?.cancel();

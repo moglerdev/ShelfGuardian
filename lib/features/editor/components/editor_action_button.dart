@@ -7,6 +7,7 @@ import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/features/editor/bloc/editor_controller.dart';
 import 'package:shelf_guardian/features/editor/bloc/editor_state.dart';
 
+/// A button that provides actions for the editor screen.
 class EditorActionButton extends StatelessWidget {
   const EditorActionButton({super.key});
 

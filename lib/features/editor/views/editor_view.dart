@@ -5,6 +5,7 @@ import 'package:shelf_guardian/components/input_field.dart';
 import 'package:shelf_guardian/features/editor/bloc/editor_controller.dart';
 import 'package:shelf_guardian/features/editor/bloc/editor_state.dart';
 
+/// The view for the editor screen.
 class EditorView extends StatefulWidget {
   final String code;
   final int id;

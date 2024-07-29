@@ -1,12 +1,17 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 
+/// An abstract class representing an internet service.
 abstract class InternetService {
+  /// Checks the internet connection.
   Future<bool> checkConnection();
+
+  /// Creates an instance of [InternetService].
   static InternetService create() {
     return ConnectivityInternetService();
   }
 }
 
+/// A concrete implementation of [InternetService] using the connectivity package.
 class ConnectivityInternetService implements InternetService {
   @override
   Future<bool> checkConnection() async {

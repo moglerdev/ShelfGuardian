@@ -1,3 +1,4 @@
+/// Represents the abstract base class for the different states of the editor.
 abstract class EditorState {
   final String barcode;
   final int id;
@@ -8,6 +9,7 @@ abstract class EditorState {
   });
 }
 
+/// Represents the state when the editor is in a loading state.
 class LoadingEditorState implements EditorState {
   @override
   final String barcode;
@@ -20,6 +22,7 @@ class LoadingEditorState implements EditorState {
   });
 }
 
+/// Represents the state when the editor is filled with data.
 class FilledEditorState implements EditorState {
   @override
   final String barcode;
@@ -37,6 +40,7 @@ class FilledEditorState implements EditorState {
     required this.price,
   });
 
+  /// Creates an empty [FilledEditorState] with default values.
   static FilledEditorState createEmpty() {
     return const FilledEditorState(
       '',
@@ -47,6 +51,7 @@ class FilledEditorState implements EditorState {
     );
   }
 
+  /// Creates a copy of the current [FilledEditorState] with optional updated values.
   EditorState copyWith({
     String? name,
     DateTime? expiryDate,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shelf_guardian/common/theme.dart';
 
+/// A custom input field widget.
 class InputField extends StatelessWidget {
   final String name;
   final String? value;
@@ -13,7 +14,19 @@ class InputField extends StatelessWidget {
   final bool isPassword;
   final void Function()? onSubmitted;
 
-  const InputField({super.key,
+  /// Creates an instance of [InputField].
+  ///
+  /// The [name] parameter is required and specifies the name of the input field.
+  /// The [value] parameter is optional and specifies the initial value of the input field.
+  /// The [icon] parameter is optional and specifies the icon to display on the input field.
+  /// The [enabled] parameter is optional and specifies whether the input field is enabled or disabled.
+  /// The [onIconTap] parameter is optional and specifies the callback function when the icon is tapped.
+  /// The [controller] parameter is optional and specifies the text controller for the input field.
+  /// The [autofillHints] parameter is optional and specifies the autofill hints for the input field.
+  /// The [isPassword] parameter is optional and specifies whether the input field is a password field.
+  /// The [onSubmitted] parameter is optional and specifies the callback function when the input field is submitted.
+  const InputField({
+    super.key,
     required this.name,
     this.value,
     this.icon,
@@ -22,18 +35,17 @@ class InputField extends StatelessWidget {
     this.controller,
     this.autofillHints,
     this.isPassword = false,
-    this.onSubmitted});
+    this.onSubmitted,
+  });
 
   void submit(String value) {
-    if(onSubmitted != null) {
+    if (onSubmitted != null) {
       onSubmitted!();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    controller ?? TextEditingController(text: value);
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -41,52 +53,55 @@ class InputField extends StatelessWidget {
       ),
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       padding: const EdgeInsets.all(10),
-
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          name,
-          style: ShelfGuardianTextStyles.header1,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: ShelfGuardianColors.button,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            name,
+            style: ShelfGuardianTextStyles.header1,
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: ShelfGuardianColors.button,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
                   child: TextField(
-
-                      onSubmitted: submit,
-                      autofillHints: autofillHints,
-                      style: ShelfGuardianTextStyles.body1,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 10, right: 10),
-                        border: InputBorder.none,
+                    onSubmitted: submit,
+                    autofillHints: autofillHints,
+                    style: ShelfGuardianTextStyles.body1,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 10, right: 10),
+                      border: InputBorder.none,
+                    ),
+                    controller: controller,
+                    enabled: enabled,
+                    autocorrect: !isPassword,
+                    obscureText: isPassword,
+                  ),
+                ),
+                if (icon != null)
+                  GestureDetector(
+                    onTap: () {
+                      onIconTap!();
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      child: FaIcon(
+                        icon,
+                        color: ShelfGuardianColors.icon,
                       ),
-                      controller: controller,
-                      enabled: enabled,
-                      autocorrect: !isPassword,
-                      obscureText: isPassword)),
-              if (icon != null)
-                GestureDetector(
-                  onTap: () {
-                    onIconTap!();
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
-                    child: FaIcon(
-                      icon,
-                      color: ShelfGuardianColors.icon,
                     ),
                   ),
-                )
-            ],
+              ],
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

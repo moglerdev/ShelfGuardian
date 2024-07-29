@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shelf_guardian/common/theme.dart';
 import 'package:shelf_guardian/features/filter/bloc/filter_controller.dart';
 import 'package:shelf_guardian/components/date_picker.dart';
-import 'package:shelf_guardian/features/filter/services/filter_dao.dart';
+import 'package:shelf_guardian/service/filter_service.dart';
 
+/// A widget that represents a filter range for selecting a date range.
 class FilterRange extends StatelessWidget {
   const FilterRange({super.key});
 
@@ -19,7 +20,6 @@ class FilterRange extends StatelessWidget {
         ),
         margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
         padding: const EdgeInsets.all(10),
-
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text(
             "Bereich",

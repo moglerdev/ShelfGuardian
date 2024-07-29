@@ -5,6 +5,7 @@ import 'package:shelf_guardian/features/filter/bloc/filter_controller.dart';
 import 'package:shelf_guardian/features/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/features/filter/components/filter_action_button.dart';
 
+/// A page that displays a filter view for filtering products.
 class FilterPage extends StatelessWidget {
   const FilterPage({super.key});
 

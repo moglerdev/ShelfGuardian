@@ -4,9 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shelf_guardian/common/theme.dart';
 import 'package:shelf_guardian/components/icon_button.dart';
 import 'package:shelf_guardian/features/filter/bloc/filter_controller.dart';
-import 'package:shelf_guardian/features/filter/services/filter_dao.dart';
-import 'package:shelf_guardian/features/filter/services/filter_options.dart';
+import 'package:shelf_guardian/service/filter_service.dart';
 
+/// A dropdown widget for filtering and sorting options.
 class FilterDropdown extends StatelessWidget {
   const FilterDropdown({super.key});
 
@@ -22,7 +22,6 @@ class FilterDropdown extends StatelessWidget {
         ),
         margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
         padding: const EdgeInsets.all(10),
-
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text(
             "Sortierung",

@@ -1,3 +1,4 @@
+/// A class that defines the route URIs used in the navigation service.
 class NavigationServiceRoutes {
   static const String _authRouteUri = '/auth';
   static const String signInRouteUri = '/';

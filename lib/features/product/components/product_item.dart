@@ -8,18 +8,26 @@ import 'package:shelf_guardian/features/product/bloc/product_state.dart';
 import 'package:shelf_guardian/features/product/models/product_model.dart';
 import 'package:shelf_guardian/components/checkbox.dart';
 
+/// A widget that represents a single product item.
 class ProductItem extends StatelessWidget {
   final Product product;
   final void Function(bool) onSelectChanged;
   final void Function() onTap;
   final bool isSelected;
 
-  const ProductItem(
-      {super.key,
-      required this.product,
-      required this.onSelectChanged,
-      required this.isSelected,
-      required this.onTap});
+  /// Constructs a [ProductItem].
+  ///
+  /// The [product] parameter is required and represents the product to display.
+  /// The [onSelectChanged] parameter is required and is called when the selection state changes.
+  /// The [onTap] parameter is required and is called when the item is tapped.
+  /// The [isSelected] parameter is required and indicates whether the item is selected.
+  const ProductItem({
+    super.key,
+    required this.product,
+    required this.onSelectChanged,
+    required this.isSelected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +43,15 @@ class ProductItem extends StatelessWidget {
         onTap();
       },
       child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: product.isExpired
-                ? ShelfGuardianColors.secondary
-                : ShelfGuardianColors.primary,
-          ),
-          padding: const EdgeInsets.all(10),
-          child: Row(children: [
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: product.isExpired
+              ? ShelfGuardianColors.secondary
+              : ShelfGuardianColors.primary,
+        ),
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
             Container(
               margin: const EdgeInsets.only(right: 10),
               child: const FaIcon(
@@ -51,20 +60,21 @@ class ProductItem extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.name,
-                  style: ShelfGuardianTextStyles.header1,
-                ),
-                Text(
-                  product.expiredAt.toMoment().fromNow(),
-                  style: ShelfGuardianTextStyles.body1,
-                ),
-              ],
-            )),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name,
+                    style: ShelfGuardianTextStyles.header1,
+                  ),
+                  Text(
+                    product.expiredAt.toMoment().fromNow(),
+                    style: ShelfGuardianTextStyles.body1,
+                  ),
+                ],
+              ),
+            ),
             if (context.read<ProductControllerCubit>().state
                 is! ProductSearchedList)
               SGCheckBox(
@@ -73,7 +83,9 @@ class ProductItem extends StatelessWidget {
                 },
                 isSelected: isSelected,
               ),
-          ])),
+          ],
+        ),
+      ),
     );
   }
 }

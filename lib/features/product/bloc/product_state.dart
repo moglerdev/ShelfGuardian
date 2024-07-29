@@ -1,41 +1,52 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shelf_guardian/features/product/models/product_model.dart';
 
+/// Abstract class representing the state of a product list.
 abstract class ProductListState {
+  /// Returns a list of all products.
   List<Product> getProducts();
+
+  /// Returns a list of searched products.
   List<Product> getSearchedProducts() => [];
+
+  /// Disposes the listener.
   void disposeListener() {}
 }
 
+/// Represents the state when the product list is empty.
 class ProductListEmpty extends ProductListState {
   @override
   List<Product> getProducts() => [];
 }
 
+/// Represents the state when the product list is loading.
 class ProductListLoading extends ProductListState {
   @override
   List<Product> getProducts() => [];
 }
 
+/// Represents the state when the product list is filled with products.
 class ProductListFilled extends ProductListState {
   final List<Product> products;
 
+  ProductListFilled(this.products);
+
   @override
   List<Product> getProducts() => products;
-
-  ProductListFilled(this.products);
 }
 
+/// Represents the state when some products in the list are selected.
 class ProductListSelected extends ProductListState {
   final List<Product> products;
   final List<Product> selectedProducts;
 
+  ProductListSelected(this.products, this.selectedProducts);
+
   @override
   List<Product> getProducts() => products;
-
-  ProductListSelected(this.products, this.selectedProducts);
 }
 
+/// Represents the state when the product list is filtered based on a search query.
 class ProductSearchedList extends ProductListState {
   final List<Product> products;
   final List<Product> shownProducts;
@@ -72,7 +83,7 @@ class ProductSearchedList extends ProductListState {
 
   @override
   void disposeListener() {
-    // Vergessen Sie nicht, den Listener zu entfernen, um Speicherlecks zu vermeiden
+    // Don't forget to remove the listener to avoid memory leaks
     searchController.removeListener(_onSearchChanged);
   }
 }

@@ -7,6 +7,7 @@ import 'package:shelf_guardian/features/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/features/product/bloc/product_state.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 
+/// A widget representing the action button for a product.
 class ProductActionButton extends StatelessWidget {
   const ProductActionButton({super.key});
 

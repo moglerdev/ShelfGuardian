@@ -6,8 +6,12 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shelf_guardian/components/icon_button.dart';
 import 'package:shelf_guardian/features/scanner/bloc/scanner_controller.dart';
 
+/// A button widget that toggles the flashlight on the mobile scanner.
 class ToggleFlashlightButton extends StatelessWidget {
-  const ToggleFlashlightButton({required this.controller, super.key});
+  const ToggleFlashlightButton({
+    required this.controller,
+    super.key,
+  });
 
   final MobileScannerController controller;
 
@@ -53,8 +57,12 @@ class ToggleFlashlightButton extends StatelessWidget {
   }
 }
 
+/// A button widget that switches the camera on the mobile scanner.
 class SwitchCameraButton extends StatelessWidget {
-  const SwitchCameraButton({required this.controller, super.key});
+  const SwitchCameraButton({
+    required this.controller,
+    super.key,
+  });
 
   final MobileScannerController controller;
 
@@ -83,50 +91,53 @@ class SwitchCameraButton extends StatelessWidget {
   }
 }
 
+/// The action button widget for the scanner feature.
 class ScannerActionButton extends StatelessWidget {
   final MobileScannerController controller;
   final void Function() onEdit;
 
-  const ScannerActionButton(
-      {super.key, required this.controller, required this.onEdit});
+  const ScannerActionButton({
+    super.key,
+    required this.controller,
+    required this.onEdit,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ScannerControllerCubit, ScannerState>(
-        builder: (context, state) {
-      Widget toggleCamBtn = SwitchCameraButton(controller: controller);
-      Widget toggleLightBtn = ToggleFlashlightButton(
-        controller: controller,
-      );
-      Widget editorBtn = SGIconButton(
-        size: 50,
-        icon: FontAwesomeIcons.penToSquare,
-        onPressed: () {
-          onEdit();
-        },
-      );
-      Widget cancelBtn = SGIconButton(
-        icon: FontAwesomeIcons.squareXmark,
-        onPressed: () {
-          context.pop();
-        },
-      );
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Spacer(flex: 1),
-          toggleCamBtn,
-          const SizedBox(width: 10),
-          toggleLightBtn,
-          const Spacer(flex: 1),
-          editorBtn,
-          const Spacer(flex: 1),
-          const SizedBox(width: 25),
-          cancelBtn,
-          const SizedBox(width: 25),
-          const Spacer(flex: 1),
-        ],
-      );
-    });
+      builder: (context, state) {
+        Widget toggleCamBtn = SwitchCameraButton(controller: controller);
+        Widget toggleLightBtn = ToggleFlashlightButton(controller: controller);
+        Widget editorBtn = SGIconButton(
+          size: 50,
+          icon: FontAwesomeIcons.penToSquare,
+          onPressed: () {
+            onEdit();
+          },
+        );
+        Widget cancelBtn = SGIconButton(
+          icon: FontAwesomeIcons.squareXmark,
+          onPressed: () {
+            context.pop();
+          },
+        );
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Spacer(flex: 1),
+            toggleCamBtn,
+            const SizedBox(width: 10),
+            toggleLightBtn,
+            const Spacer(flex: 1),
+            editorBtn,
+            const Spacer(flex: 1),
+            const SizedBox(width: 25),
+            cancelBtn,
+            const SizedBox(width: 25),
+            const Spacer(flex: 1),
+          ],
+        );
+      },
+    );
   }
 }

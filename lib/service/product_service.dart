@@ -1,26 +1,46 @@
 import 'dart:async';
 
-import 'package:shelf_guardian/features/filter/services/filter_service.dart';
+import 'package:shelf_guardian/service/filter_service.dart';
 import 'package:shelf_guardian/features/product/models/product_model.dart';
 import 'package:shelf_guardian/service/internet_service.dart';
 import 'package:shelf_guardian/supabase.dart';
 
+/// Abstract class representing a product service.
 abstract class ProductService {
+  /// Retrieves a list of products.
   Future<List<Product>> getProducts();
+
+  /// Adds a product.
   Future<bool> addProduct(Product product);
+
+  /// Removes a product.
   Future<bool> removeProduct(Product product);
+
+  /// Removes multiple products.
   Future<bool> removeProducts(List<Product> products);
+
+  /// Retrieves a product by its ID.
   Future<Product?> getProduct(int id);
+
+  /// Retrieves a product by its barcode.
   Future<Product?> getProductByBarcode(String barcode);
+
+  /// Saves a product.
   Future<Product?> saveProduct(Product product);
+
+  /// Retrieves the summary value of all products.
   Future<int> getSummaryValue();
+
+  /// Retrieves the count of all products.
   Future<int> getCount();
 
+  /// Creates an instance of [ProductService].
   static ProductService create() {
     return ProductServiceSupabase();
   }
 }
 
+/// Implementation of [ProductService] using Supabase as the data source.
 class ProductServiceSupabase implements ProductService {
   final client = Api.client;
   final channel = Api.client.channel("products_items");
@@ -29,6 +49,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<List<Product>> getProducts() async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       return [];
     }
@@ -67,6 +88,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<bool> addProduct(Product product) async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       return false;
     }
@@ -81,6 +103,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<bool> removeProduct(Product product) async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       return false;
     }
@@ -91,6 +114,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<bool> removeProducts(List<Product> products) async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       return false;
     }
@@ -103,6 +127,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<int> getSummaryValue() async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       return 0;
     }
@@ -119,6 +144,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<int> getCount() async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       return 0;
     }
@@ -127,6 +153,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<Product?> getProduct(int id) async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       return null;
     }
@@ -154,6 +181,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<Product?> getProductByBarcode(String barcode) async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       throw Exception("No internet connection");
     }
@@ -178,6 +206,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<Product?> saveProduct(Product product) async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       throw Exception("No internet connection");
     }
@@ -201,6 +230,7 @@ class ProductServiceSupabase implements ProductService {
   }
 
   Future<DbProductMeta?> saveProductMeta(Product product) async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       throw Exception("No internet connection");
     }
@@ -236,6 +266,7 @@ class ProductServiceSupabase implements ProductService {
 
   Future<DbProductItem?> saveProductItem(
       Product product, DbProductMeta meta) async {
+    // Check internet connection
     if (!await internet.checkConnection()) {
       throw Exception("No internet connection");
     }

@@ -6,6 +6,7 @@ import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/components/input_field.dart';
 import 'package:shelf_guardian/components/text_button.dart';
 
+/// A page for user sign up.
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
@@ -19,6 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _repeatedPasswordController =
       TextEditingController();
 
+  /// Handles the sign up process.
   Future<void> _signUp() async {
     final router = GoRouter.of(context);
     final sm = ScaffoldMessenger.of(context);

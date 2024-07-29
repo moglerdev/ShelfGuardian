@@ -6,6 +6,7 @@ import 'package:shelf_guardian/features/product/components/product_list.dart';
 import 'package:shelf_guardian/features/product/bloc/product_controller.dart';
 import 'package:shelf_guardian/components/input_field.dart';
 
+/// A page view widget that displays a list of products.
 class ProductPageView extends StatelessWidget {
   const ProductPageView({super.key});
 

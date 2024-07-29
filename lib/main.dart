@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:shelf_guardian/supabase.dart';
 import 'firebase_options.dart';
 
+/// The main entry point of the application.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Moment.setGlobalLocalization(MomentLocalizations.de());
@@ -30,6 +31,7 @@ Future<void> main() async {
   runApp(const Application());
 }
 
+/// The root widget of the application.
 class Application extends StatefulWidget {
   const Application({super.key});
 
@@ -38,7 +40,12 @@ class Application extends StatefulWidget {
 }
 
 class _Application extends State<Application> {
-  // In this example, suppose that all messages contain a data field with the key 'type'.
+  /// Sets up the handling of interacted messages.
+  ///
+  /// This method retrieves any messages that caused the application to open
+  /// from a terminated state. If the message contains a data property with a
+  /// "type" of "chat", it navigates to a chat screen. It also handles any
+  /// interaction when the app is in the background via a Stream listener.
   Future<void> setupInteractedMessage() async {
     // Get any messages which caused the application to open from
     // a terminated state.
@@ -56,6 +63,9 @@ class _Application extends State<Application> {
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
+  /// Handles the received message.
+  ///
+  /// Navigates to the chat screen when a message is received.
   void _handleMessage(RemoteMessage message) {
     context.push('/chat');
   }

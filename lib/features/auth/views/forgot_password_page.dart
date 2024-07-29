@@ -6,6 +6,7 @@ import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/components/input_field.dart';
 import 'package:shelf_guardian/components/text_button.dart';
 
+/// A page for resetting the password.
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
 
@@ -16,6 +17,7 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
 
+  /// Resets the password.
   Future<void> _resetPassword() async {
     final router = GoRouter.of(context);
     final sm = ScaffoldMessenger.of(context);

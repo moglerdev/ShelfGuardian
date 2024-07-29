@@ -6,6 +6,10 @@ import 'package:flutter/foundation.dart'
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
+/// This class provides the default [FirebaseOptions] for different platforms.
+/// It allows you to easily initialize Firebase with the appropriate options
+/// based on the current platform.
+///
 /// Example:
 /// ```dart
 /// import 'firebase_options.dart';
@@ -15,6 +19,9 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  /// Returns the [FirebaseOptions] for the current platform.
+  ///
+  /// Throws an [UnsupportedError] if the platform is not supported.
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError(
@@ -52,6 +59,7 @@ class DefaultFirebaseOptions {
     }
   }
 
+  /// The default [FirebaseOptions] for Android.
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDH4BOA2he028Y3fAY5kp8fQRUK0giBf1g',
     appId: '1:76032918491:android:34b7500f7e11c3ddd05dfe',
