@@ -1,3 +1,5 @@
+![logo](./assets/app_icon.png)
+
 # Shelf Guardian
 
 ## Description

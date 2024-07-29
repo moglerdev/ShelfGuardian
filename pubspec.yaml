@@ -49,12 +49,13 @@ dependencies:
   firebase_messaging: ^15.0.2
   firebase_core: ^3.1.1
   url_launcher: ^6.3.0
-  mockito: ^5.4.4
   app_settings: ^5.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  mockito: ^5.4.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -101,3 +102,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  android: true
+  ios: false
+  image_path: "assets/app_icon.png"
