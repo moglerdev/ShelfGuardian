@@ -173,8 +173,9 @@ For barcode recognition, we use the `mobile_scanner` package. This package allow
 
 ### Permissions
 
-- `android.permission.CAMERA`: Required to use the camera for barcode scanning.
-- `android.permission.INTERNET`: Required to connect to the Supabase API and send notifications.
+- **Camera**: Barcode Scanner (mobile_scanner)
+- **Internet**: Supabase, Firebase Messaging
+- **Notifications**: Firebase Messaging (Push Notifications)
 
 ### Problems during development
 
