@@ -7,7 +7,6 @@ class SGTextButton extends StatelessWidget {
   final double size;
   final bool disabled;
 
-//
   const SGTextButton(
       {super.key,
       required this.buttonText,
@@ -15,7 +14,6 @@ class SGTextButton extends StatelessWidget {
       this.size = 35,
       this.disabled = false});
 
-//
 
   @override
   Widget build(BuildContext context) {

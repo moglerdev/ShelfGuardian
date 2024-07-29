@@ -13,7 +13,6 @@ class FilterRange extends StatelessWidget {
     return BlocBuilder<FilterControllerCubit, FilterDAO>(
         builder: (context, state) {
       return Container(
-        // height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: ShelfGuardianColors.primary,

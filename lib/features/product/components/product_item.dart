@@ -35,7 +35,6 @@ class ProductItem extends StatelessWidget {
         onTap();
       },
       child: Container(
-          // height: 50,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: product.isExpired
@@ -43,7 +42,6 @@ class ProductItem extends StatelessWidget {
                 : ShelfGuardianColors.primary,
           ),
           padding: const EdgeInsets.all(10),
-          // color: item.isExpired ? Color(0xFFAD0392) : Color(0xFF5603AD),
           child: Row(children: [
             Container(
               margin: const EdgeInsets.only(right: 10),

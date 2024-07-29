@@ -19,14 +19,12 @@ class SettingsItemDescriptional extends StatelessWidget {
     // Text Color FFFFFF
 
     return Container(
-      // height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: ShelfGuardianColors.primary,
       ),
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       padding: const EdgeInsets.all(10),
-      // color: item.isExpired ? Color(0xFFAD0392) : Color(0xFF5603AD),
       child: Row(children: [
         Expanded(
             child: Column(

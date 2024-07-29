@@ -35,7 +35,6 @@ class InputField extends StatelessWidget {
     controller ?? TextEditingController(text: value);
 
     return Container(
-      // height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: ShelfGuardianColors.primary,

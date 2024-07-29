@@ -8,7 +8,6 @@ class SGIconButton extends StatelessWidget {
   final double size;
   final bool disabled;
 
-//
   const SGIconButton(
       {super.key,
       required this.icon,
@@ -16,7 +15,6 @@ class SGIconButton extends StatelessWidget {
       this.size = 35,
       this.disabled = false});
 
-//
   @override
   Widget build(BuildContext context) {
     var style = disabled

@@ -49,7 +49,6 @@ class FilterControllerCubit extends Cubit<FilterDAO>
       filterOption: state.filterOption,
       isAscending: state.isAscending,
     ));
-    // Todo: add a toast message to confirm the filter has been saved
   }
 
   @override
@@ -63,7 +62,6 @@ class FilterControllerCubit extends Cubit<FilterDAO>
     filterService.deleteDateFrom();
     filterService.deleteDateTo();
     saveFilter();
-    // Todo: add a toast message to confirm the filter has been deleted
   }
 
   @override

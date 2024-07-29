@@ -77,7 +77,6 @@ class ProductActionButton extends StatelessWidget {
               const SnackBar(content: Text('Ich kann gerade nichts suchen!')),
             );
           }
-          // TODO Implement search page
         },
       ));
       return Row(

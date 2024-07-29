@@ -37,8 +37,6 @@ class _SignInViewState extends State<SignInView> {
         sm.showSnackBar(
           const SnackBar(content: Text("Something went wrong!")),
         );
-        // Navigate to your home page or another page
-        // Navigator.pushReplacementNamed(context, '/home');
       }
     } on AuthApiException {
       sm.showSnackBar(
