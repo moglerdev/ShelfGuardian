@@ -103,7 +103,7 @@ To delete a product, select it from the list. This changes the action buttons, m
 
 You can filter products using various criteria. The filter button, which is the second button in the action list on the `Home` page, opens the `Filter` page when clicked. On the `Filter` page, select your desired criteria and click the apply button (save icon) to filter the products. To cancel, click the cancel button or the back button.
 
-The applied filter is saved in the local storage, so you don't need to reapply it every time you open the app. To remove the filter, click the filter button again and select the left button (filter icon with a times icon).
+The applied filter is saved in the local storage, so you don't need to reapply it every time you open the app. To remove the filter, click the filter button again and select the left button (filter with a x-icon).
 
 <img src="./docs/pages/filter-page.png" alt="Filter Page" width="260"/>
 
@@ -153,7 +153,7 @@ For the Session Token, we use the `SharedPreferences` of the device. This allows
 
 ### Notifications
 
-To send notifications, we use the `FhirbaseMessaging` service from Google Firebase. This service allows us to send notifications to all devices linked to the same account. We use this service to send daily notifications for products nearing their minimum durability dates. We created a Supabase Edge Function to send the notification to `FhirbaseMessaging`, and created a background service that triggers the Edge Function every day at 8:00 AM.
+To send notifications, we use the `FirebaseMessaging` service from Google Firebase. This service allows us to send notifications to all devices linked to the same account. We use this service to send daily notifications for products nearing their minimum durability dates. We created a Supabase Edge Function to send the notification to `FirebaseMessaging`, and created a background service that triggers the Edge Function every day at 8:00 AM.
 
 ### Barcode Recognition
 
