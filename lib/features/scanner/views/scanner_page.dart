@@ -119,7 +119,7 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
               controller: _controller,
               errorBuilder: (context, error, child) {
                 // if debug mode, show error
-                return Text('Bitte erlaube den Zugriff auf die Kamera');
+                return const Text('Bitte erlaube den Zugriff auf die Kamera');
               },
             )));
   }

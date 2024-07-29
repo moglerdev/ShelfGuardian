@@ -38,7 +38,7 @@ void main() {
 
     final iconButton = tester.widget<IconButton>(find.byType(IconButton));
     final style = ShelfGuardianButtonStyles.buttonDisabled.copyWith(
-      fixedSize: MaterialStateProperty.all(Size(55, 55)),
+      fixedSize: WidgetStateProperty.all(const Size(55, 55)),
     );
     expect(
         iconButton.style?.fixedSize?.resolve({}), style.fixedSize?.resolve({}));

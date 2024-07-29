@@ -9,7 +9,7 @@ void main() {
     late bool isSelected;
     late bool onChangedValue;
 
-    void _onSelectChanged(bool value) {
+    void onSelectChanged(bool value) {
       onChangedValue = value;
     }
 
@@ -24,7 +24,7 @@ void main() {
         MaterialApp(
           home: Material(
             child: SGCheckBox(
-              onSelectChanged: _onSelectChanged,
+              onSelectChanged: onSelectChanged,
               isSelected: isSelected,
             ),
           ),
@@ -44,12 +44,12 @@ void main() {
           tester.widget<ElevatedButton>(elevatedButtonFinder);
       final faIcon = tester.widget<FaIcon>(faIconFinder);
 
-      expect(container.margin, EdgeInsets.only(left: 10));
+      expect(container.margin, const EdgeInsets.only(left: 10));
 
       final padding =
-          elevatedButton.style?.padding?.resolve({MaterialState.pressed});
+          elevatedButton.style?.padding?.resolve({WidgetState.pressed});
       final minimumSize =
-          elevatedButton.style?.minimumSize?.resolve({MaterialState.pressed});
+          elevatedButton.style?.minimumSize?.resolve({WidgetState.pressed});
 
       expect(padding, const EdgeInsets.all(10));
       expect(minimumSize, const Size(40, 40));
@@ -66,7 +66,7 @@ void main() {
         MaterialApp(
           home: Material(
             child: SGCheckBox(
-              onSelectChanged: _onSelectChanged,
+              onSelectChanged: onSelectChanged,
               isSelected: isSelected,
             ),
           ),
@@ -85,7 +85,7 @@ void main() {
         MaterialApp(
           home: Material(
             child: SGCheckBox(
-              onSelectChanged: _onSelectChanged,
+              onSelectChanged: onSelectChanged,
               isSelected: isSelected,
             ),
           ),
