@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:shelf_guardian/features/scanner/bloc/scanner_controller.dart';
 import 'package:shelf_guardian/features/scanner/components/scanner_action_button.dart';
 import 'package:shelf_guardian/common/routes_service.dart';
 import 'package:shelf_guardian/service/easter_egg_service.dart';
@@ -105,27 +103,24 @@ class _ScannerPageState extends State<ScannerPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => ScannerControllerCubit(),
-        child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Barcode Scanner'),
-            ),
-            floatingActionButton: ScannerActionButton(
-              controller: _controller,
-              onEdit: () {
-                context.push(NavigationServiceRoutes.createRouteUri);
-              },
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            body: MobileScanner(
-              controller: _controller,
-              errorBuilder: (context, error, child) {
-                // if debug mode, show error
-                return const Text('Bitte erlaube den Zugriff auf die Kamera');
-              },
-            )));
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Barcode Scanner'),
+        ),
+        floatingActionButton: ScannerActionButton(
+          controller: _controller,
+          onEdit: () {
+            context.push(NavigationServiceRoutes.createRouteUri);
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: MobileScanner(
+          controller: _controller,
+          errorBuilder: (context, error, child) {
+            // if debug mode, show error
+            return const Text('Bitte erlaube den Zugriff auf die Kamera');
+          },
+        ));
   }
 
   @override

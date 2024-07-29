@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shelf_guardian/components/icon_button.dart';
-import 'package:shelf_guardian/features/scanner/bloc/scanner_controller.dart';
 
 /// A button widget that toggles the flashlight on the mobile scanner.
 class ToggleFlashlightButton extends StatelessWidget {
@@ -104,40 +102,36 @@ class ScannerActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ScannerControllerCubit, ScannerState>(
-      builder: (context, state) {
-        Widget toggleCamBtn = SwitchCameraButton(controller: controller);
-        Widget toggleLightBtn = ToggleFlashlightButton(controller: controller);
-        Widget editorBtn = SGIconButton(
-          size: 50,
-          icon: FontAwesomeIcons.penToSquare,
-          onPressed: () {
-            onEdit();
-          },
-        );
-        Widget cancelBtn = SGIconButton(
-          icon: FontAwesomeIcons.squareXmark,
-          onPressed: () {
-            context.pop();
-          },
-        );
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(flex: 1),
-            toggleCamBtn,
-            const SizedBox(width: 10),
-            toggleLightBtn,
-            const Spacer(flex: 1),
-            editorBtn,
-            const Spacer(flex: 1),
-            const SizedBox(width: 25),
-            cancelBtn,
-            const SizedBox(width: 25),
-            const Spacer(flex: 1),
-          ],
-        );
+    Widget toggleCamBtn = SwitchCameraButton(controller: controller);
+    Widget toggleLightBtn = ToggleFlashlightButton(controller: controller);
+    Widget editorBtn = SGIconButton(
+      size: 50,
+      icon: FontAwesomeIcons.penToSquare,
+      onPressed: () {
+        onEdit();
       },
+    );
+    Widget cancelBtn = SGIconButton(
+      icon: FontAwesomeIcons.squareXmark,
+      onPressed: () {
+        context.pop();
+      },
+    );
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Spacer(flex: 1),
+        toggleCamBtn,
+        const SizedBox(width: 10),
+        toggleLightBtn,
+        const Spacer(flex: 1),
+        editorBtn,
+        const Spacer(flex: 1),
+        const SizedBox(width: 25),
+        cancelBtn,
+        const SizedBox(width: 25),
+        const Spacer(flex: 1),
+      ],
     );
   }
 }
