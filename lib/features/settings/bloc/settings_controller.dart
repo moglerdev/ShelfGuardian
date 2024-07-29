@@ -1,12 +1,14 @@
 import 'dart:async';
 
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shelf_guardian/service/product_service.dart';
 import 'package:shelf_guardian/service/user_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class SettingsController {
-  void toggleNotifications();
+  Future<void> openNotification();
 
   void saveSettings();
 }
@@ -52,16 +54,8 @@ class SettingsControllerCubit extends Cubit<SettingsState>
   }
 
   @override
-  void toggleNotifications() {
-    if (state is! SettingsStateLoaded) {
-      return;
-    }
-    final currentState = state as SettingsStateLoaded;
-    emit(SettingsStateLoaded(
-        notifications: !currentState.notifications,
-        summaryValue: currentState.summaryValue,
-        summaryItems: currentState.summaryItems,
-        email: currentState.email));
+  Future<void> openNotification() async {
+    AppSettings.openAppSettings(type: AppSettingsType.notification);
   }
 
   @override

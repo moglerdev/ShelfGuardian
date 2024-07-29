@@ -46,7 +46,7 @@ class SettingsPageView extends StatelessWidget {
           description: "Wollen sie von uns Benachrichtigungen erhalten?"
               "\n Bspw. Produkte, die bald MHD erreichen.",
           onSelectChanged: (selected) {
-            context.read<SettingsControllerCubit>().toggleNotifications();
+            context.read<SettingsControllerCubit>().openNotification();
           },
           isSelected: state.notifications,
         ),
