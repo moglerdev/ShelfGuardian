@@ -1,4 +1,6 @@
-![logo](./assets/app_icon.png)
+<p align="center">
+  <img src="./assets/app_icon.png" alt="logo" width="400"/>
+</p>
 
 
 > **Example Account**\
