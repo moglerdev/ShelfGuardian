@@ -29,7 +29,7 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<List<Product>> getProducts() async {
-    if (!!await internet.checkConnection()) {
+    if (!await internet.checkConnection()) {
       return [];
     }
 
