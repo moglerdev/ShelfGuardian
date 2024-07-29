@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:shelf_guardian/features/filter/services/filter_service.dart';
 import 'package:shelf_guardian/features/product/models/product_model.dart';
+import 'package:shelf_guardian/service/internet_service.dart';
 import 'package:shelf_guardian/supabase.dart';
 
 abstract class ProductService {
@@ -24,9 +25,14 @@ class ProductServiceSupabase implements ProductService {
   final client = Api.client;
   final channel = Api.client.channel("products_items");
   final filter = FilterService.create();
+  final internet = InternetService.create();
 
   @override
   Future<List<Product>> getProducts() async {
+    if (!!await internet.checkConnection()) {
+      return [];
+    }
+
     final f = await filter.load();
     final from = f.dateFrom;
     final to = f.dateTo;
@@ -61,6 +67,10 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<bool> addProduct(Product product) async {
+    if (!await internet.checkConnection()) {
+      return false;
+    }
+
     var result = await client.from("products_items").upsert({
       "id": product.id,
       "price_in_cents": product.priceInCents,
@@ -71,6 +81,9 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<bool> removeProduct(Product product) async {
+    if (!await internet.checkConnection()) {
+      return false;
+    }
     var result =
         await client.from("products_items").delete().eq("id", product.id);
     return result.error == null;
@@ -78,6 +91,9 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<bool> removeProducts(List<Product> products) async {
+    if (!await internet.checkConnection()) {
+      return false;
+    }
     var result = await client
         .from("products_items")
         .delete()
@@ -87,6 +103,9 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<int> getSummaryValue() async {
+    if (!await internet.checkConnection()) {
+      return 0;
+    }
     var result = await client.from("products_items").select("price_in_cents");
     if (result.isEmpty) {
       return 0;
@@ -100,11 +119,17 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<int> getCount() async {
+    if (!await internet.checkConnection()) {
+      return 0;
+    }
     return await client.from("products_items").count();
   }
 
   @override
   Future<Product?> getProduct(int id) async {
+    if (!await internet.checkConnection()) {
+      return null;
+    }
     var result = await client
         .from("products_items")
         .select(
@@ -129,6 +154,9 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<Product?> getProductByBarcode(String barcode) async {
+    if (!await internet.checkConnection()) {
+      throw Exception("No internet connection");
+    }
     var result = await client
         .from("products_meta")
         .select("id, barcode, name, description, created_at")
@@ -150,6 +178,10 @@ class ProductServiceSupabase implements ProductService {
 
   @override
   Future<Product?> saveProduct(Product product) async {
+    if (!await internet.checkConnection()) {
+      throw Exception("No internet connection");
+    }
+
     var meta = await saveProductMeta(product);
     if (meta == null) {
       return null;
@@ -169,6 +201,10 @@ class ProductServiceSupabase implements ProductService {
   }
 
   Future<DbProductMeta?> saveProductMeta(Product product) async {
+    if (!await internet.checkConnection()) {
+      throw Exception("No internet connection");
+    }
+
     var exist = await getProductByBarcode(product.barcode);
     if (exist != null) {
       // Update Barcode and Name
@@ -200,6 +236,10 @@ class ProductServiceSupabase implements ProductService {
 
   Future<DbProductItem?> saveProductItem(
       Product product, DbProductMeta meta) async {
+    if (!await internet.checkConnection()) {
+      throw Exception("No internet connection");
+    }
+
     var exist = await getProduct(product.id);
     if (exist != null) {
       // Update Price and ExpiredAt
