@@ -139,9 +139,9 @@ For a fun surprise, scan the QR code below using the app's scanner. It will take
 
 ### State Management
 
-For our states we used the `bloc` package. This package allows us to manage the state of the app in a structured way. We created several blocs for the different pages and functionalities of the app. The blocs are responsible for managing the state of the app and updating the UI accordingly.
+For our states, we used the `bloc` package. This package allows us to manage the state of the app in a structured way. We created several blocs for the different pages and functionalities of the app. The blocs are responsible for managing the state of the app and updating the UI accordingly.
 
-But we separated our logic out in services to keep the blocs clean and focused on the state management. The services are responsible for the business logic of the app, such as fetching data from the backend, updating the local storage, and sending notifications. Also we can switch the backend easily by changing the services. 
+We separated our logic out into services to keep the blocs clean and focused on state management. The services handle the business logic of the app, such as fetching data from the backend, updating local storage, and sending notifications. This approach also allows us to switch the backend easily by changing the services.
 
 ### Backend
 
@@ -149,7 +149,7 @@ As the backend, we use [Supabase](https://supabase.io/), an open-source Firebase
 
 ### Storage
 
-To store device specific data, we use the local storage of the device. This allows us to save the filter settings, search results, and other device-specific data. The local storage is cleared when the user logs out.
+To store device-specific data, we use the local storage of the device. This allows us to save the filter settings, search results, and other device-specific data. The local storage is cleared when the user logs out.
 
 For the Session Token, we use the `SharedPreferences` of the device. This allows us to store the token securely and access it when needed. The token is cleared when the user logs out.
 
@@ -159,7 +159,7 @@ To send notifications, we use the `FirebaseMessaging` service from Google Fireba
 
 ### Barcode Recognition
 
-For barcode recognition, we use the `mobile_scanner` package. This package allows us to scan barcodes using the device's camera. We use this package to scan barcodes.
+For barcode recognition, we use the `mobile_scanner` package. This package allows us to scan barcodes using the device's camera. We use this package to scan barcodes and add products to the inventory quickly and efficiently.
 
 ### Dependencies
 
@@ -172,7 +172,7 @@ For barcode recognition, we use the `mobile_scanner` package. This package allow
 
 #### Barcode Scanner
 
-The barcode scanner was the most challenging part of the app. We had to find a package that could scan barcodes and recognize them. We tried several packages, but most of them were outdated or not working. We finally found the `mobile_scanner` package, but has also pitfalls. The package is not well documented, and has some issue with hot reloading / hot restarting. We had to implement some workarounds to make it work.
+The barcode scanner was the most challenging part of the app. We had to find a package that could scan barcodes and recognize them. We tried several packages, but most of them were outdated or not working. We finally found the `mobile_scanner` package, which also had pitfalls. The package is not well-documented and has some issues with hot reloading/hot restarting. We had to implement some workarounds to make it work.
 
 ## Future
 
