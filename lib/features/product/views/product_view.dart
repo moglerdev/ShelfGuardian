@@ -53,7 +53,7 @@ class ProductPageView extends StatelessWidget {
         ]);
       } else if (state is ProductListEmpty) {
         return const Center(
-          child: Text('No products found'),
+          child: Text('Keine Produkte gefunden'),
         );
       }
 
