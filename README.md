@@ -130,6 +130,9 @@ Additionally, if you update the name of a product, all products with the same ba
 
 Shelf Guardian sends daily notifications to your device for products that are about to expire. These notifications are sent at 8:00 AM and will list all products expiring either on that day or the following day. If there are no products nearing expiration, no notification will be sent, ensuring you only receive relevant alerts.
 
+<img src="./docs/notifications.png" alt="Notifications" width="260"/>
+
+
 ### Real Time Synchronization
 
 Shelf Guardian ensures real-time synchronization across all devices linked to the same account. Any changes made on one device, such as adding, updating, or deleting a product, are instantly reflected on all other devices. This allows you to seamlessly manage your inventory from multiple devices without worrying about data discrepancies.
