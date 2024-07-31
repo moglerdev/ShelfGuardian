@@ -153,6 +153,10 @@ For our states, we used the `bloc` package. This package allows us to manage the
 
 We separated our logic out into services to keep the blocs clean and focused on state management. The services handle the business logic of the app, such as fetching data from the backend, updating local storage, and sending notifications. This approach also allows us to switch the backend easily by changing the services.
 
+### Structure
+
+img src="./docs/structure.jpeg" alt="Structure" width="720"/>
+
 ### Backend
 
 As the backend, we use [Supabase](https://supabase.io/), an open-source Firebase alternative. Supabase provides a real-time database, authentication, and storage services, making it easy to build and scale applications. We use Supabase for user authentication, real-time synchronization, and data storage.
