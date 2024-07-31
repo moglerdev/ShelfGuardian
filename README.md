@@ -155,7 +155,7 @@ We separated our logic out into services to keep the blocs clean and focused on 
 
 ### Structure
 
-img src="./docs/structure.jpeg" alt="Structure" width="720"/>
+<img src="./docs/structure.jpeg" alt="Structure" width="720"/>
 
 ### Backend
 
